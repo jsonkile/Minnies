@@ -1,4 +1,4 @@
-package com.demo.minnies.database.room.models
+package com.demo.minnies.shop.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

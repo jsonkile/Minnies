@@ -1,12 +1,12 @@
-package com.demo.minnies.database.room
+package com.demo.minnies.data.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.demo.minnies.database.room.converters.CategoryConverter
-import com.demo.minnies.database.room.converters.IntListConverter
-import com.demo.minnies.database.room.daos.ShopDao
-import com.demo.minnies.database.room.models.ShopItem
+import com.demo.minnies.data.room.converters.CategoryConverter
+import com.demo.minnies.data.room.converters.IntListConverter
+import com.demo.minnies.shop.data.local.daos.ShopDao
+import com.demo.minnies.shop.data.models.ShopItem
 
 @Database(version = 2, entities = [ShopItem::class], exportSchema = false)
 @TypeConverters(value = [CategoryConverter::class, IntListConverter::class])

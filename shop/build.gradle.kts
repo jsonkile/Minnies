@@ -22,24 +22,38 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
+        val composeCompilerVersion: String by rootProject.extra
+
+        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 }
 
 dependencies {
     val hiltVersion: String by rootProject.extra
     val coroutinesVersion: String by rootProject.extra
+    val composeVersion: String by rootProject.extra
+    val roomVersion: String by rootProject.extra
+    val jUnitVersion: String by rootProject.extra
 
     implementation(project(":shared"))
-    implementation(project(":database"))
+
+    //room
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
 
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
-    androidTestImplementation("junit:junit:4.13.2")
+    androidTestImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test:runner:1.4.0")
     androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+}
+
+kapt {
+    correctErrorTypes = true
 }

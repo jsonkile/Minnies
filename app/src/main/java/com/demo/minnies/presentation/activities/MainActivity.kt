@@ -3,6 +3,7 @@ package com.demo.minnies.presentation.activities
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -20,17 +21,22 @@ import com.demo.minnies.presentation.MinniesNavHost
 import com.demo.minnies.presentation.Screen
 import com.demo.minnies.presentation.screens.LandingScreen
 import com.demo.minnies.shared.ui.MinniesTheme
+import com.demo.minnies.shop.presentation.screens.ShopScreenViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
 
             val navController = rememberNavController()
+            val systemUiController = rememberSystemUiController()
             MinniesTheme {
+                systemUiController.setStatusBarColor(color = MaterialTheme.colorScheme.background)
                 LandingScreen(navController = navController)
             }
 

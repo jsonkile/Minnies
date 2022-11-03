@@ -1,7 +1,7 @@
 package com.demo.minnies.shop.di
 
-import com.demo.minnies.shop.repos.ShopRepo
-import com.demo.minnies.shop.repos.ShopRepoImpl
+import com.demo.minnies.shop.data.repos.ShopRepo
+import com.demo.minnies.shop.data.repos.ShopRepoImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.components.SingletonComponent

@@ -15,7 +15,6 @@ dependencyResolutionManagement {
 rootProject.name = "Minnies"
 include(":app")
 include(":shared")
-include(":database")
 include(":notifications")
 include(":auth")
 include(":orders")

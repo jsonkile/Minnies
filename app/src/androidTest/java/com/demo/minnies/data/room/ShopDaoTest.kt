@@ -1,8 +1,8 @@
-package com.demo.minnies.database.room
+package com.demo.minnies.data.room
 
-import com.demo.minnies.database.room.daos.ShopDao
-import com.demo.minnies.database.room.models.Category
-import com.demo.minnies.database.room.models.ShopItem
+import com.demo.minnies.shop.data.local.daos.ShopDao
+import com.demo.minnies.shop.data.models.Category
+import com.demo.minnies.shop.data.models.ShopItem
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi

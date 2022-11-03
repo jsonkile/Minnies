@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-android")
 
+    id("com.google.dagger.hilt.android")
     kotlin("kapt")
 }
 
@@ -41,7 +42,9 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
+        val composeCompilerVersion: String by rootProject.extra
+
+        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 
     compileOptions {
@@ -60,21 +63,39 @@ android {
 dependencies {
     val composeVersion: String by rootProject.extra
     val navigationVersion: String by rootProject.extra
+    val hiltVersion: String by rootProject.extra
+    val roomVersion: String by rootProject.extra
+    val coroutinesVersion: String by rootProject.extra
+    val jUnitVersion: String by rootProject.extra
 
     implementation(project(":shared"))
-    implementation(project(":database"))
     implementation(project(":notifications"))
     implementation(project(":orders"))
     implementation(project(":auth"))
     implementation(project(":cart"))
     implementation(project(":shop"))
 
-    androidTestImplementation("junit:junit:4.13.2")
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+
+    //ui
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+
+    //room
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+
+    androidTestImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test:core:1.5.0-beta01")
+    androidTestImplementation("androidx.test:runner:1.4.0")
     androidTestImplementation("androidx.navigation:navigation-testing:$navigationVersion")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
     debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    androidTestImplementation("androidx.room:room-testing:$roomVersion")
     androidTestImplementation(kotlin("reflect"))
 }
 

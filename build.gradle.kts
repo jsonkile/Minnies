@@ -15,7 +15,8 @@ ext {
     extra["appVersionName"] = "1.0"
 
     extra["lifecycleVersion"] = "2.6.0-alpha02"
-    extra["composeVersion"] = "1.2.1"
+    extra["composeVersion"] = "1.3.0"
+    extra["composeCompilerVersion"] = "1.3.2"
     extra["navigationVersion"] = "2.5.2"
     extra["roomVersion"] = "2.4.3"
     extra["hiltVersion"] = "2.44"
@@ -23,6 +24,8 @@ ext {
 
     extra["javaVersion"] = JavaVersion.VERSION_11
     extra["jvmTargetVersion"] = "11"
+
+    extra["jUnitVersion"] = "4.13.2"
 }
 
 tasks.register("clean", Delete::class) {

@@ -17,7 +17,9 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
+        val composeCompilerVersion: String by rootProject.extra
+
+        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 }
 
@@ -26,6 +28,7 @@ dependencies {
     val composeVersion: String by rootProject.extra
     val navigationVersion: String by rootProject.extra
     val hiltVersion: String by rootProject.extra
+    val roomVersion: String by rootProject.extra
 
     //core
     api("androidx.core:core-ktx:1.9.0")
@@ -35,6 +38,10 @@ dependencies {
 
     api("androidx.navigation:navigation-compose:$navigationVersion")
 
+    //room
+    api("androidx.room:room-runtime:$roomVersion")
+    api("androidx.room:room-ktx:$roomVersion")
+
     //ui
     api("androidx.appcompat:appcompat:1.5.1")
     api("androidx.compose.material3:material3:1.1.0-alpha01")
@@ -43,7 +50,7 @@ dependencies {
     //lifecycle
     api("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     api("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion")
-    api("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
+    api("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
 
     //utils
     api("com.jakewharton.timber:timber:5.0.1")

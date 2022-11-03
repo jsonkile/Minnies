@@ -14,11 +14,12 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
+        val composeCompilerVersion: String by rootProject.extra
+
+        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 }
 
 dependencies {
     implementation(project(":shared"))
-    implementation(project(":database"))
 }
