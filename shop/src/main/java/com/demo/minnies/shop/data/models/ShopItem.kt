@@ -10,9 +10,11 @@ data class ShopItem(
     var name: String,
     var image: String,
     var description: String,
-    var sizes: List<Int>,
+    var sizes: List<Int> = emptyList(),
     var category: Category,
-    var price: Double
+    var price: Double,
+    var featured: Boolean = false,
+    var rating: Double = 0.0
 )
 
 enum class Category {

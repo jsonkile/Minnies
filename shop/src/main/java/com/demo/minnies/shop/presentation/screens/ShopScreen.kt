@@ -7,36 +7,49 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.demo.minnies.shared.ui.MinniesTheme
+import com.demo.minnies.shop.data.fakeShopItemsDataSet
 import com.demo.minnies.shop.data.models.Category
-import com.demo.minnies.shop.domain.usescases.FetchAndGroupShopItemsUseCase
 import com.demo.minnies.shop.presentation.models.ViewShopItem
-import com.demo.minnies.shop.util.forView
+import com.demo.minnies.shop.presentation.models.toView
+
+const val SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG = "SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG"
+const val SHOP_SCREEN_FEATURED_ITEMS_HEADING_TEST_TAG =
+    "SHOP_SCREEN_FEATURED_ITEMS_HEADING_TEST_TAG"
 
 @Composable
-fun ShopScreen(title: String, shopItems: Map<Category, List<ViewShopItem>>) {
+fun ShopScreen(
+    title: String,
+    shopItemsByCategory: Map<Category, List<ViewShopItem>>,
+    featuredItems: List<ViewShopItem>
+) {
 
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(scrollState), horizontalAlignment = Alignment.Start
+            .verticalScroll(scrollState)
+            .padding(bottom = 100.dp),
+        horizontalAlignment = Alignment.Start
     ) {
-        val tops = shopItems[Category.Top]
 
-        tops?.let {
-
+        //Featured items
+        if (featuredItems.isNotEmpty()) {
             Text(
-                text = Category.Top.publicName,
-                modifier = Modifier.padding(start = 22.dp, top = 40.dp, bottom = 20.dp),
+                text = "Featured",
+                modifier = Modifier
+                    .padding(start = 22.dp, top = 40.dp, bottom = 20.dp)
+                    .testTag(SHOP_SCREEN_FEATURED_ITEMS_HEADING_TEST_TAG),
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
                     color = Color.LightGray,
@@ -45,53 +58,73 @@ fun ShopScreen(title: String, shopItems: Map<Category, List<ViewShopItem>>) {
             )
 
             LazyRow(
-                contentPadding = PaddingValues(horizontal = 22.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                contentPadding = PaddingValues(horizontal = 17.dp),
+                horizontalArrangement = Arrangement.spacedBy(5.dp),
+                modifier = Modifier.testTag(SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG)
             ) {
-                items(items = tops) { top ->
-                    ShopItemCard(viewShopItem = top)
+                items(items = featuredItems) { shopItem ->
+                    ShopItemCard(viewShopItem = shopItem)
                 }
             }
-
         }
 
-        val kicks = shopItems[Category.Kicks]
+        Category.values().forEach { category ->
 
-        kicks?.let {
+            val categoryItems = shopItemsByCategory[category]
 
-            Text(
-                text = Category.Kicks.publicName,
-                modifier = Modifier.padding(start = 22.dp, top = 40.dp, bottom = 20.dp),
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    color = Color.LightGray,
-                    fontSize = 17.sp
+            categoryItems?.let { items ->
+
+                Text(
+                    text = category.publicName,
+                    modifier = Modifier.padding(start = 22.dp, top = 40.dp, bottom = 20.dp),
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        color = Color.LightGray,
+                        fontSize = 17.sp
+                    )
                 )
-            )
 
-            LazyRow(
-                contentPadding = PaddingValues(horizontal = 22.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                items(items = kicks) { top ->
-                    ShopItemCard(viewShopItem = top)
+                LazyRow(
+                    contentPadding = PaddingValues(horizontal = 17.dp),
+                    horizontalArrangement = Arrangement.spacedBy(5.dp)
+                ) {
+                    items(items = items) { shopItem ->
+                        ShopItemCard(viewShopItem = shopItem)
+                    }
                 }
+
             }
 
         }
+
     }
 
+}
+
+
+@Composable
+fun ShopScreenContainer(title: String, viewModel: ShopScreenViewModel) {
+    val shopItemsByCategory =
+        viewModel.shopItemsByCategories.collectAsState(initial = emptyMap()).value
+    val featuredItems = viewModel.featuredItems.collectAsState(initial = emptyList()).value
+
+    ShopScreen(
+        title = title,
+        shopItemsByCategory = shopItemsByCategory,
+        featuredItems = featuredItems
+    )
 }
 
 
 @Preview
 @Composable
 fun PreviewShopScreen() {
-    val mockList = FetchAndGroupShopItemsUseCase.mockList
-    val shopItems = mockList.map { item -> item.forView() }.groupBy {
-        it.category
-    }
+    val featuredItems = fakeShopItemsDataSet.filter { it.featured }.map { item -> item.toView() }
+    val itemsByCategories =
+        fakeShopItemsDataSet.map { item -> item.toView() }.groupBy {
+            it.category
+        }
     MinniesTheme {
-        ShopScreen(title = "Shop", shopItems)
+        ShopScreen(title = "Shop", itemsByCategories, featuredItems)
     }
 }

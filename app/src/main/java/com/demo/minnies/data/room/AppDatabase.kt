@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.demo.minnies.data.room.converters.CategoryConverter
 import com.demo.minnies.data.room.converters.IntListConverter
-import com.demo.minnies.shop.data.local.daos.ShopDao
+import com.demo.minnies.shop.data.daos.ShopDao
 import com.demo.minnies.shop.data.models.ShopItem
 
 @Database(version = 2, entities = [ShopItem::class], exportSchema = false)

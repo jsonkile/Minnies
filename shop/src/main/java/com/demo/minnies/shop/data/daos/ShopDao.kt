@@ -1,4 +1,4 @@
-package com.demo.minnies.shop.data.local.daos
+package com.demo.minnies.shop.data.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -19,4 +19,7 @@ interface ShopDao {
 
     @Query("select * from shop_items where category = :category")
     fun getItemsByCategory(category: Category): Flow<List<ShopItem>>
+
+    @Query("select * from shop_items where featured == 1")
+    fun getFeaturedItems(): Flow<List<ShopItem>>
 }

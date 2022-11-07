@@ -67,6 +67,9 @@ dependencies {
     val roomVersion: String by rootProject.extra
     val coroutinesVersion: String by rootProject.extra
     val jUnitVersion: String by rootProject.extra
+    val testRunnerVersion: String by rootProject.extra
+    val testCoreVersion: String by rootProject.extra
+    val accompanistSystemControllerVersion: String by rootProject.extra
 
     implementation(project(":shared"))
     implementation(project(":notifications"))
@@ -79,15 +82,15 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     //ui
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistSystemControllerVersion")
 
     //room
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
     androidTestImplementation("junit:junit:$jUnitVersion")
-    androidTestImplementation("androidx.test:core:1.5.0-beta01")
-    androidTestImplementation("androidx.test:runner:1.4.0")
+    androidTestImplementation("androidx.test:core:$testCoreVersion")
+    androidTestImplementation("androidx.test:runner:$testRunnerVersion")
     androidTestImplementation("androidx.navigation:navigation-testing:$navigationVersion")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")

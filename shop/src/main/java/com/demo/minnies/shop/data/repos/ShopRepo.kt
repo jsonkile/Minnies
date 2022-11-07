@@ -11,4 +11,6 @@ interface ShopRepo {
     fun getAllItems(): Flow<List<ShopItem>>
 
     fun getItemsByCategory(category: Category): Flow<List<ShopItem>>
+
+    fun getFeaturedItems(): Flow<List<ShopItem>>
 }

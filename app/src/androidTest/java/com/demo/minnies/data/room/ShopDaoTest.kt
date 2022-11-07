@@ -1,6 +1,6 @@
 package com.demo.minnies.data.room
 
-import com.demo.minnies.shop.data.local.daos.ShopDao
+import com.demo.minnies.shop.data.daos.ShopDao
 import com.demo.minnies.shop.data.models.Category
 import com.demo.minnies.shop.data.models.ShopItem
 import dagger.hilt.android.testing.HiltAndroidRule

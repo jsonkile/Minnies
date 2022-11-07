@@ -1,11 +1,11 @@
 package com.demo.minnies.shop.data.repos
 
-import com.demo.minnies.shop.data.local.daos.ShopDao
+import com.demo.minnies.shop.data.daos.ShopDao
 import com.demo.minnies.shop.data.models.Category
 import com.demo.minnies.shop.data.models.ShopItem
 import javax.inject.Inject
 
-class ShopRepoImpl @Inject constructor(
+class ShopRepoRoomImpl @Inject constructor(
     private val dao: ShopDao
 ) : ShopRepo {
 
@@ -14,4 +14,6 @@ class ShopRepoImpl @Inject constructor(
     override fun getAllItems() = dao.getAll()
 
     override fun getItemsByCategory(category: Category) = dao.getItemsByCategory(category)
+
+    override fun getFeaturedItems() = dao.getFeaturedItems()
 }

@@ -29,23 +29,37 @@ dependencies {
     val navigationVersion: String by rootProject.extra
     val hiltVersion: String by rootProject.extra
     val roomVersion: String by rootProject.extra
+    val coilVersion: String by rootProject.extra
+    val timberVersion: String by rootProject.extra
+    val jUnitVersion: String by rootProject.extra
+    val testRunnerVersion: String by rootProject.extra
+    val testCoreVersion: String by rootProject.extra
+    val constraintLayoutVersion: String by rootProject.extra
+    val androidXCoreVersion: String by rootProject.extra
+    val testExtJunitVersion: String by rootProject.extra
+    val appcompatVersion: String by rootProject.extra
+    val composeMaterialVersion: String by rootProject.extra
+    val composeMaterialIconsVersion: String by rootProject.extra
 
     //core
-    api("androidx.core:core-ktx:1.9.0")
+    api("androidx.core:core-ktx:$androidXCoreVersion")
     api("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
     api("androidx.compose.ui:ui-tooling-preview:$composeVersion")
-
-    api("androidx.navigation:navigation-compose:$navigationVersion")
 
     //room
     api("androidx.room:room-runtime:$roomVersion")
     api("androidx.room:room-ktx:$roomVersion")
 
     //ui
-    api("androidx.appcompat:appcompat:1.5.1")
-    api("androidx.compose.material3:material3:1.1.0-alpha01")
-    api("androidx.compose.material:material-icons-extended:1.3.0")
+    api("androidx.appcompat:appcompat:$appcompatVersion")
+    api("androidx.compose.material3:material3:$composeMaterialVersion")
+    api("androidx.compose.material:material-icons-extended:$composeMaterialIconsVersion")
+    api("io.coil-kt:coil:$coilVersion")
+    api("io.coil-kt:coil-compose:$coilVersion")
+    api("androidx.constraintlayout:constraintlayout-compose:$constraintLayoutVersion")
+    api("androidx.navigation:navigation-compose:$navigationVersion")
+
 
     //lifecycle
     api("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
@@ -53,15 +67,14 @@ dependencies {
     api("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
 
     //utils
-    api("com.jakewharton.timber:timber:5.0.1")
+    api("com.jakewharton.timber:timber:$timberVersion")
 
     //test
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test:core:1.5.0-beta01")
-    androidTestImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test:runner:1.4.0")
+    testImplementation("junit:junit:$jUnitVersion")
+    androidTestImplementation("junit:junit:$jUnitVersion")
+    androidTestImplementation("androidx.test.ext:junit:$testExtJunitVersion")
+    androidTestImplementation("androidx.test:core:$testCoreVersion")
+    androidTestImplementation("androidx.test:runner:$testRunnerVersion")
     androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
