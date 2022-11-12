@@ -25,7 +25,7 @@ android {
         versionCode = appVersionCode
         versionName = appVersionName
 
-        testInstrumentationRunner = "com.demo.minnies.shared.HiltTestRunner"
+        testInstrumentationRunner = "com.demo.minnies.HiltTestRunner"
     }
 
     buildTypes {
@@ -70,6 +70,7 @@ dependencies {
     val testRunnerVersion: String by rootProject.extra
     val testCoreVersion: String by rootProject.extra
     val accompanistSystemControllerVersion: String by rootProject.extra
+    val hiltNavigationComposeVersion: String by rootProject.extra
 
     implementation(project(":shared"))
     implementation(project(":notifications"))
@@ -96,9 +97,10 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
     debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
     androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    androidTestImplementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
     androidTestImplementation("androidx.room:room-testing:$roomVersion")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
     androidTestImplementation(kotlin("reflect"))
 }
 

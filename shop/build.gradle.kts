@@ -34,8 +34,8 @@ dependencies {
     val composeVersion: String by rootProject.extra
     val roomVersion: String by rootProject.extra
     val jUnitVersion: String by rootProject.extra
-    val hiltNavigationComposeVersion: String by rootProject.extra
     val testRunnerVersion: String by rootProject.extra
+    val hiltNavigationComposeVersion: String by rootProject.extra
 
     implementation(project(":shared"))
 
@@ -44,9 +44,6 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
 
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
-    implementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
-
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("junit:junit:$jUnitVersion")
@@ -57,6 +54,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
     debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
     debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    androidTestImplementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
 }
 

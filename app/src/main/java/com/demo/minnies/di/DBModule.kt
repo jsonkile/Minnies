@@ -21,4 +21,7 @@ object DBModule {
 
     @Provides
     fun provideShopDao(db: AppDatabase) = db.shopDao()
+
+    @Provides
+    fun providesUsersDao(db: AppDatabase) = db.usersDao()
 }

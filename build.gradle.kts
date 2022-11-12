@@ -4,6 +4,7 @@ plugins {
     id("com.android.library") version "7.3.0" apply false
     id("org.jetbrains.kotlin.android") version "1.7.20" apply false
     id("com.google.dagger.hilt.android") version "2.44" apply false
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.7.20" apply false
 }
 
 ext {
@@ -32,7 +33,10 @@ ext {
     extra["composeMaterialVersion"] = "1.1.0-alpha01"
     extra["composeMaterialIconsVersion"] = "1.3.0"
 
+    extra["kotlinSerializationVersion"] = "1.4.1"
+
     extra["roomVersion"] = "2.4.3"
+    extra["dataStoreVersion"] = "1.0.0"
 
     extra["jUnitVersion"] = "4.13.2"
     extra["testRunnerVersion"] = "1.4.0"

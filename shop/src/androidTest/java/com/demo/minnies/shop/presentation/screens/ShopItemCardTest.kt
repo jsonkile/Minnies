@@ -23,7 +23,8 @@ class ShopItemCardTest {
                     category = Category.Shorts,
                     image = "",
                     price = "",
-                    sizes = emptyList()
+                    sizes = emptyList(),
+                    id = 0
                 )
             )
         }
@@ -42,7 +43,8 @@ class ShopItemCardTest {
                     image = "",
                     price = "$0.10",
                     sizes = emptyList(),
-                    rating = 2.2
+                    rating = 2.2,
+                    id = 0
                 )
             )
         }
@@ -61,7 +63,8 @@ class ShopItemCardTest {
                     category = Category.Shorts,
                     image = "",
                     price = "",
-                    sizes = emptyList()
+                    sizes = emptyList(),
+                    id = 0
                 )
             )
         }
@@ -82,7 +85,8 @@ class ShopItemCardTest {
                     image = "",
                     price = "",
                     sizes = emptyList(),
-                    rating = 1.5
+                    rating = 1.5,
+                    id = 0
                 )
             )
         }

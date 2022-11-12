@@ -4,10 +4,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
+@HiltAndroidTest
 class NavigationKtTest {
 
     @get:Rule

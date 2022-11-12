@@ -6,7 +6,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import com.demo.minnies.shop.data.fakeShopItemsDataSet
-import com.demo.minnies.shop.util.forView
+import com.demo.minnies.shop.presentation.models.toView
 import org.junit.Rule
 import org.junit.Test
 
@@ -20,11 +20,11 @@ class ShopScreenKtTest {
 
         val featuredItems =
             fakeShopItemsDataSet.filter { it.featured }.map { item ->
-                item.forView().copy(image = "")
+                item.toView().copy(image = "")
             }
         val itemsByCategories =
             fakeShopItemsDataSet.map { item ->
-                item.forView().copy(image = "")
+                item.toView().copy(image = "")
             }.groupBy { it.category }
 
         composeTestRule.setContent {

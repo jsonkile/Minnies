@@ -6,11 +6,16 @@ plugins {
 android {
     namespace = "com.demo.minnies.notifications"
     val compileSdkVersion: Int by rootProject.extra
+    val minSdkVersion: Int by rootProject.extra
 
     compileSdk = compileSdkVersion
 
     buildFeatures {
         compose = true
+    }
+
+    defaultConfig {
+        minSdk = minSdkVersion
     }
 
     composeOptions {

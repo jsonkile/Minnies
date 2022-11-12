@@ -1,16 +1,24 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-
     id("com.google.dagger.hilt.android")
+    id("kotlinx-serialization")
+
     kotlin("kapt")
 }
 
 android {
     namespace = "com.demo.minnies.shared"
     val compileSdkVersion: Int by rootProject.extra
+    val minSdkVersion: Int by rootProject.extra
 
     compileSdk = compileSdkVersion
+
+    defaultConfig {
+        minSdk = minSdkVersion
+
+        testInstrumentationRunner = "com.demo.minnies.shared.HiltTestRunner"
+    }
 
     buildFeatures {
         compose = true
@@ -40,16 +48,26 @@ dependencies {
     val appcompatVersion: String by rootProject.extra
     val composeMaterialVersion: String by rootProject.extra
     val composeMaterialIconsVersion: String by rootProject.extra
+    val coroutinesVersion: String by rootProject.extra
+    val hiltNavigationComposeVersion: String by rootProject.extra
+    val dataStoreVersion: String by rootProject.extra
+    val kotlinSerializationVersion: String by rootProject.extra
 
     //core
     api("androidx.core:core-ktx:$androidXCoreVersion")
     api("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
     api("androidx.compose.ui:ui-tooling-preview:$composeVersion")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+
 
     //room
     api("androidx.room:room-runtime:$roomVersion")
     api("androidx.room:room-ktx:$roomVersion")
+
+    //datastore
+    api("androidx.datastore:datastore-preferences:$dataStoreVersion")
+    api("androidx.datastore:datastore:$dataStoreVersion")
 
     //ui
     api("androidx.appcompat:appcompat:$appcompatVersion")
@@ -59,6 +77,7 @@ dependencies {
     api("io.coil-kt:coil-compose:$coilVersion")
     api("androidx.constraintlayout:constraintlayout-compose:$constraintLayoutVersion")
     api("androidx.navigation:navigation-compose:$navigationVersion")
+    api("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
 
 
     //lifecycle
@@ -68,6 +87,7 @@ dependencies {
 
     //utils
     api("com.jakewharton.timber:timber:$timberVersion")
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
 
     //test
     testImplementation("junit:junit:$jUnitVersion")
@@ -76,6 +96,9 @@ dependencies {
     androidTestImplementation("androidx.test:core:$testCoreVersion")
     androidTestImplementation("androidx.test:runner:$testRunnerVersion")
     androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
+    testImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
 
 }

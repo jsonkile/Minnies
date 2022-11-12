@@ -22,4 +22,8 @@ object TestDBModule {
     @Singleton
     @Provides
     fun provideShopDao(db: AppDatabase) = db.shopDao()
+
+    @Singleton
+    @Provides
+    fun providesUsersDao(db: AppDatabase) = db.usersDao()
 }
