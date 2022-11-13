@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
-import com.demo.minnies.auth.data.models.PartialUser
-import com.demo.minnies.auth.data.models.User
-import com.demo.minnies.auth.utils.UserSerializer
+import com.demo.minnies.database.room.models.PartialUser
+import com.demo.minnies.database.room.models.UserSerializer
 import com.demo.minnies.shared.utils.PROTO_DATASTORE_FILE_NAME
 import dagger.Module
 import dagger.Provides

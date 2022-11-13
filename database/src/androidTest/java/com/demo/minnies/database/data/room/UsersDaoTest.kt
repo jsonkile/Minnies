@@ -1,8 +1,9 @@
-package com.demo.minnies.data.room
+package com.demo.minnies.database.data.room
 
-import com.demo.minnies.auth.data.daos.UsersDao
-import com.demo.minnies.auth.data.models.PartialUser
-import com.demo.minnies.auth.data.models.User
+import com.demo.minnies.database.room.AppDatabase
+import com.demo.minnies.database.room.daos.UsersDao
+import com.demo.minnies.database.room.models.PartialUser
+import com.demo.minnies.database.room.models.User
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -67,8 +68,10 @@ class UsersDaoTest {
     @Test
     fun addUser_SuccessfullyInsertsUser() {
         runTest {
-            dao.addUser(User("John", "kalu", "98", "hea¬"))
+            dao.addUser(User("John", "kalu", "Q", "hea¬"))
             Assert.assertNotNull(dao.getUserByEmail("kalu").first())
+            Assert.assertEquals("Q", dao.getUserByEmail("kalu").first()?.phoneNumber)
+            Assert.assertEquals("John", dao.getUserByEmail("kalu").first()?.fullName)
         }
     }
 

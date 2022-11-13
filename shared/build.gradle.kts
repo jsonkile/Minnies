@@ -50,8 +50,9 @@ dependencies {
     val composeMaterialIconsVersion: String by rootProject.extra
     val coroutinesVersion: String by rootProject.extra
     val hiltNavigationComposeVersion: String by rootProject.extra
-    val dataStoreVersion: String by rootProject.extra
     val kotlinSerializationVersion: String by rootProject.extra
+
+    api(project(":database"))
 
     //core
     api("androidx.core:core-ktx:$androidXCoreVersion")
@@ -65,9 +66,6 @@ dependencies {
     api("androidx.room:room-runtime:$roomVersion")
     api("androidx.room:room-ktx:$roomVersion")
 
-    //datastore
-    api("androidx.datastore:datastore-preferences:$dataStoreVersion")
-    api("androidx.datastore:datastore:$dataStoreVersion")
 
     //ui
     api("androidx.appcompat:appcompat:$appcompatVersion")

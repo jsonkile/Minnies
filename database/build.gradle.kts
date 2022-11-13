@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("kotlinx-serialization")
 
     kotlin("kapt")
 }
@@ -21,7 +22,11 @@ android {
 dependencies {
     val roomVersion: String by rootProject.extra
     val hiltVersion: String by rootProject.extra
+    val jUnitVersion: String by rootProject.extra
+    val testRunnerVersion: String by rootProject.extra
     val coroutinesVersion: String by rootProject.extra
+    val dataStoreVersion: String by rootProject.extra
+    val kotlinSerializationVersion: String by rootProject.extra
 
     api("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
@@ -32,9 +37,15 @@ dependencies {
     api("androidx.room:room-ktx:$roomVersion")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
 
-    androidTestImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test:runner:1.4.0")
+    //datastore
+    api("androidx.datastore:datastore-preferences:$dataStoreVersion")
+    api("androidx.datastore:datastore:$dataStoreVersion")
+
+    testImplementation("junit:junit:$jUnitVersion")
+    androidTestImplementation("junit:junit:$jUnitVersion")
+    androidTestImplementation("androidx.test:runner:$testRunnerVersion")
     androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")

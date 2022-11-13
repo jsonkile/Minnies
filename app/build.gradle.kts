@@ -78,6 +78,7 @@ dependencies {
     implementation(project(":auth"))
     implementation(project(":cart"))
     implementation(project(":shop"))
+    implementation(project(":database"))
 
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")

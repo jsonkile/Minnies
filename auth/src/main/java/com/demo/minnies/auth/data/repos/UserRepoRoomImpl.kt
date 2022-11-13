@@ -1,8 +1,8 @@
 package com.demo.minnies.auth.data.repos
 
-import com.demo.minnies.auth.data.daos.UsersDao
-import com.demo.minnies.auth.data.models.PartialUser
-import com.demo.minnies.auth.data.models.User
+import com.demo.minnies.database.room.daos.UsersDao
+import com.demo.minnies.database.room.models.PartialUser
+import com.demo.minnies.database.room.models.User
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -11,6 +11,8 @@ class UserRepoRoomImpl @Inject constructor(
 ) : UserRepo {
 
     override fun getUser(emailAddress: String) = dao.getUserByEmail(emailAddress)
+
+    override fun getUser(id: Long): Flow<PartialUser?> = dao.getUserById(id)
 
     override fun getUser(emailAddress: String, password: String): Flow<PartialUser?> =
         dao.getUserByEmailAndPassword(emailAddress, password)

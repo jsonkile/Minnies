@@ -1,12 +1,41 @@
-package com.demo.minnies.auth.utils
+package com.demo.minnies.database.room.models
 
 import androidx.datastore.core.Serializer
-import com.demo.minnies.auth.data.models.PartialUser
-import com.demo.minnies.auth.data.models.User
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import java.io.InputStream
 import java.io.OutputStream
+
+@Entity(tableName = "users")
+data class User(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0L,
+    @ColumnInfo(name = "full_name")
+    val fullName: String,
+    @ColumnInfo(name = "email_address")
+    val emailAddress: String,
+    @ColumnInfo(name = "phone_number")
+    val phoneNumber: String,
+    val password: String //AES Encrypted
+)
+
+/**
+ * Partial User Entity
+ */
+@kotlinx.serialization.Serializable
+data class PartialUser(
+    val id: Long = 0,
+    @ColumnInfo(name = "full_name")
+    val fullName: String,
+    @ColumnInfo(name = "email_address")
+    val emailAddress: String,
+    @ColumnInfo(name = "phone_number")
+    val phoneNumber: String
+)
+
 
 object UserSerializer : Serializer<PartialUser?> {
 

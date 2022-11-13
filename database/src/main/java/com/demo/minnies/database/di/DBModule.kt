@@ -17,13 +17,12 @@ object DBModule {
     @Singleton
     @Provides
     fun provideRoomDatabase(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.APP_DB_NAME).build()
-
-    @Singleton
-    @Provides
-    fun providesTestRoomDatabase(@ApplicationContext context: Context) =
-        Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
+        Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.APP_DB_NAME)
+            .fallbackToDestructiveMigration().build()
 
     @Provides
     fun provideShopDao(db: AppDatabase) = db.shopDao()
+
+    @Provides
+    fun providesUsersDao(db: AppDatabase) = db.usersDao()
 }

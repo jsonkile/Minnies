@@ -1,8 +1,7 @@
 package com.demo.minnies.auth.data.repos
 
 import androidx.datastore.core.DataStore
-import com.demo.minnies.auth.data.models.PartialUser
-import com.demo.minnies.auth.data.models.User
+import com.demo.minnies.database.room.models.PartialUser
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -14,7 +13,6 @@ class CacheRepoDataStoreImpl @Inject constructor(private val dataStore: DataStor
     }
 
     override fun getLoggedInUser(): Flow<PartialUser?> = dataStore.data
-
 
     override suspend fun clear() {
         dataStore.updateData { null }

@@ -29,7 +29,7 @@ class AuthRepoRoomImplTest {
     }
 
     @Test
-    fun login_CorrectlyLogsUserInAndDataStoreReturnsUser() = runTest {
+    fun loginAndRegister_CorrectlyLogsUserInAndRegistersUser() = runTest {
         authRepoRoomImpl.register(
             emailAddress = "A",
             password = "B",
@@ -52,5 +52,4 @@ class AuthRepoRoomImplTest {
             authRepoRoomImpl.login(emailAddress = "A", password = "B").first()?.phoneNumber
         )
     }
-
 }

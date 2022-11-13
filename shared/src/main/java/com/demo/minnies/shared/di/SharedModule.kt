@@ -19,4 +19,5 @@ abstract class SharedModule {
     @Binds
     abstract fun providesKeysPreferencesRepository(keysPreferencesRepositoryDataStoreImpl: KeysPreferencesRepositoryDataStoreImpl): KeysPreferencesRepository
 
+
 }

@@ -1,7 +1,6 @@
 package com.demo.minnies.auth.data.repos
 
-import com.demo.minnies.auth.data.models.PartialUser
-import com.demo.minnies.auth.data.models.User
+import com.demo.minnies.database.room.models.PartialUser
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.*

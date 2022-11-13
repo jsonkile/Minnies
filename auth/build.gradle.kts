@@ -33,15 +33,10 @@ dependencies {
     val hiltVersion: String by rootProject.extra
     val coroutinesVersion: String by rootProject.extra
     val composeVersion: String by rootProject.extra
-    val roomVersion: String by rootProject.extra
     val jUnitVersion: String by rootProject.extra
     val testRunnerVersion: String by rootProject.extra
 
     implementation(project(":shared"))
-
-    //room
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
 
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 

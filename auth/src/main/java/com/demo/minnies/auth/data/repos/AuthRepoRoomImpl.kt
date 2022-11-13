@@ -1,8 +1,12 @@
 package com.demo.minnies.auth.data.repos
 
-import com.demo.minnies.auth.data.models.PartialUser
-import com.demo.minnies.auth.data.models.User
+import com.demo.minnies.database.room.models.PartialUser
+import com.demo.minnies.database.room.models.User
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class AuthRepoRoomImpl @Inject constructor(private val userRepo: UserRepo) : AuthRepo {
@@ -15,8 +19,7 @@ class AuthRepoRoomImpl @Inject constructor(private val userRepo: UserRepo) : Aut
         password: String,
         fullName: String,
         phoneNumber: String
-    ): Flow<PartialUser?> {
-
+    ): Flow<PartialUser?> = userRepo.getUser(
         userRepo.addUser(
             User(
                 emailAddress = emailAddress,
@@ -25,7 +28,5 @@ class AuthRepoRoomImpl @Inject constructor(private val userRepo: UserRepo) : Aut
                 phoneNumber = phoneNumber
             )
         )
-
-        return userRepo.getUser(emailAddress)
-    }
+    )
 }
