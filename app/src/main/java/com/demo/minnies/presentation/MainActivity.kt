@@ -1,4 +1,4 @@
-package com.demo.minnies.presentation.activities
+package com.demo.minnies.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -35,9 +36,20 @@ class MainActivity : ComponentActivity() {
 
             val navController = rememberNavController()
             val systemUiController = rememberSystemUiController()
+
+            val mainActivityViewModel = hiltViewModel<MainActivityViewModel>()
+
+            val loggedInUser =
+                mainActivityViewModel.loggedInUser.collectAsState(initial = null).value
+
             MinniesTheme {
-                systemUiController.setStatusBarColor(color = MaterialTheme.colorScheme.background)
-                LandingScreen(navController = navController)
+                systemUiController.setStatusBarColor(color = if (loggedInUser == null) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.background)
+                LandingScreen(
+                    navController = navController,
+                    loggedInUser = loggedInUser,
+                    navHost = { modifier, navController ->
+                        MinniesNavHost(navController = navController, modifier = modifier)
+                    })
             }
 
         }

@@ -39,11 +39,9 @@ fun ShopItemCard(viewShopItem: ViewShopItem) {
     ConstraintLayout(modifier = Modifier
         .width(130.dp)
         .wrapContentHeight()
-        .clip(RoundedCornerShape(18.dp))
         .clickable {
 
         }
-        .padding(top = 5.dp, start = 5.dp, end = 5.dp, bottom = 10.dp)
         .testTag(SHOP_ITEM_CARD_TEST_TAG)) {
 
         val (image, title, price, rating, ratingIcon) = createRefs()

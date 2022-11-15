@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.demo.minnies.shared.ui.MinniesTheme
+import com.demo.minnies.shared.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shop.data.fakeShopItemsDataSet
 import com.demo.minnies.shop.data.models.Category
 import com.demo.minnies.shop.presentation.models.ViewShopItem
@@ -48,7 +49,7 @@ fun ShopScreen(
             Text(
                 text = "Featured",
                 modifier = Modifier
-                    .padding(start = 22.dp, top = 40.dp, bottom = 20.dp)
+                    .padding(start = PAGE_HORIZONTAL_MARGIN, top = 40.dp, bottom = 20.dp)
                     .testTag(SHOP_SCREEN_FEATURED_ITEMS_HEADING_TEST_TAG),
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
@@ -58,8 +59,8 @@ fun ShopScreen(
             )
 
             LazyRow(
-                contentPadding = PaddingValues(horizontal = 17.dp),
-                horizontalArrangement = Arrangement.spacedBy(5.dp),
+                contentPadding = PaddingValues(horizontal = PAGE_HORIZONTAL_MARGIN),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier.testTag(SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG)
             ) {
                 items(items = featuredItems) { shopItem ->
@@ -76,7 +77,11 @@ fun ShopScreen(
 
                 Text(
                     text = category.publicName,
-                    modifier = Modifier.padding(start = 22.dp, top = 40.dp, bottom = 20.dp),
+                    modifier = Modifier.padding(
+                        start = PAGE_HORIZONTAL_MARGIN,
+                        top = 40.dp,
+                        bottom = 20.dp
+                    ),
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
                         color = Color.LightGray,
@@ -85,8 +90,8 @@ fun ShopScreen(
                 )
 
                 LazyRow(
-                    contentPadding = PaddingValues(horizontal = 17.dp),
-                    horizontalArrangement = Arrangement.spacedBy(5.dp)
+                    contentPadding = PaddingValues(horizontal = PAGE_HORIZONTAL_MARGIN),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     items(items = items) { shopItem ->
                         ShopItemCard(viewShopItem = shopItem)
