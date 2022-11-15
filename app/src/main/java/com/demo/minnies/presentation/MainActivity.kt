@@ -21,7 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import com.demo.minnies.presentation.MinniesNavHost
 import com.demo.minnies.presentation.Screen
 import com.demo.minnies.presentation.screens.LandingScreen
-import com.demo.minnies.shared.ui.MinniesTheme
+import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shop.presentation.screens.ShopScreenViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint

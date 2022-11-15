@@ -1,4 +1,4 @@
-package com.demo.minnies.shared.ui
+package com.demo.minnies.shared.presentation.ui
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

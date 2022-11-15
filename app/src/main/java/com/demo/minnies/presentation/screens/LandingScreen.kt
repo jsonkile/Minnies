@@ -14,7 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.demo.minnies.auth.presentation.components.SignInPrompt
 import com.demo.minnies.database.room.models.PartialUser
 import com.demo.minnies.presentation.Screen
-import com.demo.minnies.shared.ui.MinniesTheme
+import com.demo.minnies.shared.presentation.ui.MinniesTheme
 
 const val NAVIGATION_BAR_TEST_TAG = "NAVIGATION_BAR_TEST_TAG"
 

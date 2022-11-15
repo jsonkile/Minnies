@@ -12,8 +12,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.demo.minnies.shared.BuildConfig
-import com.demo.minnies.shared.ui.MinniesTheme
-import com.demo.minnies.shared.ui.PAGE_HORIZONTAL_MARGIN
+import com.demo.minnies.shared.presentation.ui.MinniesTheme
+import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 
 const val SIGN_IN_PROMPT_TEST_TAG = "SIGN_IN_PROMPT_TEST_TAG"
 const val SIGN_IN_PROMPT_CREATE_ACCOUNT_BUTTON_TAG = "SIGN_IN_PROMPT_CREATE_ACCOUNT_BUTTON_TAG"

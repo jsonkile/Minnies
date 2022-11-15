@@ -81,6 +81,9 @@ dependencies {
     api("androidx.navigation:navigation-compose:$navigationVersion")
     api("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
 
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
+    debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
+
 
     //lifecycle
     api("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")

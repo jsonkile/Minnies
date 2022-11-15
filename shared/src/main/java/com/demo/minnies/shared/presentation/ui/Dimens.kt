@@ -1,4 +1,4 @@
-package com.demo.minnies.shared.ui
+package com.demo.minnies.shared.presentation.ui
 
 import androidx.compose.ui.unit.dp
 

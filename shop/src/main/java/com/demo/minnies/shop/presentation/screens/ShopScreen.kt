@@ -17,8 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.demo.minnies.shared.ui.MinniesTheme
-import com.demo.minnies.shared.ui.PAGE_HORIZONTAL_MARGIN
+import com.demo.minnies.shared.presentation.ui.MinniesTheme
+import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shop.data.fakeShopItemsDataSet
 import com.demo.minnies.shop.data.models.Category
 import com.demo.minnies.shop.presentation.models.ViewShopItem
