@@ -3,17 +3,13 @@ package com.demo.minnies.database.data.room
 import com.demo.minnies.database.room.AppDatabase
 import com.demo.minnies.database.room.daos.ShopDao
 import com.demo.minnies.database.room.models.Category
-import com.demo.minnies.database.room.models.ShopItem
+import com.demo.minnies.database.room.models.Product
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import org.junit.After
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -53,7 +49,7 @@ class ShopDaoTest {
             Assert.assertEquals(
                 1L,
                 dao.insert(
-                    ShopItem(
+                    Product(
                         name = "Test Item", category = Category.Shorts, image = "",
                         sizes = listOf(0), description = "", price = 4.0
                     )
@@ -63,7 +59,7 @@ class ShopDaoTest {
             Assert.assertEquals(
                 2L,
                 dao.insert(
-                    ShopItem(
+                    Product(
                         name = "Test Item", category = Category.Shorts, image = "",
                         sizes = listOf(0), description = "", price = 4.0
                     )
@@ -76,14 +72,14 @@ class ShopDaoTest {
     fun getAll_ReturnsItems_WhenInserted() {
         runTest {
             dao.insert(
-                ShopItem(
+                Product(
                     name = "Test Item", category = Category.Shorts, image = "",
                     sizes = listOf(0), description = "", price = 4.0
                 )
             )
 
             dao.insert(
-                ShopItem(
+                Product(
                     name = "Test Item", category = Category.Shorts, image = "",
                     sizes = listOf(0), description = "", price = 4.0
                 )
@@ -97,21 +93,21 @@ class ShopDaoTest {
     fun getByCategory_ReturnsCorrectItems_WhenCategoryIsSpecified() {
         runTest {
             dao.insert(
-                ShopItem(
+                Product(
                     name = "Test Item", category = Category.Shorts, image = "",
                     sizes = listOf(0), description = "", price = 4.0
                 )
             )
 
             dao.insert(
-                ShopItem(
+                Product(
                     name = "Test Item", category = Category.Shorts, image = "",
                     sizes = listOf(0), description = "", price = 4.0
                 )
             )
 
             dao.insert(
-                ShopItem(
+                Product(
                     name = "Test Item", category = Category.Top, image = "",
                     sizes = listOf(0), description = "", price = 4.0
                 )
@@ -119,5 +115,25 @@ class ShopDaoTest {
 
             Assert.assertEquals(1, dao.getItemsByCategory(Category.Top).first().size)
         }
+    }
+
+    @Test
+    fun getProduct_ReturnsCorrectProduct() = runTest {
+        dao.insert(
+            Product(
+                name = "Test Item 1", category = Category.Shorts, image = "",
+                sizes = listOf(0), description = "", price = 4.0
+            )
+        )
+
+        dao.insert(
+            Product(
+                name = "Test Item 2", category = Category.Shorts, image = "",
+                sizes = listOf(0), description = "", price = 4.0
+            )
+        )
+
+        Assert.assertEquals("Test Item 2", dao.getProduct(2).first()?.name)
+        Assert.assertEquals("Test Item 1", dao.getProduct(1).first()?.name)
     }
 }

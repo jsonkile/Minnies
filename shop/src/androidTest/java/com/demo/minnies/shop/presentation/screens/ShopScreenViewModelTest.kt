@@ -39,7 +39,7 @@ class ShopScreenViewModelTest {
 
     @Test
     fun checkShopItemsByCategory_ReturnsData() = runTest {
-        val items = viewModel.shopItemsByCategories.first()
+        val items = viewModel.allItems.first()
         assertEquals(items.isNotEmpty(), true)
     }
 

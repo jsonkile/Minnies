@@ -73,6 +73,7 @@ dependencies {
 
     //ui
     api("androidx.appcompat:appcompat:$appcompatVersion")
+    api("androidx.compose.material:material:$composeVersion")
     api("androidx.compose.material3:material3:$composeMaterialVersion")
     api("androidx.compose.material:material-icons-extended:$composeMaterialIconsVersion")
     api("io.coil-kt:coil:$coilVersion")
@@ -101,7 +102,6 @@ dependencies {
     androidTestImplementation("androidx.test:core:$testCoreVersion")
     androidTestImplementation("androidx.test:runner:$testRunnerVersion")
     androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
-    testImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")

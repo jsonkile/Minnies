@@ -1,29 +1,33 @@
 package com.demo.minnies.shop.data.repos
 
-import com.demo.minnies.shop.data.fakeShopItemsDataSet
-import com.demo.minnies.shop.data.models.Category
-import com.demo.minnies.shop.data.models.ShopItem
+import com.demo.minnies.database.room.models.Category
+import com.demo.minnies.database.room.models.Product
+import com.demo.minnies.shop.data.fakeProductsDataSets
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class ShopRepoMockImpl @Inject constructor() : ShopRepo {
 
-    private val items = fakeShopItemsDataSet.toMutableList()
+    private val items = fakeProductsDataSets.toMutableList()
     private val itemsAsFlow = MutableStateFlow(items.toList())
 
-    override suspend fun addItem(shopItem: ShopItem): Long {
-        items.add(shopItem)
+    override suspend fun addItem(product: Product): Long {
+        items.add(product)
         itemsAsFlow.update { items }
-        return items.indexOf(shopItem).toLong()
+        return items.indexOf(product).toLong()
     }
 
-    override fun getAllItems(): Flow<List<ShopItem>> = itemsAsFlow
+    override fun getAllItems(): Flow<List<Product>> = itemsAsFlow
 
-    override fun getItemsByCategory(category: Category): Flow<List<ShopItem>> {
+    override fun getItemsByCategory(category: Category): Flow<List<Product>> {
         return itemsAsFlow.map { list -> list.filter { item -> item.category == category } }
     }
 
-    override fun getFeaturedItems(): Flow<List<ShopItem>> {
+    override fun getFeaturedItems(): Flow<List<Product>> {
         return itemsAsFlow.map { list -> list.filter { item -> item.featured } }
+    }
+
+    override fun getProductById(id: Int): Flow<Product?> {
+        return itemsAsFlow.map { it.find { product -> product.id == id } }
     }
 }

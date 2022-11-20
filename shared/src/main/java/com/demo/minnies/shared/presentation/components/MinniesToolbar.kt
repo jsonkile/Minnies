@@ -2,9 +2,11 @@ package com.demo.minnies.shared.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -24,7 +26,7 @@ import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 @Composable
 fun MinniesToolbar(
     toolBarTitle: String,
-    navigationButtonIcon: ImageVector,
+    navigationButtonIcon: ImageVector = Icons.Default.ArrowBack,
     navigationButtonAction: () -> Unit
 ) {
     Surface(
@@ -46,13 +48,12 @@ fun MinniesToolbar(
             Image(
                 imageVector = navigationButtonIcon,
                 contentDescription = "back button",
-                colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onSecondary),
+                colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground),
                 modifier = Modifier
-                    .background(
-                        shape = CircleShape,
-                        color = MaterialTheme.colorScheme.secondary
-                    )
                     .size(27.dp)
+                    .clickable {
+                        navigationButtonAction()
+                    }
             )
 
             Text(
@@ -77,7 +78,7 @@ fun PreviewMinniesToolbar() {
     MinniesTheme {
         MinniesToolbar(
             toolBarTitle = "Favourites",
-            navigationButtonIcon = Icons.Default.ChevronLeft,
+            navigationButtonIcon = Icons.Default.ArrowBack,
             navigationButtonAction = {})
     }
 }

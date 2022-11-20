@@ -7,8 +7,8 @@ import androidx.navigation.compose.navigation
 import com.demo.minnies.orders.presentation.screens.MyOrdersScreen
 
 fun NavGraphBuilder.ordersGraph(navController: NavController) {
-    navigation(startDestination = "my-orders", route = "orders") {
-        composable("my-orders") {
+    navigation(startDestination = "orders-home", route = "orders") {
+        composable("orders-home") {
             MyOrdersScreen(title = "Orders")
         }
     }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,11 +18,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
-import com.demo.minnies.shop.data.fakeShopItemsDataSet
+import com.demo.minnies.shop.data.fakeProductsDataSets
 import com.demo.minnies.shop.data.models.Category
-import com.demo.minnies.shop.presentation.models.ViewShopItem
+import com.demo.minnies.shop.presentation.models.ViewProduct
 import com.demo.minnies.shop.presentation.models.toView
 
 const val SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG = "SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG"
@@ -29,13 +31,34 @@ const val SHOP_SCREEN_FEATURED_ITEMS_HEADING_TEST_TAG =
     "SHOP_SCREEN_FEATURED_ITEMS_HEADING_TEST_TAG"
 
 @Composable
+fun Shop(
+    title: String,
+    viewModel: ShopScreenViewModel,
+    navigateToProduct: (Int) -> Unit
+) {
+
+    val featuredProducts = viewModel.featuredItems.collectAsState(initial = emptyList()).value
+
+    val allProducts = viewModel.allItems.collectAsState(initial = emptyMap()).value
+
+    ShopScreen(
+        title = title,
+        featuredItems = featuredProducts,
+        allItems = allProducts,
+        navigateToProduct
+    )
+}
+
+@Composable
 fun ShopScreen(
     title: String,
-    shopItemsByCategory: Map<Category, List<ViewShopItem>>,
-    featuredItems: List<ViewShopItem>
+    featuredItems: List<ViewProduct>,
+    allItems: Map<Category, List<ViewProduct>>,
+    navigateToProduct: (Int) -> Unit
 ) {
 
     val scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -44,8 +67,10 @@ fun ShopScreen(
         horizontalAlignment = Alignment.Start
     ) {
 
-        //Featured items
-        if (featuredItems.isNotEmpty()) {
+        //show featured items sections if not empty
+        val showFeaturedSection = remember(featuredItems) { featuredItems.isNotEmpty() }
+
+        if (showFeaturedSection) {
             Text(
                 text = "Featured",
                 modifier = Modifier
@@ -63,18 +88,18 @@ fun ShopScreen(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier.testTag(SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG)
             ) {
-                items(items = featuredItems) { shopItem ->
-                    ShopItemCard(viewShopItem = shopItem)
+                items(items = featuredItems, key = { it.id }) { shopItem ->
+                    ProductCard(viewProduct = shopItem) { item ->
+                        navigateToProduct(item.id)
+                    }
                 }
             }
         }
 
         Category.values().forEach { category ->
+            val products = allItems[category].orEmpty()
 
-            val categoryItems = shopItemsByCategory[category]
-
-            categoryItems?.let { items ->
-
+            if (products.isNotEmpty()) {
                 Text(
                     text = category.publicName,
                     modifier = Modifier.padding(
@@ -93,43 +118,25 @@ fun ShopScreen(
                     contentPadding = PaddingValues(horizontal = PAGE_HORIZONTAL_MARGIN),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    items(items = items) { shopItem ->
-                        ShopItemCard(viewShopItem = shopItem)
+                    items(items = products, key = { it.id }) { shopItem ->
+                        ProductCard(viewProduct = shopItem) { item ->
+                            navigateToProduct(item.id)
+                        }
                     }
                 }
-
             }
-
         }
-
     }
 
 }
 
-
-@Composable
-fun ShopScreenContainer(title: String, viewModel: ShopScreenViewModel) {
-    val shopItemsByCategory =
-        viewModel.shopItemsByCategories.collectAsState(initial = emptyMap()).value
-    val featuredItems = viewModel.featuredItems.collectAsState(initial = emptyList()).value
-
-    ShopScreen(
-        title = title,
-        shopItemsByCategory = shopItemsByCategory,
-        featuredItems = featuredItems
-    )
-}
-
-
 @Preview
 @Composable
 fun PreviewShopScreen() {
-    val featuredItems = fakeShopItemsDataSet.filter { it.featured }.map { item -> item.toView() }
+    val featuredItems = fakeProductsDataSets.filter { it.featured }.map { item -> item.toView() }
     val itemsByCategories =
-        fakeShopItemsDataSet.map { item -> item.toView() }.groupBy {
-            it.category
-        }
+        fakeProductsDataSets.map { item -> item.toView() }.groupBy { it.category }
     MinniesTheme {
-        ShopScreen(title = "Shop", itemsByCategories, featuredItems)
+        ShopScreen(title = "Shop", featuredItems, itemsByCategories) {}
     }
 }

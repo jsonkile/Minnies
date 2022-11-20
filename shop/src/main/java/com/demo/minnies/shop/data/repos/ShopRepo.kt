@@ -1,16 +1,18 @@
 package com.demo.minnies.shop.data.repos
 
-import com.demo.minnies.shop.data.models.Category
-import com.demo.minnies.shop.data.models.ShopItem
+import com.demo.minnies.database.room.models.Category
+import com.demo.minnies.database.room.models.Product
 import kotlinx.coroutines.flow.Flow
 
 interface ShopRepo {
 
-    suspend fun addItem(shopItem: ShopItem): Long
+    suspend fun addItem(product: Product): Long
 
-    fun getAllItems(): Flow<List<ShopItem>>
+    fun getAllItems(): Flow<List<Product>>
 
-    fun getItemsByCategory(category: Category): Flow<List<ShopItem>>
+    fun getItemsByCategory(category: Category): Flow<List<Product>>
 
-    fun getFeaturedItems(): Flow<List<ShopItem>>
+    fun getFeaturedItems(): Flow<List<Product>>
+
+    fun getProductById(id: Int): Flow<Product?>
 }

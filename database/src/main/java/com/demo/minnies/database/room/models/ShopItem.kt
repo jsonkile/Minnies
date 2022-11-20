@@ -3,16 +3,18 @@ package com.demo.minnies.database.room.models
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "shop_items")
-data class ShopItem(
+@Entity(tableName = "products")
+data class Product(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var name: String,
     var image: String,
     var description: String,
-    var sizes: List<Int>,
+    var sizes: List<Int> = emptyList(),
     var category: Category,
-    var price: Double
+    var price: Double,
+    var featured: Boolean = false,
+    var rating: Double = 0.0
 )
 
 enum class Category {

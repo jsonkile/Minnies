@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -27,20 +28,20 @@ import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.demo.minnies.shop.data.models.Category
-import com.demo.minnies.shop.presentation.models.ViewShopItem
+import com.demo.minnies.shop.presentation.models.ViewProduct
 
 const val SHOP_ITEM_CARD_TEST_TAG = "SHOP_ITEM_CARD_TEST_TAG"
 const val SHOP_ITEM_RATING_TEST_TAG = "SHOP_ITEM_RATING_TEST_TAG"
 const val SHOP_ITEM_RATING_ICON_TEST_TAG = "SHOP_ITEM_RATING_ICON_TEST_TAG"
 
 @Composable
-fun ShopItemCard(viewShopItem: ViewShopItem) {
+fun ProductCard(viewProduct: ViewProduct, clickAction: ((ViewProduct) -> Unit)) {
 
     ConstraintLayout(modifier = Modifier
         .width(130.dp)
         .wrapContentHeight()
         .clickable {
-
+            clickAction(viewProduct)
         }
         .testTag(SHOP_ITEM_CARD_TEST_TAG)) {
 
@@ -48,7 +49,7 @@ fun ShopItemCard(viewShopItem: ViewShopItem) {
 
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(viewShopItem.image)
+                .data(viewProduct.image)
                 .crossfade(true)
                 .build(),
             contentDescription = "product image",
@@ -65,7 +66,7 @@ fun ShopItemCard(viewShopItem: ViewShopItem) {
         )
 
         Text(
-            text = viewShopItem.name,
+            text = viewProduct.name,
             maxLines = 1,
             style = TextStyle(
                 fontWeight = FontWeight.Normal,
@@ -85,7 +86,7 @@ fun ShopItemCard(viewShopItem: ViewShopItem) {
         )
 
         Text(
-            text = viewShopItem.price, maxLines = 1,
+            text = viewProduct.price, maxLines = 1,
             style = TextStyle(
                 fontWeight = FontWeight.Normal,
                 fontSize = 13.sp,
@@ -101,10 +102,12 @@ fun ShopItemCard(viewShopItem: ViewShopItem) {
                 }
         )
 
-        if (viewShopItem.rating in 1.0..5.0) {
+        val showRating = remember { viewProduct.rating in 1.0..5.0 }
+
+        if (showRating) {
 
             Text(
-                text = viewShopItem.rating.toString(),
+                text = viewProduct.rating.toString(),
                 style = TextStyle(
                     fontWeight = FontWeight.Normal,
                     fontSize = 11.sp,
@@ -137,11 +140,12 @@ fun ShopItemCard(viewShopItem: ViewShopItem) {
     }
 }
 
+
 @Preview
 @Composable
-fun PreviewShopItemCard() {
-    ShopItemCard(
-        viewShopItem = ViewShopItem(
+fun ProductCard() {
+    ProductCard(
+        viewProduct = ViewProduct(
             0,
             "Balanciaga Boomers",
             "Made in Taiwan",
@@ -152,5 +156,5 @@ fun PreviewShopItemCard() {
             false,
             4.5
         )
-    )
+    ) {}
 }

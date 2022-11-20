@@ -1,6 +1,7 @@
 package com.demo.minnies.presentation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -25,6 +26,7 @@ import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shop.presentation.screens.ShopScreenViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -44,6 +46,7 @@ class MainActivity : ComponentActivity() {
 
             MinniesTheme {
                 systemUiController.setStatusBarColor(color = if (loggedInUser == null) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.background)
+
                 LandingScreen(
                     navController = navController,
                     loggedInUser = loggedInUser,

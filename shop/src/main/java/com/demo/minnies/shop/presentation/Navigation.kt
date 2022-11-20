@@ -1,28 +1,33 @@
 package com.demo.minnies.shop.presentation
 
-import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.demo.minnies.shop.presentation.screens.ShopScreen
+import androidx.navigation.navArgument
+import com.demo.minnies.shop.presentation.screens.Shop
+import com.demo.minnies.shop.presentation.screens.Product
 import com.demo.minnies.shop.presentation.screens.ShopScreenViewModel
 
 fun NavGraphBuilder.shopGraph(navController: NavController) {
-    navigation(startDestination = "shop", route = "home") {
-        composable("shop") {
-            val viewModel: ShopScreenViewModel = hiltViewModel()
+    navigation(startDestination = "shop-home", route = "shop") {
+        composable("shop-home") {
 
-            val shopItemsByCategory =
-                viewModel.shopItemsByCategories.collectAsState(initial = emptyMap()).value
-            val featuredItems = viewModel.featuredItems.collectAsState(initial = emptyList()).value
+            val shopScreenViewModel = hiltViewModel<ShopScreenViewModel>()
+            Shop(title = "Shop", viewModel = shopScreenViewModel) {
+                navController.navigate("product/$it")
+            }
+        }
 
-            ShopScreen(
-                title = "Shop",
-                featuredItems = featuredItems,
-                shopItemsByCategory = shopItemsByCategory
-            )
+        composable(
+            "product/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) {
+
+            Product()
+
         }
     }
 }

@@ -5,12 +5,12 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
-import com.demo.minnies.shop.data.fakeShopItemsDataSet
+import com.demo.minnies.shop.data.fakeProductsDataSets
 import com.demo.minnies.shop.presentation.models.toView
 import org.junit.Rule
 import org.junit.Test
 
-class ShopScreenKtTest {
+class ShopKtTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -19,20 +19,21 @@ class ShopScreenKtTest {
     fun whenFeaturedItemsExists_FeaturedSectionShows() {
 
         val featuredItems =
-            fakeShopItemsDataSet.filter { it.featured }.map { item ->
+            fakeProductsDataSets.filter { it.featured }.map { item ->
                 item.toView().copy(image = "")
             }
+
         val itemsByCategories =
-            fakeShopItemsDataSet.map { item ->
+            fakeProductsDataSets.map { item ->
                 item.toView().copy(image = "")
             }.groupBy { it.category }
 
         composeTestRule.setContent {
             ShopScreen(
                 title = "Shop",
-                shopItemsByCategory = itemsByCategories,
+                allItems = itemsByCategories,
                 featuredItems = featuredItems
-            )
+            ) {}
         }
 
 

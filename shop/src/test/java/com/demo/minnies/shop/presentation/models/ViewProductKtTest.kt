@@ -1,16 +1,16 @@
 package com.demo.minnies.shop.presentation.models
 
 import com.demo.minnies.shop.data.models.Category
-import com.demo.minnies.shop.data.models.ShopItem
+import com.demo.minnies.shop.data.models.Product
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class ViewShopItemKtTest {
+class ViewProductKtTest {
 
     @Test
     fun `verify that forView function correctly converts ShopItem to ViewShopItem`() {
-        val shopItem =
-            ShopItem(
+        val product =
+            Product(
                 0,
                 name = "X",
                 image = "Y",
@@ -22,15 +22,15 @@ class ViewShopItemKtTest {
                 rating = 9.0
             )
 
-        val viewShopItem = shopItem.toView()
-        assertEquals(0, shopItem.id)
-        assertEquals("X", shopItem.name)
-        assertEquals("Z", shopItem.description)
-        assertEquals(listOf(0, 1), shopItem.sizes)
+        val viewShopItem = product.toView()
+        assertEquals(0, product.id)
+        assertEquals("X", product.name)
+        assertEquals("Z", product.description)
+        assertEquals(listOf(0, 1), product.sizes)
         assertEquals("$0.20", viewShopItem.price)
-        assertEquals(false, shopItem.featured)
-        assertEquals(9.0, shopItem.rating, 0.0)
-        assertEquals("Y", shopItem.image)
+        assertEquals(false, product.featured)
+        assertEquals(9.0, product.rating, 0.0)
+        assertEquals("Y", product.image)
     }
 
 }

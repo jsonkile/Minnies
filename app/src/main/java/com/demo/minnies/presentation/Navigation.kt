@@ -16,7 +16,7 @@ import com.demo.minnies.shop.presentation.shopGraph
 fun MinniesNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = "home"
+    startDestination: String = "shop"
 ) {
     NavHost(
         modifier = modifier,
@@ -38,8 +38,8 @@ sealed class Screen(
     val icon: ImageVector,
     val selectedIcon: ImageVector
 ) {
-    object Home : Screen(
-        route = "home",
+    object Shop : Screen(
+        route = "shop",
         title = "Shop",
         icon = Icons.Outlined.DryCleaning,
         selectedIcon = Icons.Filled.DryCleaning

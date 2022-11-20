@@ -1,5 +1,4 @@
 import com.android.build.api.dsl.ApplicationDefaultConfig
-import com.android.build.api.dsl.LibraryDefaultConfig
 
 plugins {
     id("com.android.application")
@@ -31,12 +30,26 @@ android {
         testInstrumentationRunner = "com.demo.minnies.HiltTestRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("/Users/jayson/AndroidStudioProjects/Minnies/keystores/upload.jks")
+            keyAlias = "upload"
+            storePassword = "d^U97HU2%BVd"
+            keyPassword = "d^U97HU2%BVd"
+        }
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
+        }
+
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
@@ -67,7 +80,6 @@ dependencies {
     val composeVersion: String by rootProject.extra
     val navigationVersion: String by rootProject.extra
     val hiltVersion: String by rootProject.extra
-    val roomVersion: String by rootProject.extra
     val coroutinesVersion: String by rootProject.extra
     val jUnitVersion: String by rootProject.extra
     val testRunnerVersion: String by rootProject.extra
@@ -81,22 +93,18 @@ dependencies {
     implementation(project(":auth"))
     implementation(project(":cart"))
     implementation(project(":shop"))
-    implementation(project(":database"))
 
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
-    
+
+    implementation("androidx.navigation:navigation-testing:$navigationVersion")
+    implementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
 
     //ui
     implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistSystemControllerVersion")
 
     debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
     debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
-
-
-    //room
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
 
     androidTestImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test:core:$testCoreVersion")
@@ -106,7 +114,6 @@ dependencies {
     androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
     androidTestImplementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
-    androidTestImplementation("androidx.room:room-testing:$roomVersion")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
     androidTestImplementation(kotlin("reflect"))
 }

@@ -7,10 +7,10 @@ import com.demo.minnies.database.room.converters.CategoryConverter
 import com.demo.minnies.database.room.converters.IntListConverter
 import com.demo.minnies.database.room.daos.ShopDao
 import com.demo.minnies.database.room.daos.UsersDao
-import com.demo.minnies.database.room.models.ShopItem
+import com.demo.minnies.database.room.models.Product
 import com.demo.minnies.database.room.models.User
 
-@Database(version = 3, entities = [ShopItem::class, User::class], exportSchema = false)
+@Database(version = 4, entities = [Product::class, User::class], exportSchema = false)
 @TypeConverters(value = [CategoryConverter::class, IntListConverter::class])
 abstract class AppDatabase : RoomDatabase() {
 

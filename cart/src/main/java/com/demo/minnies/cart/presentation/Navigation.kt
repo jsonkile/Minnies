@@ -7,8 +7,8 @@ import androidx.navigation.compose.navigation
 import com.demo.minnies.cart.presentation.screen.CartScreen
 
 fun NavGraphBuilder.cartGraph(navController: NavController) {
-    navigation(startDestination = "my-cart", route = "cart") {
-        composable("my-cart") {
+    navigation(startDestination = "cart-home", route = "cart") {
+        composable("cart-home") {
             CartScreen(title = "Cart")
         }
     }

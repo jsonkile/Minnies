@@ -71,14 +71,6 @@ fun SignInPrompt(signUpButtonClickAction: () -> Unit, loginButtonClickAction: ()
                 )
             }
         }
-
-        Divider(
-            color = Color.LightGray,
-            thickness = 1.dp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-        )
     }
 }
 
