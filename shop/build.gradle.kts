@@ -64,6 +64,7 @@ dependencies {
     androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
     androidTestImplementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
     androidTestImplementation(kotlin("reflect"))
 }

@@ -1,6 +1,7 @@
 package com.demo.minnies.presentation.screens
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Column
@@ -50,7 +51,7 @@ fun LandingScreen(
             AnimatedVisibility(
                 visible = bottomBarState.value,
                 enter = slideInVertically(initialOffsetY = { it }),
-                exit = slideOutVertically(targetOffsetY = { it }),
+                exit = ExitTransition.None,
                 content = {
                     NavigationBar(modifier = Modifier.testTag(NAVIGATION_BAR_TEST_TAG)) {
                         var selectedItem by remember { mutableStateOf(0) }
@@ -90,7 +91,7 @@ fun LandingScreen(
                 if (loggedInUser == null)
                     SignInPrompt({}, {})
 
-                if(bottomBarState.value.not())
+                if (bottomBarState.value.not())
                     MinniesToolbar(toolBarTitle = "") {
                         navController.popBackStack()
                     }

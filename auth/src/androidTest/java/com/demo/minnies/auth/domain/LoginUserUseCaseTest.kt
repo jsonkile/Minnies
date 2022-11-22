@@ -2,17 +2,15 @@ package com.demo.minnies.auth.domain
 
 import com.demo.minnies.auth.data.repos.AuthRepoRoomImpl
 import com.demo.minnies.auth.data.repos.CacheRepo
-import com.demo.minnies.auth.utils.CustomExceptions
+import com.demo.minnies.shared.utils.CustomExceptions
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule

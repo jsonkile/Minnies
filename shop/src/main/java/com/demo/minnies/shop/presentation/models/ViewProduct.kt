@@ -1,7 +1,7 @@
 package com.demo.minnies.shop.presentation.models
 
-import com.demo.minnies.shop.data.models.Category
-import com.demo.minnies.shop.data.models.Product
+import com.demo.minnies.database.room.models.Category
+import com.demo.minnies.database.room.models.Product
 import java.math.BigDecimal
 import java.math.RoundingMode
 

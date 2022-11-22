@@ -1,7 +1,7 @@
 package com.demo.minnies.shop.presentation.models
 
-import com.demo.minnies.shop.data.models.Category
-import com.demo.minnies.shop.data.models.Product
+import com.demo.minnies.database.room.models.Category
+import com.demo.minnies.database.room.models.Product
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

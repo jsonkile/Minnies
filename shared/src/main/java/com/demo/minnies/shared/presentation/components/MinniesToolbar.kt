@@ -30,7 +30,7 @@ fun MinniesToolbar(
     navigationButtonAction: () -> Unit
 ) {
     Surface(
-        shadowElevation = 5.dp,
+        shadowElevation = 0.dp,
         color = MaterialTheme.colorScheme.background,
         modifier = Modifier
             .fillMaxWidth()

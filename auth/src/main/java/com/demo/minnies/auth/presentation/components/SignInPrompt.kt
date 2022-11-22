@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.demo.minnies.shared.BuildConfig
+import com.demo.minnies.shared.presentation.components.DefaultButton
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 
@@ -47,16 +48,12 @@ fun SignInPrompt(signUpButtonClickAction: () -> Unit, loginButtonClickAction: ()
                 start = PAGE_HORIZONTAL_MARGIN, bottom = 15.dp, end = PAGE_HORIZONTAL_MARGIN
             ), horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            Button(
+            DefaultButton(
                 modifier = Modifier
                     .wrapContentSize()
-                    .testTag(SIGN_IN_PROMPT_CREATE_ACCOUNT_BUTTON_TAG),
-                onClick = { signUpButtonClickAction() }) {
-                Text(
-                    text = "Create an account",
-                    modifier = Modifier.padding(bottom = 5.dp),
-                    style = TextStyle(color = MaterialTheme.colorScheme.onPrimaryContainer)
-                )
+                    .testTag(SIGN_IN_PROMPT_CREATE_ACCOUNT_BUTTON_TAG), text = "Create an account"
+            ) {
+
             }
 
             OutlinedButton(modifier = Modifier
@@ -64,7 +61,7 @@ fun SignInPrompt(signUpButtonClickAction: () -> Unit, loginButtonClickAction: ()
                 .testTag(SIGN_IN_PROMPT__LOGIN_BUTTON_TEST_TAG),
                 onClick = { loginButtonClickAction() }) {
                 Text(
-                    text = "Login", modifier = Modifier.padding(bottom = 5.dp), style = TextStyle(
+                    text = "Login", modifier = Modifier, style = TextStyle(
                         color = MaterialTheme.colorScheme.onTertiaryContainer,
                         fontWeight = FontWeight.Medium
                     )

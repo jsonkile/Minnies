@@ -18,11 +18,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import com.demo.minnies.database.room.models.Category
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shop.data.fakeProductsDataSets
-import com.demo.minnies.shop.data.models.Category
 import com.demo.minnies.shop.presentation.models.ViewProduct
 import com.demo.minnies.shop.presentation.models.toView
 

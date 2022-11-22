@@ -2,7 +2,7 @@ package com.demo.minnies.shop.presentation.screens
 
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import com.demo.minnies.shop.data.models.Category
+import com.demo.minnies.database.room.models.Category
 import com.demo.minnies.shop.presentation.models.ViewProduct
 
 import org.junit.Rule

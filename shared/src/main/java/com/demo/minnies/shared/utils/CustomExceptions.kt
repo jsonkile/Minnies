@@ -1,4 +1,4 @@
-package com.demo.minnies.auth.utils
+package com.demo.minnies.shared.utils
 
 sealed class CustomExceptions(override val message: String) : Throwable(message = message) {
 

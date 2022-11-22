@@ -2,7 +2,7 @@ package com.demo.minnies.auth.domain
 
 import com.demo.minnies.auth.data.repos.AuthRepo
 import com.demo.minnies.auth.data.repos.CacheRepo
-import com.demo.minnies.auth.utils.CustomExceptions
+import com.demo.minnies.shared.utils.CustomExceptions
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
