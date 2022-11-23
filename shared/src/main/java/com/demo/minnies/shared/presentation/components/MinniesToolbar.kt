@@ -65,7 +65,7 @@ fun MinniesToolbar(
                 )
             )
 
-            Row() {
+            Row {
 
             }
         }
