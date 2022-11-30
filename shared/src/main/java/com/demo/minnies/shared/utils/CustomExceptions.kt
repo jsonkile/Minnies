@@ -8,4 +8,6 @@ sealed class CustomExceptions(override val message: String) : Throwable(message 
 
     class InternalErrorException(override val message: String) : CustomExceptions(message)
 
+    class TimeoutException(override val message: String) : CustomExceptions(message)
+
 }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -13,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.demo.minnies.shared.BuildConfig
 import com.demo.minnies.shared.presentation.components.DefaultButton
+import com.demo.minnies.shared.presentation.components.OutlinedDefaultButton
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 
@@ -21,7 +21,7 @@ const val SIGN_IN_PROMPT_CREATE_ACCOUNT_BUTTON_TAG = "SIGN_IN_PROMPT_CREATE_ACCO
 const val SIGN_IN_PROMPT__LOGIN_BUTTON_TEST_TAG = "SIGN_IN_PROMPT__LOGIN_BUTTON_TEST_TAG"
 
 @Composable
-fun SignInPrompt(signUpButtonClickAction: () -> Unit, loginButtonClickAction: () -> Unit) {
+fun SignInPrompt(createAccount: () -> Unit, login: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,19 +53,15 @@ fun SignInPrompt(signUpButtonClickAction: () -> Unit, loginButtonClickAction: ()
                     .wrapContentSize()
                     .testTag(SIGN_IN_PROMPT_CREATE_ACCOUNT_BUTTON_TAG), text = "Create an account"
             ) {
-
+                createAccount()
             }
 
-            OutlinedButton(modifier = Modifier
-                .wrapContentSize()
-                .testTag(SIGN_IN_PROMPT__LOGIN_BUTTON_TEST_TAG),
-                onClick = { loginButtonClickAction() }) {
-                Text(
-                    text = "Login", modifier = Modifier, style = TextStyle(
-                        color = MaterialTheme.colorScheme.onTertiaryContainer,
-                        fontWeight = FontWeight.Medium
-                    )
-                )
+            OutlinedDefaultButton(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .testTag(SIGN_IN_PROMPT__LOGIN_BUTTON_TEST_TAG), text = "Login"
+            ) {
+                login()
             }
         }
     }

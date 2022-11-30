@@ -19,6 +19,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.demo.minnies.auth.presentation.AuthScreen
 import com.demo.minnies.presentation.MinniesNavHost
 import com.demo.minnies.presentation.Screen
 import com.demo.minnies.presentation.screens.LandingScreen
@@ -44,8 +45,17 @@ class MainActivity : ComponentActivity() {
             val loggedInUser =
                 mainActivityViewModel.loggedInUser.collectAsState(initial = null).value
 
+            val currentDestination = navController.currentBackStackEntryAsState().value?.destination
+
             MinniesTheme {
-                systemUiController.setStatusBarColor(color = if (loggedInUser == null) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.background)
+
+                val statusBarColor = when {
+                    loggedInUser == null && currentDestination?.route !in AuthScreen.values()
+                        .map { it.name } -> MaterialTheme.colorScheme.onPrimaryContainer
+                    else -> MaterialTheme.colorScheme.background
+                }
+
+                systemUiController.setStatusBarColor(color = statusBarColor)
 
                 LandingScreen(
                     navController = navController,

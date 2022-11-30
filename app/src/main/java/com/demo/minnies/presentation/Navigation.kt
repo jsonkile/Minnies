@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.demo.minnies.auth.presentation.authGraph
 import com.demo.minnies.cart.presentation.cartGraph
 import com.demo.minnies.orders.presentation.ordersGraph
 import com.demo.minnies.shop.presentation.shopGraph
@@ -28,6 +29,8 @@ fun MinniesNavHost(
         ordersGraph(navController)
 
         cartGraph(navController)
+
+        authGraph(navController)
     }
 }
 

@@ -44,6 +44,7 @@ ext {
     extra["testExtJunitVersion"] = "1.1.3"
 
     extra["timberVersion"] = "5.0.1"
+    extra["easyValidation"] = "1.0.4"
 }
 
 tasks.register("clean", Delete::class) {

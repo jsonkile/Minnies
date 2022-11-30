@@ -31,4 +31,3 @@ val appColors =
         secondary = arcticLime,
         onSecondary = Color.Black
     )
-

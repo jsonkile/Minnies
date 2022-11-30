@@ -12,10 +12,6 @@ class LoginUserUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(email: String, password: String) {
         val user = authRepo.login(email, password).first()
-        if (user == null) {
-            throw CustomExceptions.NotFoundException("User not found")
-        } else {
-            cacheRepo.storeLoggedInUser(user)
-        }
+        cacheRepo.storeLoggedInUser(checkNotNull(user) { "User not found" })
     }
 }
