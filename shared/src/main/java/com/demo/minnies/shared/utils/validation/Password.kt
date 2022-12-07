@@ -16,3 +16,10 @@ fun String.validateAsPassword(): Error? {
         }.check()
     return error
 }
+
+
+fun String.validateAsConfirmPassword(password: String): Error? {
+    var error: Error? = null
+    if (this != password) error = Error("Passwords do not match.")
+    return error
+}

@@ -1,7 +1,10 @@
 package com.demo.minnies.shared.presentation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.HeartBroken
 import androidx.compose.material3.MaterialTheme
@@ -51,5 +54,34 @@ fun PreviewErrorView() {
         message = "Something went wrong",
         icon = Icons.Default.HeartBroken,
         modifier = Modifier.wrapContentSize()
+    )
+}
+
+@Composable
+fun ErrorBar(message: String, modifier: Modifier) {
+    Box(modifier = modifier) {
+        Text(
+            text = message,
+            modifier = Modifier
+                .background(
+                    color = MaterialTheme.colorScheme.error,
+                    shape = RoundedCornerShape(5.dp)
+                )
+                .padding(vertical = 6.dp, horizontal = 10.dp),
+            color = MaterialTheme.colorScheme.errorContainer,
+            textAlign = TextAlign.Center,
+            fontSize = 12.sp
+        )
+    }
+}
+
+@Preview
+@Composable
+fun PreviewErrorBar() {
+    ErrorBar(
+        message = "Something went wrong",
+        modifier = Modifier
+            .wrapContentSize()
+
     )
 }

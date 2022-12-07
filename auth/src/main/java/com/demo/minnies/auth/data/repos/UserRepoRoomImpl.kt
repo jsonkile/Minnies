@@ -17,6 +17,8 @@ class UserRepoRoomImpl @Inject constructor(
     override fun getUser(emailAddress: String, password: String): Flow<PartialUser?> =
         dao.getUserByEmailAndPassword(emailAddress, password)
 
+    override fun peekPassword(emailAddress: String): String? = dao.getPasswordByEmail(emailAddress)
+
     override fun addUser(user: User) = dao.addUser(user)
 
     override fun removeUser(partialUser: PartialUser) = dao.deleteUser(partialUser)

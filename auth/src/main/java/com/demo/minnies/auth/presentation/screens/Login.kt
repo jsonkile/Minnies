@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -22,22 +23,26 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.demo.minnies.auth.presentation.AuthScreen
 import com.demo.minnies.shared.presentation.components.DefaultButton
+import com.demo.minnies.shared.presentation.components.ErrorBar
 import com.demo.minnies.shared.presentation.components.PageHeader
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shared.utils.validation.validateAsEmail
 import com.demo.minnies.shared.utils.validation.validateAsPassword
 
+const val LOGIN_ERROR_BAR_TEST_TAG = "LOGIN_ERROR_BAR_TEST_TAG"
+const val LOADING_TEXT = "Loading..."
+
 @Composable
 fun Login(toCreateAccountScreen: () -> Unit) {
 
     val viewModel = hiltViewModel<LoginViewModel>()
 
-    MinniesTheme {
-        LoginScreen(uiState = viewModel.uiState.value, login = { email, password ->
-            viewModel.login(email, password)
-        })
-    }
+    val uiState = viewModel.uiState.collectAsState()
+
+    LoginScreen(uiState = uiState.value, login = { email, password ->
+        viewModel.login(email, password)
+    })
 }
 
 @Composable
@@ -55,8 +60,22 @@ fun LoginScreen(uiState: LoginViewModel.UiState, login: (String, String) -> Unit
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(top = 20.dp, bottom = 30.dp)
+                .padding(
+                    top = 20.dp,
+                    bottom = if (uiState !is LoginViewModel.UiState.Error) 30.dp else 0.dp
+                )
         )
+
+
+        if (uiState is LoginViewModel.UiState.Error) {
+            ErrorBar(
+                message = uiState.throwable.message.orEmpty(),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(vertical = 10.dp)
+                    .testTag(LOGIN_ERROR_BAR_TEST_TAG)
+            )
+        }
 
 
         var emailAddress by remember { mutableStateOf("") }
@@ -140,11 +159,12 @@ fun LoginScreen(uiState: LoginViewModel.UiState, login: (String, String) -> Unit
             text = when (uiState) {
                 LoginViewModel.UiState.Default -> "Let me in"
                 is LoginViewModel.UiState.Error -> "Let me in"
-                LoginViewModel.UiState.Loading -> "Loading..."
+                LoginViewModel.UiState.Loading -> LOADING_TEXT
             },
             isLoading = uiState is LoginViewModel.UiState.Loading
         ) {
-            if (emailAddressError != null && passwordError != null) login(emailAddress, password)
+            if (emailAddressError == null && passwordError == null && uiState !is LoginViewModel.UiState.Loading)
+                login(emailAddress, password)
         }
     }
 }

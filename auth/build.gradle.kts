@@ -50,6 +50,7 @@ dependencies {
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    androidTestImplementation("app.cash.turbine:turbine:0.12.1")
 }
 
 kapt {

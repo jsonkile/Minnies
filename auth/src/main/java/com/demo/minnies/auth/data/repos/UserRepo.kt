@@ -12,6 +12,8 @@ interface UserRepo {
 
     fun getUser(emailAddress: String, password: String): Flow<PartialUser?>
 
+    fun peekPassword(emailAddress: String): String?
+
     fun addUser(user: User):Long
 
     fun removeUser(partialUser: PartialUser): Int

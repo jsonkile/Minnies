@@ -22,7 +22,10 @@ interface UsersDao {
     @Query("select id, full_name, email_address, phone_number from users where email_address = :emailAddress and password = :password limit 1")
     fun getUserByEmailAndPassword(emailAddress: String, password: String): Flow<PartialUser?>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Query("select password from users where email_address = :emailAddress")
+    fun getPasswordByEmail(emailAddress: String): String?
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     fun addUser(user: User): Long
 
     @Update(entity = User::class)

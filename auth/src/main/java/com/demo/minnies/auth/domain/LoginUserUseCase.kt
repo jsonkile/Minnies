@@ -12,6 +12,6 @@ class LoginUserUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(email: String, password: String) {
         val user = authRepo.login(email, password).first()
-        cacheRepo.storeLoggedInUser(checkNotNull(user) { "User not found" })
+        cacheRepo.storeLoggedInUser(user!!)
     }
 }

@@ -2,7 +2,7 @@ package com.demo.minnies.auth.presentation.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.demo.minnies.auth.domain.LoginUserUseCase
+import com.demo.minnies.auth.domain.RegisterUserUseCase
 import com.demo.minnies.shared.utils.TIME_OUT_MESSAGE
 import com.demo.minnies.shared.utils.encryption.Encryptor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,22 +12,27 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val loginUserUseCase: LoginUserUseCase,
+class RegisterViewModel @Inject constructor(
+    private val registerUserUseCase: RegisterUserUseCase,
     private val encryptor: Encryptor
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Default)
     val uiState = _uiState.asStateFlow()
 
-    fun login(emailAddress: String, password: String) {
+
+    fun register(emailAddress: String, password: String, fullName: String, phoneNumber: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 withTimeout(20_000) {
                     _uiState.value = UiState.Loading
                     delay(2000) // simulate network request
-                    loginUserUseCase(emailAddress, encryptor.encrypt(password))
+                    registerUserUseCase(
+                        email = emailAddress,
+                        password = encryptor.encrypt(password),
+                        fullName = fullName,
+                        phoneNumber = phoneNumber
+                    )
                     _uiState.value = UiState.Default
                 }
             } catch (e: Exception) {
@@ -38,6 +43,7 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+
 
     sealed class UiState {
         object Loading : UiState()

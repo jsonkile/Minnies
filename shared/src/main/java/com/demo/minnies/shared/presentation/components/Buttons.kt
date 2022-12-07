@@ -61,7 +61,7 @@ fun DefaultButton(
                 Spacer(modifier = Modifier.width(10.dp))
 
                 CircularProgressIndicator(
-                    modifier = Modifier.size(10.dp),
+                    modifier = Modifier.size(13.dp),
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                     strokeWidth = 2.dp
                 )

@@ -69,10 +69,48 @@ class UsersDaoTest {
         }
     }
 
+
+    @Test
+    fun getPasswordByEmail_WithExistingEmail_ReturnsMatch() {
+        runTest {
+            dao.addUser(
+                User(
+                    fullName = "a1",
+                    emailAddress = "b1",
+                    phoneNumber = "c1",
+                    password = "d1"
+                )
+            )
+            Assert.assertEquals(dao.getPasswordByEmail(emailAddress = "b1"), "d1")
+        }
+    }
+
+    @Test
+    fun getPasswordByEmail_WithNonExistingEmail_ReturnsNoMatch() {
+        runTest {
+            dao.addUser(
+                User(
+                    fullName = "a1",
+                    emailAddress = "b1",
+                    phoneNumber = "c1",
+                    password = "d1"
+                )
+            )
+            Assert.assertNull(dao.getPasswordByEmail(emailAddress = "2"))
+        }
+    }
+
     @Test
     fun addUser_SuccessfullyInsertsUser() {
         runTest {
-            dao.addUser(User(fullName = "John", emailAddress = "kalu", phoneNumber = "Q", password = "hea¬"))
+            dao.addUser(
+                User(
+                    fullName = "John",
+                    emailAddress = "kalu",
+                    phoneNumber = "Q",
+                    password = "hea¬"
+                )
+            )
             Assert.assertNotNull(dao.getUserByEmail("kalu").first())
             Assert.assertEquals("Q", dao.getUserByEmail("kalu").first()?.phoneNumber)
             Assert.assertEquals("John", dao.getUserByEmail("kalu").first()?.fullName)
@@ -82,9 +120,22 @@ class UsersDaoTest {
     @Test
     fun updateUser_SuccessfullyUpdatesUserData() {
         runTest {
-            dao.addUser(User(fullName = "John", emailAddress = "kalu", phoneNumber = "98", password = "hea¬"))
+            dao.addUser(
+                User(
+                    fullName = "John",
+                    emailAddress = "kalu",
+                    phoneNumber = "98",
+                    password = "hea¬"
+                )
+            )
             Assert.assertEquals("John", dao.getUserByEmail("kalu").first()?.fullName)
-            dao.updateUser(PartialUser(fullName = "Mike", emailAddress = "kalu", phoneNumber = "98"))
+            dao.updateUser(
+                PartialUser(
+                    fullName = "Mike",
+                    emailAddress = "kalu",
+                    phoneNumber = "98"
+                )
+            )
             Assert.assertEquals("Mike", dao.getUserByEmail("kalu").first()?.fullName)
         }
     }
@@ -92,9 +143,22 @@ class UsersDaoTest {
     @Test
     fun deleteUser_SuccessfullyDeletesUserData() {
         runTest {
-            dao.addUser(User(fullName = "John", emailAddress = "kalu", phoneNumber = "98", password = "hea¬"))
+            dao.addUser(
+                User(
+                    fullName = "John",
+                    emailAddress = "kalu",
+                    phoneNumber = "98",
+                    password = "hea¬"
+                )
+            )
             Assert.assertNotNull(dao.getUserByEmail("kalu").first())
-            dao.deleteUser(PartialUser(fullName = "John", emailAddress = "kalu", phoneNumber = "98"))
+            dao.deleteUser(
+                PartialUser(
+                    fullName = "John",
+                    emailAddress = "kalu",
+                    phoneNumber = "98"
+                )
+            )
             Assert.assertNull(dao.getUserByEmail("kalu").first())
         }
     }

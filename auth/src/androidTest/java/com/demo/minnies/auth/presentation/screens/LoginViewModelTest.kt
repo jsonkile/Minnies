@@ -1,23 +1,22 @@
 package com.demo.minnies.auth.presentation.screens
 
+import app.cash.turbine.test
 import com.demo.minnies.auth.data.repos.AuthRepo
+import com.demo.minnies.auth.data.repos.UserRepo
 import com.demo.minnies.auth.domain.LoginUserUseCase
+import com.demo.minnies.shared.utils.customByteArray
 import com.demo.minnies.shared.utils.encryption.Encryptor
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.test.*
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
@@ -26,7 +25,8 @@ internal class LoginViewModelTest {
     @get:Rule
     val hiltAndroidRule = HiltAndroidRule(this)
 
-    private val dispatcher = StandardTestDispatcher()
+    private val scheduler = TestCoroutineScheduler()
+    private val dispatcher = StandardTestDispatcher(scheduler)
     private val scope = TestScope(dispatcher)
 
     @Inject
@@ -37,6 +37,9 @@ internal class LoginViewModelTest {
 
     @Inject
     lateinit var authRepo: AuthRepo
+
+    @Inject
+    lateinit var userRepo: UserRepo
 
     private lateinit var loginViewModel: LoginViewModel
 
@@ -54,42 +57,55 @@ internal class LoginViewModelTest {
     }
 
     @Test
-    fun uiState_ChangesToLoading_WhenLoginStarts() {
-        scope.launch {
+    fun uiState_ChangesToLoading_WhenLoginStarts() = runTest(dispatcher) {
+        loginViewModel.uiState.test {
+
             loginViewModel.login("", "")
-            val states = loginViewModel.uiState.take(2).toList()
-            Assert.assertTrue(states.first() is LoginViewModel.UiState.Default)
-            Assert.assertTrue(states[1] is LoginViewModel.UiState.Loading)
+            Assert.assertTrue(awaitItem() is LoginViewModel.UiState.Default)
+            Assert.assertTrue(awaitItem() is LoginViewModel.UiState.Loading)
+            cancel()
         }
     }
 
     @Test
-    fun login_ChangesToError_whenLoginFails() {
-        scope.launch {
+    fun uiState_ChangesToError_whenLoginFails() = runTest(dispatcher) {
+        loginViewModel.uiState.test(timeout = 5.seconds) {
+
             loginViewModel.login("", "")
-            val states = loginViewModel.uiState.take(3).toList()
-            Assert.assertTrue(states.first() is LoginViewModel.UiState.Default)
-            Assert.assertTrue(states[1] is LoginViewModel.UiState.Loading)
-            Assert.assertTrue(states[2] is LoginViewModel.UiState.Error)
+
+            Assert.assertTrue(awaitItem() is LoginViewModel.UiState.Default)
+            Assert.assertTrue(awaitItem() is LoginViewModel.UiState.Loading)
+            Assert.assertTrue(awaitItem() is LoginViewModel.UiState.Error)
         }
     }
 
     @Test
-    fun login_ChangesToDefault_whenLoginSuccess() {
-        scope.launch {
-            authRepo.register(
-                emailAddress = "baba",
-                phoneNumber = "080",
-                fullName = "baba",
-                password = encryptor.encrypt("pass")
+    fun uiState_ChangesToDefault_whenLoginSuccess() = runTest(dispatcher) {
+        loginViewModel.uiState.test(timeout = 5.seconds) {
+
+            val fakeEmail = "tester${System.currentTimeMillis()}"
+
+            val newUser = authRepo.register(
+                emailAddress = fakeEmail,
+                password = encryptor.encrypt("password"),
+                fullName = "f", phoneNumber = "3"
             ).first()
 
-            loginViewModel.login("baba", encryptor.encrypt("pass"))
-            val states = loginViewModel.uiState.take(3).toList()
-            Assert.assertTrue(states.first() is LoginViewModel.UiState.Default)
-            Assert.assertTrue(states[1] is LoginViewModel.UiState.Loading)
-            Assert.assertTrue(states[2] is LoginViewModel.UiState.Default)
-        }
+            Assert.assertNotNull(userRepo.getUser(fakeEmail).first())
 
+            Assert.assertEquals("f", newUser?.fullName.orEmpty())
+            Assert.assertEquals("3", newUser?.phoneNumber.orEmpty())
+            Assert.assertEquals(fakeEmail, newUser?.emailAddress.orEmpty())
+
+            loginViewModel.login(fakeEmail, "password")
+
+            Assert.assertTrue(awaitItem() is LoginViewModel.UiState.Default)
+            Assert.assertTrue(awaitItem() is LoginViewModel.UiState.Loading)
+            Assert.assertEquals(
+                "Please enter a valid email address.",
+                (awaitItem() as LoginViewModel.UiState.Error).throwable.message
+            )
+            ensureAllEventsConsumed()
+        }
     }
 }
