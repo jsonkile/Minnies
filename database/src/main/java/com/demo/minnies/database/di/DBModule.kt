@@ -21,8 +21,11 @@ object DBModule {
             .fallbackToDestructiveMigration().build()
 
     @Provides
-    fun provideShopDao(db: AppDatabase) = db.shopDao()
+    fun provideShopDao(db: AppDatabase) = db.productsDao()
 
     @Provides
     fun providesUsersDao(db: AppDatabase) = db.usersDao()
+
+    @Provides
+    fun providesCartDao(db: AppDatabase) = db.cartDao()
 }

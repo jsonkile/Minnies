@@ -35,6 +35,7 @@ dependencies {
     val composeVersion: String by rootProject.extra
     val jUnitVersion: String by rootProject.extra
     val testRunnerVersion: String by rootProject.extra
+    val turbineVersion: String by rootProject.extra
 
     implementation(project(":shared"))
 
@@ -50,7 +51,10 @@ dependencies {
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
-    androidTestImplementation("app.cash.turbine:turbine:0.12.1")
+    androidTestImplementation("app.cash.turbine:turbine:$turbineVersion")
+
+    testImplementation("app.cash.turbine:turbine:$turbineVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
 }
 
 kapt {

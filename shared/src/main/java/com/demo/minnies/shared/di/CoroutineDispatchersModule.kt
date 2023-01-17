@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import javax.inject.Qualifier
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 object DispatcherModule {
     @DefaultDispatcher
     @Provides

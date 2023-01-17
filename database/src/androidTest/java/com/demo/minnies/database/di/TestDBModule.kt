@@ -21,9 +21,13 @@ object TestDBModule {
 
     @Singleton
     @Provides
-    fun provideShopDao(db: AppDatabase) = db.shopDao()
+    fun provideShopDao(db: AppDatabase) = db.productsDao()
 
     @Singleton
     @Provides
     fun providesUsersDao(db: AppDatabase) = db.usersDao()
+
+    @Singleton
+    @Provides
+    fun providesCartDao(db: AppDatabase) = db.cartDao()
 }

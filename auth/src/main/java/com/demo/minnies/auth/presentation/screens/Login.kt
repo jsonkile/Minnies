@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.demo.minnies.auth.presentation.AuthScreen
-import com.demo.minnies.shared.presentation.components.DefaultButton
+import com.demo.minnies.shared.presentation.components.MinniesDefaultButton
 import com.demo.minnies.shared.presentation.components.ErrorBar
 import com.demo.minnies.shared.presentation.components.PageHeader
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
@@ -34,15 +34,20 @@ const val LOGIN_ERROR_BAR_TEST_TAG = "LOGIN_ERROR_BAR_TEST_TAG"
 const val LOADING_TEXT = "Loading..."
 
 @Composable
-fun Login(toCreateAccountScreen: () -> Unit) {
+fun Login(gotoRegisterScreen: () -> Unit, goBack: () -> Unit) {
 
     val viewModel = hiltViewModel<LoginViewModel>()
 
-    val uiState = viewModel.uiState.collectAsState()
+    val uiState = viewModel.uiState.collectAsState().value
 
-    LoginScreen(uiState = uiState.value, login = { email, password ->
+    LoginScreen(uiState = uiState, login = { email, password ->
         viewModel.login(email, password)
     })
+
+
+    LaunchedEffect(uiState) {
+        if (uiState is LoginViewModel.UiState.Success) goBack()
+    }
 }
 
 @Composable
@@ -81,7 +86,7 @@ fun LoginScreen(uiState: LoginViewModel.UiState, login: (String, String) -> Unit
         var emailAddress by remember { mutableStateOf("") }
         val emailAddressError = emailAddress.validateAsEmail()
 
-        com.demo.minnies.shared.presentation.components.OutlinedTextField(
+        com.demo.minnies.shared.presentation.components.MinniesOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
@@ -119,7 +124,7 @@ fun LoginScreen(uiState: LoginViewModel.UiState, login: (String, String) -> Unit
         var password by remember { mutableStateOf("") }
         val passwordError = password.validateAsPassword()
 
-        com.demo.minnies.shared.presentation.components.OutlinedTextField(
+        com.demo.minnies.shared.presentation.components.MinniesOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
@@ -154,14 +159,14 @@ fun LoginScreen(uiState: LoginViewModel.UiState, login: (String, String) -> Unit
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        DefaultButton(
+        MinniesDefaultButton(
             modifier = Modifier,
             text = when (uiState) {
-                LoginViewModel.UiState.Default -> "Let me in"
-                is LoginViewModel.UiState.Error -> "Let me in"
-                LoginViewModel.UiState.Loading -> LOADING_TEXT
+                is LoginViewModel.UiState.Loading -> LOADING_TEXT
+                else -> "Let me in"
             },
-            isLoading = uiState is LoginViewModel.UiState.Loading
+            isLoading = uiState is LoginViewModel.UiState.Loading,
+            enabled = uiState !is LoginViewModel.UiState.Success
         ) {
             if (emailAddressError == null && passwordError == null && uiState !is LoginViewModel.UiState.Loading)
                 login(emailAddress, password)

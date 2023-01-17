@@ -19,7 +19,7 @@ import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 
 @Composable
-fun MyOrdersScreen(title: String) {
+fun MyOrdersScreen() {
 
     LazyColumn(
         modifier = Modifier
@@ -30,7 +30,7 @@ fun MyOrdersScreen(title: String) {
         item {
             PageHeader(
                 heading = "Orders",
-                subHeading = "Your orders are safe here.",
+                showSubHeading = false,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -46,6 +46,6 @@ fun MyOrdersScreen(title: String) {
 @Composable
 fun PreviewMyOrdersScreen() {
     MinniesTheme {
-        MyOrdersScreen("Orders")
+        MyOrdersScreen()
     }
 }

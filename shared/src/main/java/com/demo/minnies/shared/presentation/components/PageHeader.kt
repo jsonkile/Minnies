@@ -14,23 +14,30 @@ import androidx.compose.ui.unit.dp
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 
 @Composable
-fun PageHeader(heading: String, subHeading: String, modifier: Modifier) {
+fun PageHeader(
+    heading: String,
+    subHeading: String = "",
+    modifier: Modifier,
+    showSubHeading: Boolean = true
+) {
     Column(modifier = modifier) {
         Text(
             text = heading,
-            style = MaterialTheme.typography.displayMedium.copy(
+            style = MaterialTheme.typography.headlineMedium.copy(
                 fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground
             )
         )
 
-        Text(
-            modifier = Modifier.padding(top = 3.dp),
-            text = subHeading,
-            style = MaterialTheme.typography.labelMedium.copy(
-                fontWeight = FontWeight.Normal,
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = .6F)
+        if (showSubHeading) {
+            Text(
+                modifier = Modifier.padding(top = 3.dp),
+                text = subHeading,
+                style = MaterialTheme.typography.labelMedium.copy(
+                    fontWeight = FontWeight.Normal,
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = .6F)
+                )
             )
-        )
+        }
     }
 }
 

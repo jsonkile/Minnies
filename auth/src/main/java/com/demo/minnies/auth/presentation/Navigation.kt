@@ -4,29 +4,38 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.demo.minnies.auth.presentation.screens.Register
 import com.demo.minnies.auth.presentation.screens.Login
+import com.demo.minnies.auth.presentation.screens.Register
+import com.demo.minnies.auth.presentation.screens.account.Account
+import timber.log.Timber
+import java.util.Timer
 
 fun NavGraphBuilder.authGraph(navController: NavController) {
-    navigation(startDestination = AuthScreen.CreateAccount.name, route = "auth") {
-        composable(AuthScreen.CreateAccount.name) {
+    navigation(startDestination = AuthScreen.Register.name, route = "auth") {
+        composable(AuthScreen.Register.name) {
+            Register(
+                gotoLoginScreen = { navController.navigate(AuthScreen.Login.name) },
+                goBack = { navController.popBackStack() }
+            )
+        }
 
-            Register {
-                navController.navigate(AuthScreen.Login.name)
-            }
+
+        composable(AuthScreen.Login.name) {
+            Login(
+                gotoRegisterScreen = { navController.navigate(AuthScreen.Register.name) },
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
 
         }
 
-        composable(AuthScreen.Login.name) {
-
-            Login {
-                navController.navigate(AuthScreen.CreateAccount.name)
-            }
-
+        composable(AuthScreen.Account.name) {
+            Account()
         }
     }
 }
 
 enum class AuthScreen {
-    CreateAccount, Login
+    Register, Login, Account
 }

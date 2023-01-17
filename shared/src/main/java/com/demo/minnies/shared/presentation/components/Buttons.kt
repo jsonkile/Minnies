@@ -2,6 +2,8 @@ package com.demo.minnies.shared.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddShoppingCart
 import androidx.compose.material3.*
@@ -17,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 
 @Composable
-fun DefaultButton(
+fun MinniesDefaultButton(
     modifier: Modifier,
     text: String,
     icon: ImageVector? = null,
@@ -29,7 +31,7 @@ fun DefaultButton(
     Button(
         modifier = modifier,
         enabled = enabled,
-        onClick = { clickAction() }) {
+        onClick = { if (isLoading.not()) clickAction() }) {
 
         Row(
             modifier = Modifier.padding(vertical = 5.dp),
@@ -75,7 +77,7 @@ fun DefaultButton(
 @Composable
 fun PreviewDefaultButton() {
     MinniesTheme {
-        DefaultButton(
+        MinniesDefaultButton(
             modifier = Modifier
                 .wrapContentSize(),
             text = "Add to Bag",
@@ -89,7 +91,7 @@ fun PreviewDefaultButton() {
 
 
 @Composable
-fun OutlinedDefaultButton(
+fun MinniesOutlinedDefaultButton(
     modifier: Modifier,
     text: String,
     icon: ImageVector? = null,
@@ -99,8 +101,10 @@ fun OutlinedDefaultButton(
     clickAction: () -> Unit
 ) {
 
-    OutlinedButton(modifier = modifier, enabled = enabled,
-        onClick = { clickAction() }) {
+    OutlinedButton(
+        modifier = modifier,
+        enabled = enabled,
+        onClick = { if (isLoading.not()) clickAction() }) {
 
         Row(
             modifier = Modifier.padding(vertical = 5.dp),
@@ -151,7 +155,7 @@ fun OutlinedDefaultButton(
 fun PreviewOutlinedButton() {
     MinniesTheme {
         Column() {
-            OutlinedDefaultButton(
+            MinniesOutlinedDefaultButton(
                 modifier = Modifier
                     .wrapContentSize(),
                 text = "Add to Bag",
@@ -161,7 +165,7 @@ fun PreviewOutlinedButton() {
 
             }
 
-            OutlinedDefaultButton(
+            MinniesOutlinedDefaultButton(
                 modifier = Modifier
                     .wrapContentSize(),
                 text = "Add to Bag",

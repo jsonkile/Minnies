@@ -1,7 +1,6 @@
 package com.demo.minnies.shared.utils.encryption
 
-import com.demo.minnies.shared.data.repos.KeysPreferencesRepository
-import com.demo.minnies.shared.utils.customByteArray
+import com.demo.minnies.shared.data.repos.KeysRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
@@ -11,41 +10,35 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class AESEncryptorImplTest {
 
-    val keyHolder = mutableMapOf<String, String>()
-    private val keysRepo = object : KeysPreferencesRepository {
-        override suspend fun storeEncryptionSecretKey(key: String) {
-            keyHolder["secret"] = key
-        }
+    private val keysRepo = object : KeysRepository {
+        override suspend fun storeEncryptionSecretKey(key: String) {}
 
-        override suspend fun getEncryptionSecretKey() = keyHolder["secret"].orEmpty()
+        override suspend fun getEncryptionSecretKey() = "sVwnNYYk5ve77Y%0"
 
-        override suspend fun storeEncryptionInitializationVectorKey(key: String) {
-            keyHolder["vector"] = key
-        }
+        override suspend fun storeEncryptionInitializationVectorKey(key: String) {}
 
-        override suspend fun getEncryptionInitializationVectorKey() = keyHolder["vector"].orEmpty()
-
+        override suspend fun getEncryptionInitializationVectorKey() = "m@4*dI723!UX@IVF"
     }
 
-    private val aesEncryptorImplTest = AESEncryptorImpl(keysRepo)
+    private val aesEncryptorImpl = AESEncryptorImpl(keysRepo)
+    private val aesEncryptorImpl2 = AESEncryptorImpl(keysRepo)
 
     @Test
     fun `test that after calling encrypt on a value, call decrypt on the result returns the original value`() =
         runTest {
             val stringToEncrypt = "test value"
-            val encryptionResult = aesEncryptorImplTest.encrypt(stringToEncrypt)
+            val encryptionResult = aesEncryptorImpl2.encrypt(stringToEncrypt)
 
-            println(encryptionResult)
+            print(encryptionResult)
 
             assertEquals(
                 "test value",
-                aesEncryptorImplTest.decrypt(encryptionResult.customByteArray())
+                aesEncryptorImpl.decrypt(encryptionResult)
             )
+
             assertNotEquals(
                 "test value fake",
-                aesEncryptorImplTest.decrypt(encryptionResult.customByteArray())
+                aesEncryptorImpl.decrypt(encryptionResult)
             )
         }
-
-
 }

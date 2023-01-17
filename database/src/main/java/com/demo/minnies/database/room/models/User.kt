@@ -19,6 +19,8 @@ data class User(
     val emailAddress: String,
     @ColumnInfo(name = "phone_number")
     val phoneNumber: String,
+    @ColumnInfo(name = "shipping_address")
+    val shippingAddress: String = "",
     val password: String //AES Encrypted
 )
 
@@ -33,9 +35,20 @@ data class PartialUser(
     @ColumnInfo(name = "email_address")
     val emailAddress: String,
     @ColumnInfo(name = "phone_number")
-    val phoneNumber: String
+    val phoneNumber: String,
+    @ColumnInfo(name = "shipping_address")
+    val shippingAddress: String = ""
 )
 
+
+/**
+ * Shipping Address Update
+ */
+data class ShippingAddress(
+    val id: Long = 0,
+    @ColumnInfo(name = "shipping_address")
+    val shippingAddress: String
+)
 
 object UserSerializer : Serializer<PartialUser?> {
 

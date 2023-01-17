@@ -1,7 +1,8 @@
 package com.demo.minnies.shared.di
 
-import com.demo.minnies.shared.data.repos.KeysPreferencesRepository
-import com.demo.minnies.shared.data.repos.KeysPreferencesRepositoryDataStoreImpl
+import com.demo.minnies.shared.data.repos.*
+import com.demo.minnies.shared.domain.GetUserCurrencyPreferenceUseCase
+import com.demo.minnies.shared.domain.GetUserCurrencyPreferenceUseCaseImpl
 import com.demo.minnies.shared.utils.encryption.AESEncryptorImpl
 import com.demo.minnies.shared.utils.encryption.Encryptor
 import dagger.Binds
@@ -14,10 +15,14 @@ import dagger.hilt.components.SingletonComponent
 abstract class SharedModule {
 
     @Binds
-    abstract fun providesEncryptor(aesEncryptorImpl: AESEncryptorImpl): Encryptor
+    abstract fun bindEncryptor(aesEncryptorImpl: AESEncryptorImpl): Encryptor
 
     @Binds
-    abstract fun providesKeysPreferencesRepository(keysPreferencesRepositoryDataStoreImpl: KeysPreferencesRepositoryDataStoreImpl): KeysPreferencesRepository
+    abstract fun bindKeysPreferencesRepository(keysRepositoryHardImpl: KeysRepositoryHardImpl): KeysRepository
 
+    @Binds
+    abstract fun bindUserPreferencesRepository(userPreferencesRepositoryImpl: UserPreferencesRepositoryImpl): UserPreferencesRepository
 
+    @Binds
+    abstract fun bindsGetUserCurrencyPreferenceUseCase(getUserCurrencyPreferenceUseCaseImpl: GetUserCurrencyPreferenceUseCaseImpl): GetUserCurrencyPreferenceUseCase
 }

@@ -42,6 +42,7 @@ ext {
     extra["testRunnerVersion"] = "1.4.0"
     extra["testCoreVersion"] = "1.5.0-beta01"
     extra["testExtJunitVersion"] = "1.1.3"
+    extra["turbineVersion"] = "0.12.1"
 
     extra["timberVersion"] = "5.0.1"
     extra["easyValidation"] = "1.0.4"

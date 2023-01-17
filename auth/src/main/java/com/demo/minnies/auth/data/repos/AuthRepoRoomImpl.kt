@@ -22,14 +22,10 @@ class AuthRepoRoomImpl @Inject constructor(
         val user = userRepo.getUser(emailAddress).first()
         checkNotNull(user) { "The user with the details was not found." }
 
-        Timber.e(userRepo.peekPassword(emailAddress)!!)
-        print(userRepo.peekPassword(emailAddress)!!)
+        val decryptedLoginPassword = encryptor.decrypt(password)
 
-        val decryptedLoginPassword = encryptor.decrypt(password.customByteArray())
         val decryptedUserPassword =
-            encryptor.decrypt(userRepo.peekPassword(emailAddress)!!.customByteArray())
-
-        Timber.e("$decryptedLoginPassword $decryptedUserPassword")
+            encryptor.decrypt(userRepo.peekPassword(emailAddress)!!)
 
         check(decryptedLoginPassword == decryptedUserPassword) {
             "The user with the details was not found."

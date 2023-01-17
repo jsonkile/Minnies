@@ -3,6 +3,7 @@ package com.demo.minnies.auth.presentation.screens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.demo.minnies.auth.domain.RegisterUserUseCase
+import com.demo.minnies.auth.domain.RegisterUserUseCaseImpl
 import com.demo.minnies.shared.utils.TIME_OUT_MESSAGE
 import com.demo.minnies.shared.utils.encryption.Encryptor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +21,6 @@ class RegisterViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UiState>(UiState.Default)
     val uiState = _uiState.asStateFlow()
 
-
     fun register(emailAddress: String, password: String, fullName: String, phoneNumber: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -33,7 +33,8 @@ class RegisterViewModel @Inject constructor(
                         fullName = fullName,
                         phoneNumber = phoneNumber
                     )
-                    _uiState.value = UiState.Default
+
+                    _uiState.value = UiState.Success
                 }
             } catch (e: Exception) {
                 _uiState.value = when (e) {
@@ -49,5 +50,6 @@ class RegisterViewModel @Inject constructor(
         object Loading : UiState()
         class Error(val throwable: Throwable) : UiState()
         object Default : UiState()
+        object Success : UiState()
     }
 }

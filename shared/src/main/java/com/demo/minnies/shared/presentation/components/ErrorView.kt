@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.sp
 fun ErrorView(message: String, icon: ImageVector, modifier: Modifier) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(

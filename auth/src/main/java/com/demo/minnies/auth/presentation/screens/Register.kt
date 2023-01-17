@@ -19,24 +19,26 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.demo.minnies.shared.presentation.components.DefaultButton
+import com.demo.minnies.shared.presentation.components.MinniesDefaultButton
 import com.demo.minnies.shared.presentation.components.ErrorBar
-import com.demo.minnies.shared.presentation.components.OutlinedTextField
+import com.demo.minnies.shared.presentation.components.MinniesOutlinedTextField
 import com.demo.minnies.shared.presentation.components.PageHeader
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shared.utils.validation.*
 
-const val REGISTER_ERROR_BAR_TEST_TAG = "LOGIN_ERROR_BAR_TEST_TAG"
+const val REGISTER_ERROR_BAR_TEST_TAG = "REGISTER_ERROR_BAR_TEST_TAG"
 
 @Composable
-fun Register(toLoginScreen: () -> Unit) {
+fun Register(gotoLoginScreen: () -> Unit, goBack: () -> Unit) {
 
     val viewModel = hiltViewModel<RegisterViewModel>()
 
-    val uiState = viewModel.uiState.collectAsState()
+    val uiState = viewModel.uiState.collectAsState().value
 
-    RegisterScreen(uiState.value) { fullName, phoneNumber, emailAddress, password ->
+    if (uiState is RegisterViewModel.UiState.Success) goBack()
+
+    RegisterScreen(uiState) { fullName, phoneNumber, emailAddress, password ->
         viewModel.register(
             fullName = fullName,
             phoneNumber = phoneNumber,
@@ -83,7 +85,7 @@ fun RegisterScreen(
         var fullName by remember { mutableStateOf("") }
         val fullNameError = fullName.validateAsName()
 
-        OutlinedTextField(
+        MinniesOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
@@ -120,7 +122,7 @@ fun RegisterScreen(
         var emailAddress by remember { mutableStateOf("") }
         val emailAddressError = emailAddress.validateAsEmail()
 
-        OutlinedTextField(
+        MinniesOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
@@ -157,7 +159,7 @@ fun RegisterScreen(
         var phoneNumber by remember { mutableStateOf("") }
         val phoneNumberError = phoneNumber.validateAsPhoneNumber()
 
-        OutlinedTextField(
+        MinniesOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
@@ -194,7 +196,7 @@ fun RegisterScreen(
         var password by remember { mutableStateOf("") }
         val passwordError = password.validateAsPassword()
 
-        OutlinedTextField(
+        MinniesOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
@@ -231,7 +233,7 @@ fun RegisterScreen(
         var confirmPassword by remember { mutableStateOf("") }
         val confirmPasswordError = password.validateAsConfirmPassword(password)
 
-        OutlinedTextField(
+        MinniesOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
@@ -265,12 +267,14 @@ fun RegisterScreen(
         Spacer(modifier = Modifier.height(30.dp))
 
 
-        DefaultButton(
-            modifier = Modifier, text = when (uiState) {
-                is RegisterViewModel.UiState.Default -> "Create my account"
-                is RegisterViewModel.UiState.Error -> "Create my account"
+        MinniesDefaultButton(
+            modifier = Modifier,
+            text = when (uiState) {
                 is RegisterViewModel.UiState.Loading -> LOADING_TEXT
-            }
+                else -> "Create my account"
+            },
+            enabled = uiState !is RegisterViewModel.UiState.Success,
+            isLoading = uiState is RegisterViewModel.UiState.Loading
         ) {
             register(fullName, phoneNumber, emailAddress, password)
         }

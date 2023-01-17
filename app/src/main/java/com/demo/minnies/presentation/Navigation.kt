@@ -8,9 +8,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.demo.minnies.auth.presentation.AuthScreen
 import com.demo.minnies.auth.presentation.authGraph
-import com.demo.minnies.cart.presentation.cartGraph
 import com.demo.minnies.orders.presentation.ordersGraph
+import com.demo.minnies.presentation.screens.More
+import com.demo.minnies.shop.presentation.cartGraph
+import com.demo.minnies.shop.presentation.screens.Search
 import com.demo.minnies.shop.presentation.shopGraph
 
 @Composable
@@ -26,11 +30,23 @@ fun MinniesNavHost(
     ) {
         shopGraph(navController)
 
+        composable(Screen.Search.route) {
+            Search(navigateToProduct = {
+                navController.navigate("product/$it")
+            })
+        }
+
         ordersGraph(navController)
 
         cartGraph(navController)
 
         authGraph(navController)
+
+        composable(Screen.More.route) {
+            More(gotoAccountScreen = {
+                navController.navigate(AuthScreen.Account.name)
+            })
+        }
     }
 }
 
@@ -48,6 +64,13 @@ sealed class Screen(
         selectedIcon = Icons.Filled.DryCleaning
     )
 
+    object Search : Screen(
+        route = "search",
+        title = "Search",
+        icon = Icons.Outlined.Search,
+        selectedIcon = Icons.Default.Search
+    )
+
     object Orders : Screen(
         route = "orders",
         title = "Orders",
@@ -60,5 +83,12 @@ sealed class Screen(
         title = "Cart",
         icon = Icons.Outlined.ShoppingCart,
         selectedIcon = Icons.Filled.ShoppingCart
+    )
+
+    object More : Screen(
+        route = "more",
+        title = "More",
+        icon = Icons.Outlined.MoreHoriz,
+        selectedIcon = Icons.Filled.MoreHoriz
     )
 }

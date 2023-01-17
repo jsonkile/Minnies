@@ -50,11 +50,12 @@ class UsersDaoTest {
     @Test
     fun getUserByEmailAndPassword_WithExistingEmailAndPassword_ReturnsCorrectMatch() {
         runTest {
-            dao.addUser(User(fullName = "a", emailAddress = "b", phoneNumber = "c", password = "d"))
-            dao.addUser(User(fullName = "e", emailAddress = "f", phoneNumber = "g", password = "h"))
+            dao.addUser(User(fullName = "a", emailAddress = "b", phoneNumber = "c", password = "d", shippingAddress = "q"))
+            dao.addUser(User(fullName = "e", emailAddress = "f", phoneNumber = "g", password = "h", shippingAddress = "o"))
             Assert.assertNotNull(
                 dao.getUserByEmailAndPassword(emailAddress = "f", password = "h").first()
             )
+            Assert.assertEquals("o", dao.getUserByEmail("f").first()?.shippingAddress)
         }
     }
 
@@ -125,7 +126,8 @@ class UsersDaoTest {
                     fullName = "John",
                     emailAddress = "kalu",
                     phoneNumber = "98",
-                    password = "hea¬"
+                    password = "hea¬",
+                    shippingAddress = "ship"
                 )
             )
             Assert.assertEquals("John", dao.getUserByEmail("kalu").first()?.fullName)
@@ -133,10 +135,12 @@ class UsersDaoTest {
                 PartialUser(
                     fullName = "Mike",
                     emailAddress = "kalu",
-                    phoneNumber = "98"
+                    phoneNumber = "98",
+                    shippingAddress = "ship2"
                 )
             )
             Assert.assertEquals("Mike", dao.getUserByEmail("kalu").first()?.fullName)
+            Assert.assertEquals("ship2", dao.getUserByEmail("kalu").first()?.shippingAddress)
         }
     }
 

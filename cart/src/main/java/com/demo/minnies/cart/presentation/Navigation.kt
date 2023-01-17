@@ -9,7 +9,7 @@ import com.demo.minnies.cart.presentation.screen.CartScreen
 fun NavGraphBuilder.cartGraph(navController: NavController) {
     navigation(startDestination = "cart-home", route = "cart") {
         composable("cart-home") {
-            CartScreen(title = "Cart")
+            CartScreen()
         }
     }
 }

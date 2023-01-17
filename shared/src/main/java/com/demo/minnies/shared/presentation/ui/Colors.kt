@@ -27,7 +27,8 @@ val appColors =
         onPrimary = Color.White,
         onTertiary = Color.White,
         tertiaryContainer = wildBlueYonder,
-        onTertiaryContainer = oxfordBlue,
+        onTertiaryContainer = blueYonder,
         secondary = arcticLime,
-        onSecondary = Color.Black
+        onSecondary = Color.Black,
+        scrim = pineTree.copy(alpha = 0.7F)
     )

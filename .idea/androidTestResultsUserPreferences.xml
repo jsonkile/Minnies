@@ -3,6 +3,19 @@
   <component name="AndroidTestResultsUserPreferences">
     <option name="androidTestResultsTableState">
       <map>
+        <entry key="-2139103651">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-2057540476">
           <value>
             <AndroidTestResultsTableState>
@@ -43,6 +56,32 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1968775909">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-1883596584">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-1823666504">
           <value>
             <AndroidTestResultsTableState>
@@ -71,6 +110,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1590963670">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-1555836611">
           <value>
             <AndroidTestResultsTableState>
@@ -92,6 +144,21 @@
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_4_XL_API_33" value="120" />
                   <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-1325370625">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="adb-RZ8R32C9E6B-wPn2td._adb-tls-connect._tcp." value="120" />
+                  <entry key="samsung&#10; SM-A525F" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -131,6 +198,8 @@
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_4_XL_API_33" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="adb-RZ8R32C9E6B-wPn2td._adb-tls-connect._tcp." value="120" />
+                  <entry key="samsung&#10; SM-A525F" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -255,7 +324,46 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-604633678">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-467644517">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-394325209">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-262749285">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
@@ -317,6 +425,7 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="adb-RZ8R32C9E6B-wPn2td._adb-tls-connect._tcp." value="120" />
                   <entry key="samsung&#10; SM-A525F" value="120" />
@@ -339,6 +448,19 @@
           </value>
         </entry>
         <entry key="185980419">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="232113716">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
@@ -496,6 +618,58 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="621706388">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="742108032">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="758890425">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="815895960">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="892246190">
           <value>
             <AndroidTestResultsTableState>
@@ -509,7 +683,7 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
-        <entry key="1061543662">
+        <entry key="960669613">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
@@ -518,6 +692,34 @@
                   <entry key="Tests" value="360" />
                   <entry key="adb-RZ8R32C9E6B-wPn2td._adb-tls-connect._tcp." value="120" />
                   <entry key="samsung&#10; SM-A525F" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1061543662">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="adb-RZ8R32C9E6B-wPn2td._adb-tls-connect._tcp." value="120" />
+                  <entry key="samsung&#10; SM-A525F" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1065271739">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -573,6 +775,20 @@
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_4_XL_API_33" value="120" />
                   <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1454489041">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="adb-RZ8R32C9E6B-wPn2td._adb-tls-connect._tcp." value="120" />
+                  <entry key="samsung&#10; SM-A525F" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -740,6 +956,19 @@
                   <entry key="Tests" value="360" />
                   <entry key="adb-RZ8R32C9E6B-wPn2td._adb-tls-connect._tcp." value="120" />
                   <entry key="samsung&#10; SM-A525F" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1898341991">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_XL_API_33" value="120" />
+                  <entry key="Tests" value="360" />
                 </map>
               </option>
             </AndroidTestResultsTableState>

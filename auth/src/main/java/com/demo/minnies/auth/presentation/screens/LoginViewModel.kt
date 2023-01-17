@@ -3,6 +3,7 @@ package com.demo.minnies.auth.presentation.screens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.demo.minnies.auth.domain.LoginUserUseCase
+import com.demo.minnies.auth.domain.LoginUserUseCaseImpl
 import com.demo.minnies.shared.utils.TIME_OUT_MESSAGE
 import com.demo.minnies.shared.utils.encryption.Encryptor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +16,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val loginUserUseCase: LoginUserUseCase,
     private val encryptor: Encryptor
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Default)
     val uiState = _uiState.asStateFlow()
@@ -28,7 +28,8 @@ class LoginViewModel @Inject constructor(
                     _uiState.value = UiState.Loading
                     delay(2000) // simulate network request
                     loginUserUseCase(emailAddress, encryptor.encrypt(password))
-                    _uiState.value = UiState.Default
+
+                    _uiState.value = UiState.Success
                 }
             } catch (e: Exception) {
                 _uiState.value = when (e) {
@@ -43,5 +44,6 @@ class LoginViewModel @Inject constructor(
         object Loading : UiState()
         class Error(val throwable: Throwable) : UiState()
         object Default : UiState()
+        object Success : UiState()
     }
 }

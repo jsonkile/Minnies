@@ -1,7 +1,7 @@
 package com.demo.minnies.presentation
 
 import com.demo.minnies.auth.data.repos.CacheRepo
-import com.demo.minnies.auth.domain.GetCachedUserUseCase
+import com.demo.minnies.auth.domain.GetCachedUserUseCaseImpl
 import com.demo.minnies.database.room.models.PartialUser
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -28,7 +28,7 @@ class MainActivityViewModelTest {
     lateinit var cacheRepo: CacheRepo
 
     @Inject
-    lateinit var getCachedUserUseCase: GetCachedUserUseCase
+    lateinit var getCachedUserUseCaseImpl: GetCachedUserUseCaseImpl
 
     lateinit var viewModel: MainActivityViewModel
 
@@ -38,7 +38,7 @@ class MainActivityViewModelTest {
     @Before
     fun setup() {
         hiltRule.inject()
-        viewModel = MainActivityViewModel(getCachedUserUseCase)
+        viewModel = MainActivityViewModel(getCachedUserUseCaseImpl)
     }
 
     @Test

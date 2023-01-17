@@ -1,99 +1,57 @@
 package com.demo.minnies.shared.utils.encryption
 
-import com.demo.minnies.shared.data.repos.KeysPreferencesRepository
-import com.demo.minnies.shared.utils.customString
-import kotlinx.coroutines.runBlocking
-import timber.log.Timber
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.ObjectInputStream
-import java.io.ObjectOutputStream
+import android.util.Base64
+import com.demo.minnies.shared.data.repos.KeysRepository
+import com.demo.minnies.shared.utils.PREFERENCE_INITIALIZATION_VECTOR_KEY
+import com.demo.minnies.shared.utils.PREFERENCE_SECRET_KEY_KEY
 import javax.crypto.Cipher
-import javax.crypto.KeyGenerator
-import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
 
-class AESEncryptorImpl @Inject constructor(
-    private val keysPreferencesRepository: KeysPreferencesRepository
-) : Encryptor {
+class AESEncryptorImpl @Inject constructor(private val keysRepository: KeysRepository) : Encryptor {
 
     override suspend fun encrypt(data: String): String {
-        val plainText = data.toByteArray(Charsets.UTF_8)
-        val keygen = KeyGenerator.getInstance("AES")
-        keygen.init(256)
-        val key = keygen.generateKey()
-        saveSecretKey(key)
-        val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
-        cipher.init(Cipher.ENCRYPT_MODE, key)
-        val cipherText = cipher.doFinal(plainText)
-        saveInitializationVector(cipher.iv)
-
-        val sb = StringBuilder()
-        for (b in cipherText) {
-            sb.append(b.toChar())
-        }
-
-        return cipherText.customString()
-    }
-
-    override suspend fun decrypt(data: ByteArray): String {
-        val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
-        val ivSpec = IvParameterSpec(getSavedInitializationVector())
-        cipher.init(Cipher.DECRYPT_MODE, getSavedSecretKey(), ivSpec)
-        val cipherText = cipher.doFinal(data)
-
-        val sb = StringBuilder()
-        for (b in cipherText) {
-            sb.append(b.toChar())
-        }
-
-        return sb.toString()
-    }
-
-    private fun saveSecretKey(secretKey: SecretKey) {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        val oos = ObjectOutputStream(byteArrayOutputStream)
-        oos.writeObject(secretKey)
-        val strToSave =
-            String(
-                android.util.Base64.encode(
-                    byteArrayOutputStream.toByteArray(), android.util.Base64.DEFAULT
+        try {
+            val iv =
+                IvParameterSpec(
+                    keysRepository.getEncryptionInitializationVectorKey()
+                        .toByteArray(charset("UTF-8"))
                 )
-            )
-        runBlocking {
-            keysPreferencesRepository.storeEncryptionSecretKey(strToSave)
-        }
-    }
-
-    private fun getSavedSecretKey(): SecretKey {
-        val strSecretKey = runBlocking { keysPreferencesRepository.getEncryptionSecretKey() }
-        val bytes = android.util.Base64.decode(strSecretKey, android.util.Base64.DEFAULT)
-        val ois = ObjectInputStream(ByteArrayInputStream(bytes))
-        return ois.readObject() as SecretKey
-    }
-
-    private fun saveInitializationVector(initializationVector: ByteArray) {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        val oos = ObjectOutputStream(byteArrayOutputStream)
-        oos.writeObject(initializationVector)
-        val strToSave =
-            String(
-                android.util.Base64.encode(
-                    byteArrayOutputStream.toByteArray(),
-                    android.util.Base64.DEFAULT
+            val keySpec =
+                SecretKeySpec(
+                    keysRepository.getEncryptionSecretKey().toByteArray(charset("UTF-8")),
+                    "AES"
                 )
-            )
-        runBlocking {
-            keysPreferencesRepository.storeEncryptionInitializationVectorKey(strToSave)
+            val cipher: Cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec, iv)
+            val encrypted: ByteArray = cipher.doFinal(data.toByteArray(charset("UTF-8")))
+            return Base64.encodeToString(encrypted, Base64.DEFAULT)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
         }
+        return ""
     }
 
-    private fun getSavedInitializationVector(): ByteArray {
-        val strInitializationVector =
-            runBlocking { keysPreferencesRepository.getEncryptionInitializationVectorKey() }
-        val bytes = android.util.Base64.decode(strInitializationVector, android.util.Base64.DEFAULT)
-        val ois = ObjectInputStream(ByteArrayInputStream(bytes))
-        return ois.readObject() as ByteArray
+    override suspend fun decrypt(data: String): String {
+        try {
+            val iv =
+                IvParameterSpec(
+                    keysRepository.getEncryptionInitializationVectorKey()
+                        .toByteArray(charset("UTF-8"))
+                )
+            val keySpec =
+                SecretKeySpec(
+                    keysRepository.getEncryptionSecretKey().toByteArray(charset("UTF-8")),
+                    "AES"
+                )
+            val cipher: Cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
+            cipher.init(Cipher.DECRYPT_MODE, keySpec, iv)
+            val original: ByteArray = cipher.doFinal(Base64.decode(data, Base64.DEFAULT))
+            return String(original)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+        return ""
     }
 }

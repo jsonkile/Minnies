@@ -17,7 +17,7 @@ import com.demo.minnies.shared.utils.Error
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OutlinedTextField(
+fun MinniesOutlinedTextField(
     modifier: Modifier,
     keyboardOptions: KeyboardOptions,
     label: @Composable () -> Unit,
@@ -39,9 +39,7 @@ fun OutlinedTextField(
     Column {
         OutlinedTextField(
             value = value,
-            onValueChange = {
-                onValueChanged(it)
-            },
+            onValueChange = { onValueChanged(it) },
             modifier = modifier,
             singleLine = singleLine,
             keyboardOptions = keyboardOptions,

@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -35,14 +36,20 @@ fun LandingScreen(
 ) {
 
     //Base screens found on Bottom Navigation Bar
-    val homeScreens = listOf(Screen.Shop, Screen.Orders, Screen.Cart)
+    val homeScreens = listOf(Screen.Shop, Screen.Search, Screen.Orders, Screen.Cart, Screen.More)
 
-    val currentDestination = navController.currentBackStackEntryAsState().value?.destination
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
 
     val showBottomBarState = rememberSaveable { (mutableStateOf(false)) }
     val showLoginPromptState = rememberSaveable { (mutableStateOf(false)) }
 
-    showBottomBarState.value = currentDestination?.route in homeScreens.map { "${it.route}-home" }
+    showBottomBarState.value =
+        currentDestination?.route in mutableListOf<String>().apply {
+            addAll(homeScreens.map { "${it.route}-home" })
+            add(Screen.More.route)
+            add(Screen.Search.route)
+        }
 
     showLoginPromptState.value = currentDestination?.route !in AuthScreen.values().map { it.name }
 
@@ -55,7 +62,6 @@ fun LandingScreen(
             content = {
                 NavigationBar(modifier = Modifier.testTag(NAVIGATION_BAR_TEST_TAG)) {
 
-
                     homeScreens.forEachIndexed { index, screen ->
                         NavigationBarItem(modifier = Modifier.semantics {
                             contentDescription = "${screen.title} page button"
@@ -67,10 +73,8 @@ fun LandingScreen(
                                 )
                             },
                             label = { Text(screen.title) },
-                            selected = selectedItem == index,
+                            selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                             onClick = {
-                                selectedItem = index
-
                                 navController.navigate(screen.route) {
                                     popUpTo(navController.graph.findStartDestination().id) {
                                         saveState = true
@@ -86,14 +90,15 @@ fun LandingScreen(
     }, topBar = {
         Column {
             if (loggedInUser == null && showLoginPromptState.value) SignInPrompt(createAccount = {
-                navController.navigate(AuthScreen.CreateAccount.name)
+                navController.navigate(AuthScreen.Register.name)
             }, login = {
                 navController.navigate(AuthScreen.Login.name)
             })
 
-            if (showBottomBarState.value.not()) MinniesToolbar(toolBarTitle = "") {
-                navController.popBackStack()
-            }
+            if (showBottomBarState.value.not())
+                MinniesToolbar(
+                    toolBarTitle = "", showNavigationIcon = true
+                ) { navController.popBackStack() }
         }
     }) { innerPadding ->
 
