@@ -2,8 +2,8 @@ package com.demo.minnies.database.data.room
 
 import com.demo.minnies.database.room.AppDatabase
 import com.demo.minnies.database.room.daos.UsersDao
-import com.demo.minnies.database.room.models.PartialUser
-import com.demo.minnies.database.room.models.User
+import com.demo.minnies.database.models.PartialUser
+import com.demo.minnies.database.models.User
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi

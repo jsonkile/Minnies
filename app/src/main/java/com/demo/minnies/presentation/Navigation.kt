@@ -11,9 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.demo.minnies.auth.presentation.AuthScreen
 import com.demo.minnies.auth.presentation.authGraph
+import com.demo.minnies.cart.presentation.cartGraph
 import com.demo.minnies.orders.presentation.ordersGraph
 import com.demo.minnies.presentation.screens.More
-import com.demo.minnies.shop.presentation.cartGraph
 import com.demo.minnies.shop.presentation.screens.Search
 import com.demo.minnies.shop.presentation.shopGraph
 

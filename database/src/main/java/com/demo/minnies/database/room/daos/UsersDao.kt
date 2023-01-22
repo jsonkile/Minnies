@@ -6,9 +6,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.demo.minnies.database.room.models.PartialUser
-import com.demo.minnies.database.room.models.ShippingAddress
-import com.demo.minnies.database.room.models.User
+import com.demo.minnies.database.models.PartialUser
+import com.demo.minnies.database.models.ShippingAddress
+import com.demo.minnies.database.models.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao

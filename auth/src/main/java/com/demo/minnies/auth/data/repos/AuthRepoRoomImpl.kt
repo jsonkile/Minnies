@@ -1,7 +1,7 @@
 package com.demo.minnies.auth.data.repos
 
-import com.demo.minnies.database.room.models.PartialUser
-import com.demo.minnies.database.room.models.User
+import com.demo.minnies.database.models.PartialUser
+import com.demo.minnies.database.models.User
 import com.demo.minnies.shared.utils.customByteArray
 import com.demo.minnies.shared.utils.encryption.Encryptor
 import kotlinx.coroutines.ExperimentalCoroutinesApi

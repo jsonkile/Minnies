@@ -1,6 +1,7 @@
 package com.demo.minnies.shop.domain.usescases
 
 
+import com.demo.minnies.shared.domain.GetUserCurrencyPreferenceUseCase
 import com.demo.minnies.shared.domain.GetUserCurrencyPreferenceUseCaseImpl
 import com.demo.minnies.shared.utils.Currency
 import com.demo.minnies.shared.utils.CustomExceptions
@@ -19,12 +20,12 @@ interface FetchProductByIdUseCase {
 
 class FetchProductByIdUseCaseImpl @Inject constructor(
     private val repo: ProductsRepo,
-    private val getUserCurrencyPreferenceUseCaseImpl: GetUserCurrencyPreferenceUseCaseImpl
+    private val getUserCurrencyPreferenceUseCase: GetUserCurrencyPreferenceUseCase
 ) : FetchProductByIdUseCase {
 
     override operator fun invoke(id: Int): Flow<ViewProduct> {
         val item = repo.getProductById(id)
-        val currency = getUserCurrencyPreferenceUseCaseImpl()
+        val currency = getUserCurrencyPreferenceUseCase()
         val currencyFormattedItem = combine(item, currency) { product, curr ->
             product?.toView(Currency.valueOf(curr))
         }

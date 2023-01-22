@@ -3,7 +3,7 @@ package com.demo.minnies.shop.presentation.screens
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.demo.minnies.auth.domain.GetCachedUserUseCase
-import com.demo.minnies.database.room.models.PartialUser
+import com.demo.minnies.database.models.PartialUser
 import com.demo.minnies.shared.domain.GetUserCurrencyPreferenceUseCase
 import com.demo.minnies.shared.utils.CustomExceptions
 import com.demo.minnies.shop.domain.usescases.AddToCartUseCase

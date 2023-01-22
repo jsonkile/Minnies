@@ -1,5 +1,6 @@
 package com.demo.minnies.shared.utils
 
+import org.apache.commons.lang3.RandomStringUtils
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -33,3 +34,5 @@ fun Double.toFormattedPriceWithSign(currency: Currency): String {
         )
     }"
 }
+
+fun getRandomString(length: Int) = RandomStringUtils.randomAlphabetic(length)

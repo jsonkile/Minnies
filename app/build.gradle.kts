@@ -91,6 +91,7 @@ dependencies {
     implementation(project(":notifications"))
     implementation(project(":orders"))
     implementation(project(":auth"))
+    implementation(project(":cart"))
     implementation(project(":products"))
 
     implementation("com.google.dagger:hilt-android:$hiltVersion")

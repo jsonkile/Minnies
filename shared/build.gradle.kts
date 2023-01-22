@@ -56,6 +56,7 @@ dependencies {
     val hiltNavigationComposeVersion: String by rootProject.extra
     val kotlinSerializationVersion: String by rootProject.extra
     val easyValidation: String by rootProject.extra
+    val apacheCommons: String by rootProject.extra
 
     api(project(":database"))
 
@@ -96,6 +97,7 @@ dependencies {
     api("com.jakewharton.timber:timber:$timberVersion")
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
     implementation("com.wajahatkarim:easyvalidation-core:$easyValidation")
+    implementation("org.apache.commons:commons-lang3:$apacheCommons")
 
     //test
     testImplementation("junit:junit:$jUnitVersion")

@@ -30,4 +30,8 @@ object TestDBModule {
     @Singleton
     @Provides
     fun providesCartDao(db: AppDatabase) = db.cartDao()
+
+    @Singleton
+    @Provides
+    fun providesOrderDao(db: AppDatabase) = db.ordersDao()
 }

@@ -2,7 +2,7 @@ package com.demo.minnies.presentation
 
 import com.demo.minnies.auth.data.repos.CacheRepo
 import com.demo.minnies.auth.domain.GetCachedUserUseCaseImpl
-import com.demo.minnies.database.room.models.PartialUser
+import com.demo.minnies.database.models.PartialUser
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.demo.minnies.auth.domain.GetCachedUserUseCase
-import com.demo.minnies.database.room.models.PartialUser
+import com.demo.minnies.database.models.PartialUser
 import com.demo.minnies.shared.domain.GetUserCurrencyPreferenceUseCase
 import com.demo.minnies.shared.utils.Currency
 import com.demo.minnies.shop.domain.usescases.AddToCartUseCase

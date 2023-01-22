@@ -20,7 +20,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.demo.minnies.auth.presentation.AuthScreen
 import com.demo.minnies.auth.presentation.components.SignInPrompt
-import com.demo.minnies.database.room.models.PartialUser
+import com.demo.minnies.database.models.PartialUser
 import com.demo.minnies.presentation.Screen
 import com.demo.minnies.shared.presentation.components.MinniesToolbar
 import com.demo.minnies.shared.presentation.ui.MinniesTheme

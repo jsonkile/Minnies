@@ -46,6 +46,9 @@ ext {
 
     extra["timberVersion"] = "5.0.1"
     extra["easyValidation"] = "1.0.4"
+
+    extra["mockkVersion"] = "1.13.3"
+    extra["apacheCommons"] = "3.12.0"
 }
 
 tasks.register("clean", Delete::class) {

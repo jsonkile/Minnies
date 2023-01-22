@@ -2,11 +2,8 @@ package com.demo.minnies.database.data.room
 
 import com.demo.minnies.database.room.AppDatabase
 import com.demo.minnies.database.room.daos.CartDao
-import com.demo.minnies.database.room.daos.ProductsDao
-import com.demo.minnies.database.room.models.CartItem
-import com.demo.minnies.database.room.models.Category
-import com.demo.minnies.database.room.models.PartialCartItem
-import com.demo.minnies.database.room.models.Product
+import com.demo.minnies.database.models.CartItem
+import com.demo.minnies.database.models.CartItemIdAndQuantity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -63,7 +60,7 @@ class CartDaoTest {
     fun update_UpdatesItem_WhenItemPassed() {
         runTest {
             dao.insert(CartItem(productId = 9, quantity = 2, userId = 1, id = 1))
-            dao.update(PartialCartItem(id = 1, 6))
+            dao.update(CartItemIdAndQuantity(id = 1, 6))
 
             Assert.assertEquals(dao.getAll().first().first().quantity, 6)
         }

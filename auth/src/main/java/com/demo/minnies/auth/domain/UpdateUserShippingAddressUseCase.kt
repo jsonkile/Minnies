@@ -1,8 +1,8 @@
 package com.demo.minnies.auth.domain
 
 import com.demo.minnies.auth.data.repos.UserRepo
-import com.demo.minnies.database.room.models.PartialUser
-import com.demo.minnies.database.room.models.ShippingAddress
+import com.demo.minnies.database.models.PartialUser
+import com.demo.minnies.database.models.ShippingAddress
 import javax.inject.Inject
 
 interface UpdateUserShippingAddressUseCase {

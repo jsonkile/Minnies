@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.demo.minnies.shop"
+    namespace = "com.demo.minnies.products"
     val compileSdkVersion: Int by rootProject.extra
     val minSdkVersion: Int by rootProject.extra
 

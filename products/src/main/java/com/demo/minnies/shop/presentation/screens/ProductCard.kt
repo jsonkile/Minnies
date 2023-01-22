@@ -29,7 +29,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.demo.minnies.database.room.models.Category
+import com.demo.minnies.database.models.Category
 import com.demo.minnies.shop.presentation.models.ViewProduct
 
 const val SHOP_ITEM_CARD_TEST_TAG = "SHOP_ITEM_CARD_TEST_TAG"

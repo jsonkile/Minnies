@@ -1,16 +1,29 @@
 package com.demo.minnies.cart.data.repos
 
-import com.demo.minnies.database.room.models.CartItem
+import com.demo.minnies.database.models.*
 import kotlinx.coroutines.flow.Flow
 
 interface CartRepo {
 
-    fun addItem(cartItem: CartItem)
+    suspend fun addItem(cartItem: CartItem): Long
 
-    fun updateItem(cartItem: CartItem)
+    suspend fun updateItem(cartItem: CartItemIdAndQuantity)
 
-    fun removeItem(id: Int)
+    suspend fun updateItem(cartItem: CartItemIdAndStatus)
 
-    fun getAllItems() : Flow<List<CartItem>>
+    suspend fun updateItems(cartItems: List<CartItemIdAndStatus>): Int
 
+    suspend fun removeItem(id: Int)
+
+    suspend fun getItem(id: Long): CartItem?
+
+    suspend fun getItemByProductAndUser(productId: Int, userId: Long): CartItem?
+
+    fun getAllItems(): Flow<List<CartItem>>
+
+    fun getCart(userId: Long): Flow<List<CartItem>>
+
+    fun getCartWithDetails(userId: Long): Flow<List<CartItemDetail>>
+
+    suspend fun makeOrder(order: Order): Long
 }

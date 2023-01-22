@@ -6,7 +6,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import com.demo.minnies.shared.utils.Currency
-import com.demo.minnies.shop.data.fakeProductsDataSets
+import com.demo.minnies.database.mock.mockProductsDataSet
 import com.demo.minnies.shop.presentation.models.toView
 import org.junit.Rule
 import org.junit.Test
@@ -20,12 +20,12 @@ class ShopKtTest {
     fun whenFeaturedItemsExists_FeaturedSectionShows() {
 
         val featuredItems =
-            fakeProductsDataSets.filter { it.featured }.map { item ->
+            mockProductsDataSet.filter { it.featured }.map { item ->
                 item.toView(Currency.USD).copy(image = "")
             }
 
         val itemsByCategories =
-            fakeProductsDataSets.map { item ->
+            mockProductsDataSet.map { item ->
                 item.toView(Currency.USD).copy(image = "")
             }.groupBy { it.category }
 

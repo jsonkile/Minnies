@@ -5,7 +5,7 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.navigation.testing.TestNavHostController
 import com.demo.minnies.auth.presentation.components.SIGN_IN_PROMPT_TEST_TAG
-import com.demo.minnies.database.room.models.PartialUser
+import com.demo.minnies.database.models.PartialUser
 import com.demo.minnies.presentation.Screen
 import org.junit.Rule
 import org.junit.Test

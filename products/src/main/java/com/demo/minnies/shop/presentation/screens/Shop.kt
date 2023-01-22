@@ -18,13 +18,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.demo.minnies.database.room.models.Category
+import com.demo.minnies.database.models.Category
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shared.utils.Currency
-import com.demo.minnies.shop.data.fakeProductsDataSets
 import com.demo.minnies.shop.presentation.models.ViewProduct
 import com.demo.minnies.shop.presentation.models.toView
+import com.demo.minnies.shop.util.mockProducts
 
 const val SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG = "SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG"
 const val SHOP_SCREEN_FEATURED_ITEMS_HEADING_TEST_TAG =
@@ -133,9 +133,10 @@ fun ShopScreen(
 @Preview
 @Composable
 fun PreviewShopScreen() {
-    val featuredItems = fakeProductsDataSets.filter { it.featured }.map { item -> item.toView(Currency.USD) }
+    val featuredItems =
+        mockProducts.filter { it.featured }.map { item -> item.toView(Currency.USD) }
     val itemsByCategories =
-        fakeProductsDataSets.map { item -> item.toView(Currency.USD) }.groupBy { it.category }
+        mockProducts.map { item -> item.toView(Currency.USD) }.groupBy { it.category }
     MinniesTheme {
         ShopScreen(title = "Shop", featuredItems, itemsByCategories) {}
     }

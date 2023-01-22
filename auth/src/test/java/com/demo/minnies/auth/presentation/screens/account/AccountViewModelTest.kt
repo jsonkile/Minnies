@@ -3,8 +3,8 @@ package com.demo.minnies.auth.presentation.screens.account
 import com.demo.minnies.auth.domain.GetCachedUserUseCase
 import com.demo.minnies.auth.domain.GetUserUseCase
 import com.demo.minnies.auth.domain.UpdateUserShippingAddressUseCase
-import com.demo.minnies.database.room.models.PartialUser
-import com.demo.minnies.database.room.models.ShippingAddress
+import com.demo.minnies.database.models.PartialUser
+import com.demo.minnies.database.models.ShippingAddress
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

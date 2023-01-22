@@ -2,6 +2,7 @@ package com.demo.minnies.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.demo.minnies.Minnies
 import com.demo.minnies.auth.domain.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
