@@ -10,8 +10,7 @@ data class CartItem(
     var id: Long = 0,
     var userId: Long,
     var productId: Int,
-    var quantity: Int,
-    var status: CartStatus = CartStatus.Open
+    var quantity: Int
 )
 
 @DatabaseView("select cart_items.id, cart_items.quantity, cart_items.userId, products.id as productId, products.name as productName, products.image as productImage, products.price as productPrice from cart_items inner join products on cart_items.productId = products.id")
@@ -25,10 +24,4 @@ data class CartItemDetail(
     val productPrice: Double,
 )
 
-enum class CartStatus {
-    Open, Closed
-}
-
 data class CartItemIdAndQuantity(val id: Long, val quantity: Int)
-
-data class CartItemIdAndStatus(val id: Long, val status: CartStatus)

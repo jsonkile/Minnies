@@ -7,8 +7,11 @@ data class ViewOrder(
     val status: OrderStatus,
     val createdTime: String,
     val items: List<OrderContent>,
-    val progress: Int
+    val progress: Int,
+    val ref: String,
+    val totalAmount: String
 )
+
 
 data class OrderContent(
     val productId: Long,

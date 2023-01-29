@@ -30,8 +30,8 @@ fun MinniesDefaultButton(
 ) {
     Button(
         modifier = modifier,
-        enabled = enabled,
-        onClick = { if (isLoading.not()) clickAction() }) {
+        enabled = enabled && !isLoading,
+        onClick = { clickAction() }) {
 
         Row(
             modifier = Modifier.padding(vertical = 5.dp),

@@ -11,12 +11,12 @@ import com.demo.minnies.database.room.daos.UsersDao
 import com.demo.minnies.database.room.daos.OrdersDao
 
 @Database(
-    version = 10,
-    entities = [Product::class, User::class, CartItem::class, Order::class],
-    views = [CartItemDetail::class],
+    version = 11,
+    entities = [Product::class, User::class, CartItem::class, Order::class, OrderItem::class],
+    views = [CartItemDetail::class, OrderItemDetail::class],
     exportSchema = false
 )
-@TypeConverters(value = [ProductCategoryConverter::class, IntListConverter::class, CartStatusConverter::class, LongListConverter::class, OrderStatusConverter::class])
+@TypeConverters(value = [ProductCategoryConverter::class, IntListConverter::class, LongListConverter::class, OrderStatusConverter::class])
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun productsDao(): ProductsDao

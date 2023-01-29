@@ -10,7 +10,7 @@ data class ViewCartItem(
     val productId: Int,
     val productName: String,
     val productImage: String,
-    val currency: Currency,
+    val currency: Currency = Currency.USD,
     val baseProductPrice: Double, //Product price in dollars
     val convertedProductPrice: Double = baseProductPrice * currency.perDollar, //Product price in user's selected currency
     val formattedProductPrice: String,

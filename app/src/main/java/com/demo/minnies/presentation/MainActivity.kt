@@ -8,9 +8,9 @@ import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.demo.minnies.auth.presentation.AuthScreen
 import com.demo.minnies.presentation.screens.LandingScreen
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
+import com.demo.minnies.shared.utils.AuthScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 

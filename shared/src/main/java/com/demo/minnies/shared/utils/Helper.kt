@@ -4,6 +4,8 @@ import org.apache.commons.lang3.RandomStringUtils
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 fun ByteArray.customString(): String {
@@ -35,4 +37,13 @@ fun Double.toFormattedPriceWithSign(currency: Currency): String {
     }"
 }
 
-fun getRandomString(length: Int) = RandomStringUtils.randomAlphabetic(length)
+fun getRandomString(length: Int): String = RandomStringUtils.randomNumeric(length)
+
+fun getDateTime(timestamp: Long): String {
+    return try {
+        val simpleDateFormat = SimpleDateFormat("MM/dd/yyyy, HH:mm", Locale.ENGLISH)
+        simpleDateFormat.format(Date(timestamp))
+    } catch (e: Exception) {
+        "-"
+    }
+}

@@ -2,6 +2,9 @@ package com.demo.minnies.shop.util
 
 import com.demo.minnies.database.models.Category
 import com.demo.minnies.database.models.Product
+import com.demo.minnies.shared.utils.Currency
+import com.demo.minnies.shared.utils.toFormattedPrice
+import com.demo.minnies.shop.presentation.models.ViewProduct
 
 /**
  * A sample products data set to prepopulate DB with
@@ -151,3 +154,22 @@ val mockProducts = listOf(
         rating = 4.5
     )
 )
+
+
+fun Product.toView(userCurrencyPreference: Currency): ViewProduct {
+
+    return ViewProduct(
+        name = name,
+        description = description,
+        formattedPrice = "${userCurrencyPreference.sign}${
+            price.toFormattedPrice(userCurrencyPreference)
+        }",
+        price = price,
+        sizes = sizes,
+        image = image,
+        category = category,
+        featured = featured,
+        rating = rating,
+        id = id
+    )
+}

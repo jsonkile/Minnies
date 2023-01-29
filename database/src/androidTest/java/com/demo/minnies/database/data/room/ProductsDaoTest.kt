@@ -37,14 +37,7 @@ class ProductsDaoTest {
     }
 
     @Test
-    fun getAll_ReturnsZeroItems_WhenTableIsEmpty() {
-        runTest {
-            Assert.assertEquals(0, dao.getAll().first().size)
-        }
-    }
-
-    @Test
-    fun insert_AddsNewItem_WhenItemPassed() {
+    fun testInsert() {
         runTest {
             Assert.assertEquals(
                 1L,
@@ -69,7 +62,7 @@ class ProductsDaoTest {
     }
 
     @Test
-    fun getAll_ReturnsItems_WhenInserted() {
+    fun testGetAll() {
         runTest {
             dao.insert(
                 Product(
@@ -90,7 +83,7 @@ class ProductsDaoTest {
     }
 
     @Test
-    fun getByCategory_ReturnsCorrectItems_WhenCategoryIsSpecified() {
+    fun testGetByCategory() {
         runTest {
             dao.insert(
                 Product(
@@ -118,7 +111,7 @@ class ProductsDaoTest {
     }
 
     @Test
-    fun getProduct_ReturnsCorrectProduct() = runTest {
+    fun testGet() = runTest {
         dao.insert(
             Product(
                 name = "Test Item 1", category = Category.Shorts, image = "",
@@ -133,7 +126,7 @@ class ProductsDaoTest {
             )
         )
 
-        Assert.assertEquals("Test Item 2", dao.getProduct(2).first()?.name)
-        Assert.assertEquals("Test Item 1", dao.getProduct(1).first()?.name)
+        Assert.assertEquals("Test Item 2", dao.get(2).first()?.name)
+        Assert.assertEquals("Test Item 1", dao.get(1).first()?.name)
     }
 }

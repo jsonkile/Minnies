@@ -7,13 +7,9 @@ interface CartRepo {
 
     suspend fun addItem(cartItem: CartItem): Long
 
-    suspend fun updateItem(cartItem: CartItemIdAndQuantity)
+    suspend fun updateQuantity(cartItem: CartItemIdAndQuantity)
 
-    suspend fun updateItem(cartItem: CartItemIdAndStatus)
-
-    suspend fun updateItems(cartItems: List<CartItemIdAndStatus>): Int
-
-    suspend fun removeItem(id: Int)
+    suspend fun removeItem(id: Long)
 
     suspend fun getItem(id: Long): CartItem?
 
@@ -25,5 +21,5 @@ interface CartRepo {
 
     fun getCartWithDetails(userId: Long): Flow<List<CartItemDetail>>
 
-    suspend fun makeOrder(order: Order): Long
+    suspend fun makeOrder(order: Order, orderItems: List<OrderItem>, userId: Long)
 }

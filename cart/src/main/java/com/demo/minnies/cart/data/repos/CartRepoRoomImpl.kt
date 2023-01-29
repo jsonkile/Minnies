@@ -12,19 +12,11 @@ class CartRepoRoomImpl @Inject constructor(
 ) : CartRepo {
     override suspend fun addItem(cartItem: CartItem) = cartDao.insert(cartItem)
 
-    override suspend fun updateItem(cartItem: CartItemIdAndQuantity) {
-        cartDao.update(cartItem)
+    override suspend fun updateQuantity(cartItem: CartItemIdAndQuantity) {
+        cartDao.updateQuantity(cartItem)
     }
 
-    override suspend fun updateItem(cartItem: CartItemIdAndStatus) {
-        cartDao.update(cartItem)
-    }
-
-    override suspend fun updateItems(cartItems: List<CartItemIdAndStatus>): Int {
-        return cartDao.update(cartItems)
-    }
-
-    override suspend fun removeItem(id: Int) {
+    override suspend fun removeItem(id: Long) {
         cartDao.delete(id)
     }
 
@@ -40,5 +32,8 @@ class CartRepoRoomImpl @Inject constructor(
     override fun getCartWithDetails(userId: Long): Flow<List<CartItemDetail>> =
         cartDao.getCartItemsWithDetails(userId)
 
-    override suspend fun makeOrder(order: Order) = ordersDao.insert(order)
+    override suspend fun makeOrder(order: Order, orderItems: List<OrderItem>, userId: Long) {
+        ordersDao.insertOrderAndItems(order, orderItems)
+        cartDao.deleteAll(userId)
+    }
 }

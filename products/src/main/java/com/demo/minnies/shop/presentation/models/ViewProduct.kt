@@ -20,21 +20,3 @@ data class ViewProduct(
     var featured: Boolean = false,
     var rating: Double = 0.0
 )
-
-fun Product.toView(userCurrencyPreference: Currency): ViewProduct {
-
-    return ViewProduct(
-        name = name,
-        description = description,
-        formattedPrice = "${userCurrencyPreference.sign}${
-            price.toFormattedPrice(userCurrencyPreference)
-        }",
-        price = price,
-        sizes = sizes,
-        image = image,
-        category = category,
-        featured = featured,
-        rating = rating,
-        id = id
-    )
-}

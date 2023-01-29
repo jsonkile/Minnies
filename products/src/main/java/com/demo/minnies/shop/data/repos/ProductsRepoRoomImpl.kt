@@ -21,7 +21,7 @@ class ProductsRepoRoomImpl @Inject constructor(
 
     override fun getFeaturedItems() = productsDao.getFeaturedItems()
 
-    override fun getProductById(id: Int) = productsDao.getProduct(id)
+    override fun getProductById(id: Int) = productsDao.get(id)
 
     override fun searchProducts(term: String) = productsDao.searchProducts(term)
 

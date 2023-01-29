@@ -7,21 +7,29 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
+import com.demo.minnies.shared.utils.ProductScreen
 import com.demo.minnies.shop.presentation.screens.Product
+import com.demo.minnies.shop.presentation.screens.Search
 import com.demo.minnies.shop.presentation.screens.Shop
 import com.demo.minnies.shop.presentation.screens.ShopViewModel
 
 fun NavGraphBuilder.shopGraph(navController: NavController) {
-    navigation(startDestination = "shop-home", route = "shop") {
-        composable("shop-home") {
+    navigation(startDestination = ProductScreen.Shop.name, route = "products") {
+        composable(ProductScreen.Shop.name) {
             val shopViewModel = hiltViewModel<ShopViewModel>()
             Shop(title = "Shop", viewModel = shopViewModel) {
-                navController.navigate("product/$it")
+                navController.navigate("${ProductScreen.Product.name}/$it")
             }
         }
 
+        composable(ProductScreen.Search.name) {
+            Search(navigateToProduct = {
+                navController.navigate("product/$it")
+            })
+        }
+
         composable(
-            "product/{id}",
+            "${ProductScreen.Product.name}/{id}",
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) {
 
@@ -30,3 +38,4 @@ fun NavGraphBuilder.shopGraph(navController: NavController) {
         }
     }
 }
+

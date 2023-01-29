@@ -1,8 +1,6 @@
 package com.demo.minnies.database.room.converters
 
 import androidx.room.TypeConverter
-import com.demo.minnies.database.models.CartStatus
-import com.demo.minnies.database.models.Category
 import com.demo.minnies.database.models.OrderStatus
 
 class OrderStatusConverter {

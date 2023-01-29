@@ -2,6 +2,7 @@ package com.demo.minnies.cart.presentation.screens.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.demo.minnies.cart.domain.usecases.DeleteCartItemUseCase
 import com.demo.minnies.cart.presentation.screens.models.ViewCartItem
 import com.demo.minnies.database.models.CartItemIdAndQuantity
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CartViewModel @Inject constructor(
     fetchCartUseCase: com.demo.minnies.cart.domain.usecases.FetchCartUseCase,
-    private val updateCartItemUseCase: com.demo.minnies.cart.domain.usecases.UpdateCartItemUseCase
+    private val updateCartItemUseCase: com.demo.minnies.cart.domain.usecases.UpdateCartItemUseCase,
+    private val deleteCartItemUseCase: DeleteCartItemUseCase
 ) :
     ViewModel() {
 
@@ -41,6 +43,17 @@ class CartViewModel @Inject constructor(
                     )
                 )
 
+                _snackBarMessage.trySend("Your cart was updated.")
+            } catch (e: Exception) {
+                _snackBarMessage.trySend(e.message.orEmpty())
+            }
+        }
+    }
+
+    fun deleteCartItem(id: Long) {
+        viewModelScope.launch {
+            try {
+                deleteCartItemUseCase(id)
                 _snackBarMessage.trySend("Your cart was updated.")
             } catch (e: Exception) {
                 _snackBarMessage.trySend(e.message.orEmpty())

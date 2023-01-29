@@ -43,7 +43,7 @@ class NavigationKtTest {
     @Test
     fun minniesNavHost_verifyRootNodesCount() {
         val nodesCount = navController.graph.nodes.size()
-        assertEquals(Screen::class.nestedClasses.size, nodesCount)
+        assertEquals(BottomNavigationDestination::class.nestedClasses.size, nodesCount)
     }
 
     @Test

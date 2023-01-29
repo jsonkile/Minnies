@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.NoteAdd
+import androidx.compose.material.icons.filled.PostAdd
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -103,7 +106,7 @@ fun CheckoutSummary(
 
 
         Text(
-            text = shippingAddress,
+            text = shippingAddress.ifEmpty { "Please add your address" },
             modifier = Modifier.constrainAs(address) {
                 top.linkTo(addressLabel.bottom, 10.dp)
                 start.linkTo(totalPriceLabel.start)
@@ -113,13 +116,14 @@ fun CheckoutSummary(
                 width = Dimension.fillToConstraints
             },
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
-            color = MaterialTheme.colorScheme.onBackground,
-            fontSize = 13.sp
+            color = if (shippingAddress.isNotEmpty()) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onError,
+            fontSize = if (shippingAddress.isNotEmpty()) 13.sp else 12.sp,
+            fontStyle = if (shippingAddress.isNotEmpty()) FontStyle.Normal else FontStyle.Italic
         )
 
 
         Image(
-            imageVector = Icons.Default.Edit,
+            imageVector = if (shippingAddress.isNotEmpty()) Icons.Default.Edit else Icons.Default.AddCircle,
             contentDescription = "Change address",
             modifier = Modifier
                 .constrainAs(updateAddressControl) {
@@ -153,7 +157,7 @@ fun PreviewCheckoutSummary() {
                 .wrapContentHeight(),
             totalCartCount = 3,
             totalCheckoutAmount = "N3,000",
-            shippingAddress = "Eastern by pass"
+            shippingAddress = ""
         ) {
 
         }

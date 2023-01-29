@@ -7,8 +7,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
@@ -26,38 +24,49 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.demo.minnies.cart.presentation.screens.cart.ERROR_AREA_TEST_TAG
 import com.demo.minnies.cart.presentation.screens.cart.LOADING_TEST_TAG
 import com.demo.minnies.cart.presentation.screens.models.ViewCartItem
 import com.demo.minnies.shared.presentation.components.MinniesDefaultButton
-import com.demo.minnies.shared.presentation.components.ErrorView
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shared.utils.Currency
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 
 
 @Composable
-fun Checkout(viewModel: CheckoutViewModel, gotoAccountScreen: () -> Unit) {
-    val uiState = viewModel.uiState.collectAsState(initial = CheckoutViewModel.UiState.Empty).value
+fun Checkout(
+    viewModel: CheckoutViewModel,
+    gotoAccountScreen: () -> Unit,
+    gotoOrdersScreen: () -> Unit
+) {
+    val uiState = viewModel.uiState.collectAsState().value
     val scaffoldState = rememberScaffoldState()
 
-    CheckoutScreen(uiState, scaffoldState, gotoAccountScreen)
+    CheckoutScreen(uiState, scaffoldState, gotoAccountScreen) { viewModel.checkout() }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(viewModel.snackBarMessage) {
         viewModel.snackBarMessage.collectLatest { message ->
             scaffoldState.snackbarHostState.showSnackbar(
                 message = message, duration = SnackbarDuration.Short
             )
         }
     }
+
+    LaunchedEffect(viewModel.checkoutCompleteEvent) {
+        viewModel.checkoutCompleteEvent.collectLatest {
+            gotoOrdersScreen()
+        }
+    }
 }
+
 
 @Composable
 fun CheckoutScreen(
     uiState: CheckoutViewModel.UiState,
     scaffoldState: ScaffoldState,
-    gotoAccountScreen: () -> Unit
+    gotoAccountScreen: () -> Unit,
+    checkout: () -> Unit
 ) {
     val lazyListState = rememberLazyListState()
 
@@ -66,108 +75,84 @@ fun CheckoutScreen(
     ) { padding ->
 
         Box(modifier = Modifier.fillMaxSize()) {
-            when (uiState) {
-                CheckoutViewModel.UiState.Empty -> {
-                    ErrorView(
-                        message = "Your cart is empty.",
-                        icon = Icons.Default.ShoppingCart,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .testTag(ERROR_AREA_TEST_TAG)
-                    )
-                }
 
-                is CheckoutViewModel.UiState.Error -> {
-                    val message =
-                        uiState.throwable.message.orEmpty().ifEmpty { "Something went wrong!" }
-                    ErrorView(
-                        message = message,
-                        icon = Icons.Default.ShoppingCart,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .testTag(ERROR_AREA_TEST_TAG)
-                    )
-                }
+            if (uiState.isLoadingCart) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .testTag(LOADING_TEST_TAG)
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(PAGE_HORIZONTAL_MARGIN),
+                    horizontalAlignment = Alignment.Start,
+                    state = lazyListState,
+                    contentPadding = PaddingValues(
+                        horizontal = PAGE_HORIZONTAL_MARGIN, vertical = 0.dp
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                ) {
 
-                CheckoutViewModel.UiState.Loading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .testTag(LOADING_TEST_TAG)
-                    )
-                }
-
-                is CheckoutViewModel.UiState.Success -> {
-
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(PAGE_HORIZONTAL_MARGIN),
-                        horizontalAlignment = Alignment.Start,
-                        state = lazyListState,
-                        contentPadding = PaddingValues(
-                            horizontal = PAGE_HORIZONTAL_MARGIN, vertical = 0.dp
-                        ),
-                        verticalArrangement = Arrangement.spacedBy(20.dp)
-                    ) {
-
-                        item {
-                            Text(
-                                text = "Checkout",
-                                modifier = Modifier,
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.LightGray,
-                                    fontSize = 25.sp
-                                )
+                    item {
+                        Text(
+                            text = "Checkout",
+                            modifier = Modifier,
+                            style = TextStyle(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.LightGray,
+                                fontSize = 25.sp
                             )
+                        )
+                    }
+
+                    items(uiState.checkoutItems) { item ->
+                        CheckoutItem(
+                            viewCartItem = item,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                        )
+                    }
+
+                    item {
+                        Divider(
+                            modifier = Modifier,
+                            thickness = .5.dp,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
+
+                    item {
+                        CheckoutSummary(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight(),
+                            totalCartCount = uiState.checkoutItems.size,
+                            totalCheckoutAmount = uiState.formattedTotalAmount,
+                            shippingAddress = uiState.shippingAddress
+                        ) {
+                            gotoAccountScreen()
                         }
+                    }
 
-                        items(uiState.checkoutItems) { item ->
-                            CheckoutItem(
-                                viewCartItem = item,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .wrapContentHeight()
-                            )
-                        }
-
-                        item {
-                            Divider(
-                                modifier = Modifier,
-                                thickness = .5.dp,
-                                color = MaterialTheme.colorScheme.onBackground
-                            )
-                        }
-
-                        item {
-                            CheckoutSummary(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .wrapContentHeight(),
-                                totalCartCount = uiState.checkoutItems.size,
-                                totalCheckoutAmount = uiState.formattedTotalAmount,
-                                shippingAddress = uiState.shippingAddress
-                            ) {
-                                gotoAccountScreen()
-                            }
-                        }
-
-                        item {
-                            MinniesDefaultButton(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .wrapContentHeight()
-                                    .padding(top = 10.dp),
-                                text = "Place order"
-                            ) {
-
-                            }
+                    item {
+                        MinniesDefaultButton(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                                .padding(top = 10.dp),
+                            text = "Place order",
+                            isLoading = uiState.isCheckingOut
+                        ) {
+                            checkout()
                         }
                     }
 
                 }
             }
+
         }
     }
 }
@@ -178,7 +163,7 @@ fun CheckoutScreen(
 fun PreviewCheckoutScreen() {
     MinniesTheme {
         CheckoutScreen(
-            uiState = CheckoutViewModel.UiState.Success(
+            uiState = CheckoutViewModel.UiState(
                 listOf(
                     ViewCartItem(
                         id = 1,
@@ -206,7 +191,47 @@ fun PreviewCheckoutScreen() {
                         currency = Currency.USD
                     )
                 ), formattedTotalAmount = "N3,000", shippingAddress = "The Ireland"
-            ), scaffoldState = rememberScaffoldState(), gotoAccountScreen = {}
-        )
+            ), scaffoldState = rememberScaffoldState(), gotoAccountScreen = {}, {})
+    }
+}
+
+
+@Preview
+@Composable
+fun PreviewCheckoutScreen2() {
+    MinniesTheme {
+        CheckoutScreen(
+            uiState = CheckoutViewModel.UiState(
+                listOf(
+                    ViewCartItem(
+                        id = 1,
+                        quantity = 1,
+                        productId = 1,
+                        productName = "Cap",
+                        baseProductPrice = 3.9,
+                        productImage = "",
+                        formattedProductPrice = "N3,000",
+                        formattedTotalAmount = "N3,000",
+                        convertedProductPrice = 5.0,
+                        currency = Currency.USD
+                    ),
+
+                    ViewCartItem(
+                        id = 2,
+                        quantity = 2,
+                        productId = 1,
+                        productName = "Trouser",
+                        baseProductPrice = 4.0,
+                        productImage = "",
+                        formattedProductPrice = "N2,000",
+                        formattedTotalAmount = "N4,000",
+                        convertedProductPrice = 5.0,
+                        currency = Currency.USD
+                    )
+                ),
+                formattedTotalAmount = "N3,000",
+                shippingAddress = "The Ireland",
+                isCheckingOut = true
+            ), scaffoldState = rememberScaffoldState(), gotoAccountScreen = {}, {})
     }
 }

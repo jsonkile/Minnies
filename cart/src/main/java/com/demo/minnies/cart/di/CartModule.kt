@@ -23,5 +23,8 @@ abstract class CartModule {
     abstract fun bindUpdateCartItemUseCase(updateCartItemUseCaseImpl: UpdateCartItemUseCaseImpl): UpdateCartItemUseCase
 
     @Binds
-    abstract fun bindMakeOrderUseCase(makeOrderUseCaseImpl: MakeOrderUseCaseImpl): MakeOrderUseCase
+    abstract fun bindCheckoutCartUseCase(checkoutCartUseCaseImpl: CheckoutCartUseCaseImpl): CheckoutCartUseCase
+
+    @Binds
+    abstract fun bindDeleteCartItemUseCase(deleteCartUseCaseRoomImpl: DeleteCartItemUseCaseImpl): DeleteCartItemUseCase
 }

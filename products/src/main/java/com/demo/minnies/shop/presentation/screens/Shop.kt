@@ -23,8 +23,8 @@ import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shared.utils.Currency
 import com.demo.minnies.shop.presentation.models.ViewProduct
-import com.demo.minnies.shop.presentation.models.toView
 import com.demo.minnies.shop.util.mockProducts
+import com.demo.minnies.shop.util.toView
 
 const val SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG = "SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG"
 const val SHOP_SCREEN_FEATURED_ITEMS_HEADING_TEST_TAG =

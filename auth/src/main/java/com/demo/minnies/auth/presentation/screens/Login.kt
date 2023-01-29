@@ -21,12 +21,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.demo.minnies.auth.presentation.AuthScreen
 import com.demo.minnies.shared.presentation.components.MinniesDefaultButton
 import com.demo.minnies.shared.presentation.components.ErrorBar
 import com.demo.minnies.shared.presentation.components.PageHeader
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
+import com.demo.minnies.shared.utils.AuthScreen
 import com.demo.minnies.shared.utils.validation.validateAsEmail
 import com.demo.minnies.shared.utils.validation.validateAsPassword
 

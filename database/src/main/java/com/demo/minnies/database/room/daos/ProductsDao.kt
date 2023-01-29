@@ -26,7 +26,7 @@ interface ProductsDao {
     fun getFeaturedItems(): Flow<List<Product>>
 
     @Query("select * from products where id == :id")
-    fun getProduct(id: Int): Flow<Product?>
+    fun get(id: Int): Flow<Product?>
 
     @Query("select * from products where name like :term")
     fun searchProducts(term: String): Flow<List<Product>>

@@ -36,6 +36,7 @@ dependencies {
     val jUnitVersion: String by rootProject.extra
     val testRunnerVersion: String by rootProject.extra
     val turbineVersion: String by rootProject.extra
+    val mockkVersion: String by rootProject.extra
 
     implementation(project(":shared"))
     implementation(project(":auth"))
@@ -56,6 +57,9 @@ dependencies {
 
     testImplementation("app.cash.turbine:turbine:$turbineVersion")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+
+    testImplementation("io.mockk:mockk-android:$mockkVersion")
+    testImplementation("io.mockk:mockk-agent:$mockkVersion")
 }
 
 kapt {

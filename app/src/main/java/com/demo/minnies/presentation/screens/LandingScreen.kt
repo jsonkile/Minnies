@@ -18,12 +18,12 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.demo.minnies.auth.presentation.AuthScreen
 import com.demo.minnies.auth.presentation.components.SignInPrompt
 import com.demo.minnies.database.models.PartialUser
-import com.demo.minnies.presentation.Screen
+import com.demo.minnies.presentation.BottomNavigationDestination
 import com.demo.minnies.shared.presentation.components.MinniesToolbar
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
+import com.demo.minnies.shared.utils.AuthScreen
 
 const val NAVIGATION_BAR_TEST_TAG = "NAVIGATION_BAR_TEST_TAG"
 
@@ -36,7 +36,13 @@ fun LandingScreen(
 ) {
 
     //Base screens found on Bottom Navigation Bar
-    val homeScreens = listOf(Screen.Shop, Screen.Search, Screen.Orders, Screen.Cart, Screen.More)
+    val homeBottomNavigationDestinations = listOf(
+        BottomNavigationDestination.Shop,
+        BottomNavigationDestination.Search,
+        BottomNavigationDestination.Orders,
+        BottomNavigationDestination.Cart,
+        BottomNavigationDestination.More
+    )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -45,15 +51,12 @@ fun LandingScreen(
     val showLoginPromptState = rememberSaveable { (mutableStateOf(false)) }
 
     showBottomBarState.value =
-        currentDestination?.route in mutableListOf<String>().apply {
-            addAll(homeScreens.map { "${it.route}-home" })
-            add(Screen.More.route)
-            add(Screen.Search.route)
-        }
+        currentDestination?.route in homeBottomNavigationDestinations.map { it.route }
+
 
     showLoginPromptState.value = currentDestination?.route !in AuthScreen.values().map { it.name }
 
-    var selectedItem by rememberSaveable { mutableStateOf(0) }
+    val selectedItem by rememberSaveable { mutableStateOf(0) }
 
     Scaffold(bottomBar = {
         AnimatedVisibility(visible = showBottomBarState.value,
@@ -62,7 +65,7 @@ fun LandingScreen(
             content = {
                 NavigationBar(modifier = Modifier.testTag(NAVIGATION_BAR_TEST_TAG)) {
 
-                    homeScreens.forEachIndexed { index, screen ->
+                    homeBottomNavigationDestinations.forEachIndexed { index, screen ->
                         NavigationBarItem(modifier = Modifier.semantics {
                             contentDescription = "${screen.title} page button"
                         },

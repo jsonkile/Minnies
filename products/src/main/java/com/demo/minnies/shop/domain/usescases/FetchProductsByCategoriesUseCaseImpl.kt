@@ -5,7 +5,7 @@ import com.demo.minnies.database.models.Category
 import com.demo.minnies.shared.domain.GetUserCurrencyPreferenceUseCase
 import com.demo.minnies.shared.utils.Currency
 import com.demo.minnies.shop.presentation.models.ViewProduct
-import com.demo.minnies.shop.presentation.models.toView
+import com.demo.minnies.shop.util.toView
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject

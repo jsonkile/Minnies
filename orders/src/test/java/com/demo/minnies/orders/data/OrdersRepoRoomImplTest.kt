@@ -3,6 +3,7 @@ package com.demo.minnies.orders.data
 import com.demo.minnies.database.models.Order
 import com.demo.minnies.database.models.OrderIdAndStatus
 import com.demo.minnies.database.models.OrderStatus
+import com.demo.minnies.database.models.OrderWithItems
 import com.demo.minnies.database.room.daos.OrdersDao
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -32,38 +33,35 @@ internal class OrdersRepoRoomImplTest {
 
     @Test
     fun testAdd() = runTest {
-        val order = Order(user = 1, cartItems = listOf())
-        coEvery { ordersDao.insert(order) } returns 1
-        Assert.assertTrue(ordersRepoRoomImpl.addOrder(order) == 1L)
+        var step = 0
+        val order = Order(user = 1, ref = "")
+        coEvery { ordersDao.insertOrderAndItems(order, listOf()) } answers { step++ }
+        ordersRepoRoomImpl.addOrder(order = order, orderItems = emptyList())
+        Assert.assertTrue(1 == step)
     }
-
 
     @Test
     fun testUpdate() = runTest {
-        var order = Order(user = 1, cartItems = listOf(), status = OrderStatus.Completed)
+        var order = Order(user = 1, status = OrderStatus.Completed, ref = "")
 
         Assert.assertTrue(order.status == OrderStatus.Completed)
 
         coEvery {
-            ordersDao.update(
-                OrderIdAndStatus(1, status = OrderStatus.Ongoing)
-            )
+            ordersDao.update(OrderIdAndStatus(status = OrderStatus.Ongoing, ref = ""))
         } answers { order = order.copy(status = OrderStatus.Ongoing) }
 
-        ordersRepoRoomImpl.updateOrder(OrderIdAndStatus(1, OrderStatus.Ongoing))
+        ordersRepoRoomImpl.updateOrder(OrderIdAndStatus(status = OrderStatus.Ongoing, ref = ""))
 
         Assert.assertTrue(order.status == OrderStatus.Ongoing)
     }
 
     @Test
     fun testGetUserOrders() = runTest {
-        coEvery {
-            ordersDao.getAll(1)
-        } returns flow {
+        coEvery { ordersDao.getUserOrders(1) } returns flow {
             emit(
                 listOf(
-                    Order(cartItems = listOf(), user = 1),
-                    Order(cartItems = listOf(), user = 1)
+                    OrderWithItems(order = Order(ref = "", user = 1), items = emptyList()),
+                    OrderWithItems(order = Order(ref = "", user = 1), items = emptyList())
                 )
             )
         }
@@ -73,12 +71,17 @@ internal class OrdersRepoRoomImplTest {
 
     @Test
     fun testGetOrder() = runTest {
-        coEvery {
-            ordersDao.get(4)
-        } returns flow {
-            emit(Order(id = 4, cartItems = listOf(), user = 1, status = OrderStatus.Cancelled))
+        coEvery { ordersDao.get("") } returns flow {
+            emit(
+                OrderWithItems(
+                    Order(id = 4, user = 1, status = OrderStatus.Cancelled, ref = ""),
+                    listOf()
+                )
+            )
         }
 
-        Assert.assertTrue(ordersRepoRoomImpl.getOrder(4).first()!!.status == OrderStatus.Cancelled)
+        Assert.assertTrue(
+            ordersRepoRoomImpl.getOrder("").first()!!.order.status == OrderStatus.Cancelled
+        )
     }
 }

@@ -11,6 +11,7 @@ val blueYonder = Color(0xFF576CA8)
 val wildBlueYonder = Color(0xFFA1ADCE)
 val oxfordBlue = Color(0xFFA1ADCE)
 val arcticLime = Color(0xFFD6FF5C)
+val orangeRedCrayola = Color(0xFFFF5C5C)
 
 val appColors =
     darkColorScheme(
@@ -30,5 +31,6 @@ val appColors =
         onTertiaryContainer = blueYonder,
         secondary = arcticLime,
         onSecondary = Color.Black,
-        scrim = pineTree.copy(alpha = 0.7F)
+        scrim = pineTree.copy(alpha = 0.7F),
+        onError = orangeRedCrayola
     )

@@ -9,12 +9,25 @@ interface OrdersDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(order: Order): Long
 
-    @Query("select * from orders where id = :id")
-    fun get(id: Long): Flow<Order?>
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertOrderItems(orderItems: List<OrderItem>)
+
+    @Transaction
+    suspend fun insertOrderAndItems(order: Order, items: List<OrderItem>) {
+        insert(order)
+        insertOrderItems(items)
+    }
+
+    @Query("select * from orders where ref = :ref")
+    fun get(ref: String): Flow<OrderWithItems?>
 
     @Query("select * from orders where user = :user")
     fun getAll(user: Long): Flow<List<Order>>
 
     @Update(entity = Order::class)
     suspend fun update(item: OrderIdAndStatus)
+
+    @Transaction
+    @Query("select * from orders where user = :user")
+    fun getUserOrders(user: Long): Flow<List<OrderWithItems>>
 }
