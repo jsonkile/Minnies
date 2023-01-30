@@ -3,10 +3,12 @@
 package com.demo.minnies.cart.presentation.screens.cart
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -127,7 +129,9 @@ fun CartScreen(
                             val currentItem by rememberUpdatedState(newValue = item)
                             val dismissState = rememberDismissState(
                                 confirmStateChange = {
-                                    deleteCartItemAction(currentItem.id)
+                                    if (it == DismissValue.DismissedToEnd || it == DismissValue.DismissedToStart) {
+                                        deleteCartItemAction(currentItem.id)
+                                    }
                                     true
                                 }
                             )
@@ -141,15 +145,19 @@ fun CartScreen(
                                     DeleteSwipeBackground(dismissState = dismissState)
                                 },
                                 directions = setOf(
-                                    DismissDirection.EndToStart,
-                                    DismissDirection.StartToEnd
-                                ), dismissThresholds = { FractionalThreshold(0.6F) }
+                                    DismissDirection.EndToStart, DismissDirection.StartToEnd
+                                ),
+                                dismissThresholds = { FractionalThreshold(0.7F) }
                             ) {
                                 CartItem(
                                     viewCartItem = item,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .wrapContentHeight(),
+                                        .wrapContentHeight()
+                                        .background(
+                                            shape = RoundedCornerShape(10.dp),
+                                            color = MaterialTheme.colorScheme.background
+                                        ),
                                     updateQuantityAction = { cartItem, step ->
                                         updateCartItemQuantityAction(cartItem, step)
                                     },

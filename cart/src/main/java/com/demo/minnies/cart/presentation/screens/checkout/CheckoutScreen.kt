@@ -18,12 +18,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.FragmentActivity
+import com.demo.minnies.auth.util.BioAuth
 import com.demo.minnies.cart.presentation.screens.cart.LOADING_TEST_TAG
 import com.demo.minnies.cart.presentation.screens.models.ViewCartItem
 import com.demo.minnies.shared.presentation.components.MinniesDefaultButton
@@ -43,7 +46,22 @@ fun Checkout(
     val uiState = viewModel.uiState.collectAsState().value
     val scaffoldState = rememberScaffoldState()
 
-    CheckoutScreen(uiState, scaffoldState, gotoAccountScreen) { viewModel.checkout() }
+    val context = LocalContext.current as FragmentActivity
+    val bioAuth = BioAuth(activity = context, successAction = {
+        viewModel.checkout()
+    })
+
+    CheckoutScreen(uiState, scaffoldState, gotoAccountScreen) {
+        if (bioAuth.canAuthenticate()) {
+            bioAuth.authenticate(
+                dialogTitle = "Complete your order",
+                dialogSubtitle = "Log in using your biometric credential",
+                dialogCancelButtonTitle = "Cancel"
+            )
+        } else {
+            viewModel.checkout()
+        }
+    }
 
     LaunchedEffect(viewModel.snackBarMessage) {
         viewModel.snackBarMessage.collectLatest { message ->

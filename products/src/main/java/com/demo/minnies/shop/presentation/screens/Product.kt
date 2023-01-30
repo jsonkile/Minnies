@@ -1,4 +1,5 @@
-@file:OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class,
+@file:OptIn(
+    ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class,
     ExperimentalMaterialApi::class
 )
 
@@ -6,6 +7,7 @@ package com.demo.minnies.shop.presentation.screens
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -15,6 +17,7 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.HeartBroken
 import androidx.compose.material.icons.filled.RemoveCircle
 import androidx.compose.material.icons.outlined.AddShoppingCart
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.*
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -335,7 +338,10 @@ fun AddToCartBottomSheet(
                     bottom.linkTo(image.bottom)
                     start.linkTo(name.start)
                 }
-                .clickable {
+                .clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = rememberRipple(bounded = false)
+                ) {
                     if (quantityCount > 1) quantityCount--
                 },
             colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground)
@@ -373,7 +379,10 @@ fun AddToCartBottomSheet(
                     bottom.linkTo(minusButton.bottom)
                     start.linkTo(quantity.end, 10.dp)
                 }
-                .clickable {
+                .clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = rememberRipple(bounded = false)
+                ) {
                     quantityCount++
                 },
             colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground)

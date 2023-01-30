@@ -55,8 +55,8 @@ fun OrderContentsContainer(contents: List<OrderContent>, modifier: Modifier) {
                 verticalArrangement = Arrangement.spacedBy(2.dp),
                 contentPadding = PaddingValues(2.dp)
             ) {
-                itemsIndexed(contents.take(4)) { index, content ->
-                    if (contents.size > 4 && index == 3) {
+                itemsIndexed(contents.take(6)) { index, content ->
+                    if (contents.size > 6 && index == 5) {
                         Box(
                             Modifier
                                 .size(25.dp)
@@ -67,7 +67,7 @@ fun OrderContentsContainer(contents: List<OrderContent>, modifier: Modifier) {
                         ) {
                             Text(
                                 text = "+1",
-                                fontSize = 11.sp,
+                                fontSize = 13.sp,
                                 textAlign = TextAlign.Center,
                             )
                         }
@@ -150,8 +150,8 @@ fun RoundedOrderContentsContainer(contents: List<OrderContent>, modifier: Modifi
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy((-10).dp, Alignment.End)
     ) {
-        contents.take(4).forEachIndexed { index, content ->
-            if (contents.size > 4 && index == 3) {
+        contents.take(6).forEachIndexed { index, content ->
+            if (contents.size > 6 && index == 5) {
                 Box(
                     Modifier
                         .size(30.dp)
@@ -164,7 +164,7 @@ fun RoundedOrderContentsContainer(contents: List<OrderContent>, modifier: Modifi
                 ) {
                     Text(
                         text = "+1",
-                        fontSize = 6.sp,
+                        fontSize = 10.sp,
                         textAlign = TextAlign.Center,
                     )
                 }

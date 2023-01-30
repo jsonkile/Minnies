@@ -49,6 +49,8 @@ ext {
 
     extra["mockkVersion"] = "1.13.3"
     extra["apacheCommons"] = "3.12.0"
+
+    extra["biometricVersion"] = "1.2.0-alpha05"
 }
 
 tasks.register("clean", Delete::class) {

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -36,15 +37,17 @@ fun DeleteSwipeBackground(dismissState: DismissState) {
     Box(
         Modifier
             .fillMaxSize()
-            .background(Color.Transparent)
+            .background(MaterialTheme.colorScheme.error, RoundedCornerShape(10.dp))
             .padding(horizontal = 30.dp),
         contentAlignment = alignment
     ) {
         Icon(
             Icons.Default.Delete,
             contentDescription = "Delete cart item",
-            modifier = Modifier.size(30.dp).scale(scale),
-            tint = MaterialTheme.colorScheme.onError
+            modifier = Modifier
+                .size(50.dp)
+                .scale(scale),
+            tint = Color.White
         )
     }
 }

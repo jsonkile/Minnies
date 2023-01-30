@@ -1,11 +1,24 @@
 package com.demo.minnies.shared.utils
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import org.apache.commons.lang3.RandomStringUtils
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
+
+fun Context.findActivity(): Activity {
+    var context = this
+    while (context is ContextWrapper) {
+        if (context is Activity) return context
+        context = context.baseContext
+    }
+    throw IllegalStateException("no activity")
+}
 
 
 fun ByteArray.customString(): String {

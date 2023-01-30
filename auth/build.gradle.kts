@@ -36,10 +36,13 @@ dependencies {
     val jUnitVersion: String by rootProject.extra
     val testRunnerVersion: String by rootProject.extra
     val turbineVersion: String by rootProject.extra
+    val biometricVersion: String by rootProject.extra
 
     implementation(project(":shared"))
 
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+
+    implementation("androidx.biometric:biometric:$biometricVersion")
 
     debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
     debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
