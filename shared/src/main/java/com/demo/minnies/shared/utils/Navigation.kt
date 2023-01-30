@@ -1,7 +1,7 @@
 package com.demo.minnies.shared.utils
 
 enum class OrdersScreen {
-    OrdersHome
+    OrdersHome, Order
 }
 
 enum class AuthScreen {

@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
+import com.demo.minnies.shared.utils.CartScreen
 import com.demo.minnies.shared.utils.ProductScreen
 import com.demo.minnies.shop.presentation.screens.Product
 import com.demo.minnies.shop.presentation.screens.Search
@@ -24,7 +25,7 @@ fun NavGraphBuilder.shopGraph(navController: NavController) {
 
         composable(ProductScreen.Search.name) {
             Search(navigateToProduct = {
-                navController.navigate("product/$it")
+                navController.navigate("${ProductScreen.Product.name}/$it")
             })
         }
 
@@ -33,7 +34,7 @@ fun NavGraphBuilder.shopGraph(navController: NavController) {
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) {
 
-            Product()
+            Product(gotoCartAction = { navController.navigate(CartScreen.CartHome.name) })
 
         }
     }

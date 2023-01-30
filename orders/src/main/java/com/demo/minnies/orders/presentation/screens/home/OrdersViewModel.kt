@@ -1,4 +1,4 @@
-package com.demo.minnies.orders.presentation.screens
+package com.demo.minnies.orders.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

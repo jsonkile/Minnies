@@ -1,5 +1,6 @@
-package com.demo.minnies.orders.presentation.screens
+package com.demo.minnies.orders.presentation.screens.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -9,8 +10,6 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingBag
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.filled.ShoppingCartCheckout
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -21,30 +20,26 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.demo.minnies.database.models.OrderItem
 import com.demo.minnies.database.models.OrderStatus
 import com.demo.minnies.orders.presentation.models.OrderContent
 import com.demo.minnies.orders.presentation.models.ViewOrder
 import com.demo.minnies.shared.presentation.components.ErrorView
-import com.demo.minnies.shared.presentation.components.MinniesDefaultButton
-import com.demo.minnies.shared.presentation.components.PageHeader
 import com.demo.minnies.shared.presentation.components.PageInfo
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun Orders(viewModel: OrdersViewModel) {
+fun Orders(viewModel: OrdersViewModel, gotoOrder: (String) -> Unit) {
     val uiState = viewModel.uiState.collectAsState(initial = OrdersViewModel.UiState.Loading).value
     val scaffoldState = rememberScaffoldState()
 
-    OrdersScreen(uiState, scaffoldState)
+    OrdersScreen(uiState, scaffoldState, gotoOrder)
 
     LaunchedEffect(viewModel.uiState) {
         viewModel.snackBarMessage.collectLatest { message ->
@@ -56,7 +51,11 @@ fun Orders(viewModel: OrdersViewModel) {
 }
 
 @Composable
-fun OrdersScreen(uiState: OrdersViewModel.UiState, scaffoldState: ScaffoldState) {
+fun OrdersScreen(
+    uiState: OrdersViewModel.UiState,
+    scaffoldState: ScaffoldState,
+    gotoOrder: (String) -> Unit
+) {
     val lazyListState = rememberLazyListState()
 
     Scaffold(
@@ -104,7 +103,6 @@ fun OrdersScreen(uiState: OrdersViewModel.UiState, scaffoldState: ScaffoldState)
                             ),
                             verticalArrangement = Arrangement.spacedBy(20.dp)
                         ) {
-
                             item {
                                 Text(
                                     text = "Orders",
@@ -123,6 +121,9 @@ fun OrdersScreen(uiState: OrdersViewModel.UiState, scaffoldState: ScaffoldState)
                                     Modifier
                                         .fillMaxWidth()
                                         .wrapContentHeight()
+                                        .clickable {
+                                            gotoOrder(item.ref)
+                                        }
                                 )
                             }
                         }
@@ -247,7 +248,6 @@ fun PreviewMyOrdersScreen() {
                         totalAmount = "$5.00"
                     )
                 )
-            )
-        )
+            ), gotoOrder = {})
     }
 }

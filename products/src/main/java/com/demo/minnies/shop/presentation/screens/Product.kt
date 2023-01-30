@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarResult
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.HeartBroken
@@ -49,6 +50,7 @@ import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shared.utils.Currency
 import com.demo.minnies.shared.utils.toFormattedPrice
 import com.demo.minnies.shop.presentation.models.ViewProduct
+import com.demo.minnies.shop.util.ADDED_T0_CART_MESSAGE
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -59,7 +61,7 @@ const val ADD_TO_CART_BUTTON_TEST_TAG = "ADD_TO_CART_BUTTON_TEST_TAG"
 const val PRICE_TEST_TAG = "PRICE_TEST_TAG"
 
 @Composable
-fun Product(viewModel: ProductViewModel = hiltViewModel()) {
+fun Product(viewModel: ProductViewModel = hiltViewModel(), gotoCartAction: () -> Unit) {
 
     val uiState = viewModel.uiState.collectAsState(initial = ProductViewModel.UiState.Empty).value
     val scaffoldState = rememberScaffoldState()
@@ -81,8 +83,23 @@ fun Product(viewModel: ProductViewModel = hiltViewModel()) {
     LaunchedEffect(Unit) {
         viewModel.snackBarMessage.collectLatest { message ->
             scaffoldState.snackbarHostState.showSnackbar(
-                message = message, duration = SnackbarDuration.Short
+                message = message, duration = SnackbarDuration.Long
             )
+        }
+    }
+
+    LaunchedEffect(viewModel.addedToCartEvent) {
+        viewModel.addedToCartEvent.collectLatest {
+            val result = scaffoldState.snackbarHostState.showSnackbar(
+                message = ADDED_T0_CART_MESSAGE,
+                duration = SnackbarDuration.Short,
+                actionLabel = "Go to Cart"
+            )
+
+            when (result) {
+                SnackbarResult.Dismissed -> {}
+                SnackbarResult.ActionPerformed -> { gotoCartAction() }
+            }
         }
     }
 }

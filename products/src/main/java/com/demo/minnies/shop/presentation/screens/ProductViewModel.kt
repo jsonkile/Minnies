@@ -46,11 +46,14 @@ class ProductViewModel @Inject constructor(
     private val _snackBarMessage = Channel<String>()
     val snackBarMessage = _snackBarMessage.receiveAsFlow()
 
+    private val _addedToCartEvent = Channel<Any>()
+    val addedToCartEvent = _addedToCartEvent.receiveAsFlow()
+
     fun addToCart(productId: Int, quantity: Int, userId: Long?) {
         viewModelScope.launch {
             try {
                 addToCartUseCase(productId, quantity, userId)
-                _snackBarMessage.send(ADDED_T0_CART_MESSAGE)
+                _addedToCartEvent.send(Any())
             } catch (e: Exception) {
                 _snackBarMessage.send(e.message.orEmpty())
             }

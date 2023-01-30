@@ -18,9 +18,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.demo.minnies.cart.presentation.screens.models.ViewCartItem
 import com.demo.minnies.shared.presentation.components.DeleteSwipeBackground
 import com.demo.minnies.shared.presentation.components.ErrorView
@@ -125,6 +129,19 @@ fun CartScreen(
                         ),
                         verticalArrangement = Arrangement.spacedBy(20.dp)
                     ) {
+
+                        item {
+                            androidx.compose.material3.Text(
+                                text = "Shopping cart",
+                                modifier = Modifier,
+                                style = TextStyle(
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.LightGray,
+                                    fontSize = 25.sp
+                                )
+                            )
+                        }
+
                         items(items = uiState.cartItems, key = { item -> item.id }) { item ->
                             val currentItem by rememberUpdatedState(newValue = item)
                             val dismissState = rememberDismissState(
@@ -167,19 +184,18 @@ fun CartScreen(
                             }
                         }
 
-                        if (uiState.cartItems.isNotEmpty()) {
-                            item {
-                                MinniesDefaultButton(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .wrapContentHeight(),
-                                    text = "Checkout",
-                                    icon = Icons.Default.ShoppingCartCheckout
-                                ) {
-                                    gotoCheckoutScreen()
-                                }
+                        item {
+                            MinniesDefaultButton(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentHeight(),
+                                text = "Checkout",
+                                icon = Icons.Default.ShoppingCartCheckout
+                            ) {
+                                gotoCheckoutScreen()
                             }
                         }
+
                     }
 
                 }

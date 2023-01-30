@@ -42,10 +42,9 @@ fun CheckoutSummary(
             text = "Total amount", modifier = Modifier.constrainAs(totalPriceLabel) {
                 start.linkTo(parent.start)
                 top.linkTo(parent.top)
-            }, fontSize = 13.sp,
+            }, fontSize = 12.sp,
             color = MaterialTheme.colorScheme.onBackground,
-            fontWeight = FontWeight.Light,
-            fontStyle = FontStyle.Italic
+            fontWeight = FontWeight.Light
         )
 
         Text(
@@ -69,10 +68,9 @@ fun CheckoutSummary(
             text = "Delivery fee", modifier = Modifier.constrainAs(deliveryCostLabel) {
                 start.linkTo(totalPriceLabel.start)
                 top.linkTo(totalPriceLabel.bottom, 10.dp)
-            }, fontSize = 13.sp,
+            }, fontSize = 12.sp,
             color = MaterialTheme.colorScheme.onBackground,
-            fontWeight = FontWeight.Light,
-            fontStyle = FontStyle.Italic
+            fontWeight = FontWeight.Light
         )
 
         Text(
@@ -98,10 +96,9 @@ fun CheckoutSummary(
                 top.linkTo(deliveryCostLabel.bottom, 10.dp)
                 start.linkTo(totalPriceLabel.start)
             },
-            fontSize = 13.sp,
+            fontSize = 12.sp,
             color = MaterialTheme.colorScheme.onBackground,
-            fontWeight = FontWeight.Light,
-            fontStyle = FontStyle.Italic
+            fontWeight = FontWeight.Light
         )
 
 

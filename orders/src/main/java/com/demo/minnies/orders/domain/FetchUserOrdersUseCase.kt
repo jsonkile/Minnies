@@ -4,7 +4,7 @@ import com.demo.minnies.auth.domain.GetCachedUserUseCase
 import com.demo.minnies.database.models.PartialUser
 import com.demo.minnies.orders.data.OrdersRepo
 import com.demo.minnies.orders.presentation.models.ViewOrder
-import com.demo.minnies.orders.util.toViewOrders
+import com.demo.minnies.orders.util.toViewOrder
 import com.demo.minnies.shared.domain.GetUserCurrencyPreferenceUseCase
 import com.demo.minnies.shared.utils.Currency
 import kotlinx.coroutines.flow.*
@@ -29,7 +29,7 @@ class FetchUserOrdersUseCaseImpl @Inject constructor(
             )
         }.flatMapLatest { userAndCurrency ->
             ordersRepo.getUserOrders(userAndCurrency.user.id)
-                .map { items -> items.toViewOrders(userAndCurrency.currency) }
+                .map { items -> items.map { it.toViewOrder(userAndCurrency.currency) } }
         }
 
     private data class UserAndCurrency(val user: PartialUser, val currency: Currency)
