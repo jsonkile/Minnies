@@ -22,7 +22,7 @@ class OrdersViewModel @Inject constructor(fetchUserOrdersUseCase: FetchUserOrder
         }.catch { e ->
             emit(UiState.Error(e))
         }.onStart { emit(UiState.Loading) }
-        .shareIn(viewModelScope, SharingStarted.Lazily)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L))
 
 
     sealed class UiState {

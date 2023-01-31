@@ -1,129 +1,133 @@
 package com.demo.minnies.orders.presentation.screens.order
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Money
+import androidx.compose.material.icons.filled.TextSnippet
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.demo.minnies.database.models.OrderStatus
 import com.demo.minnies.orders.presentation.models.ViewOrder
+import com.demo.minnies.shared.presentation.components.TextWithIcon
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 
 @Composable
 fun OrderSummary(viewOrder: ViewOrder, modifier: Modifier) {
     Column(modifier = modifier) {
+        TextWithIcon(
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(top = 0.dp), textAndIconGap = 5.dp, icon = {
+                Image(
+                    imageVector = Icons.Default.TextSnippet,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(16.dp),
+                    colorFilter = ColorFilter.tint(
+                        MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7F)
+                    )
+                )
+            },
+            text = {
+                androidx.compose.material.Text(
+                    text = "Status",
+                    modifier = Modifier.wrapContentSize(),
+                    style = TextStyle(
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7F),
+                        fontSize = 13.sp, fontWeight = FontWeight.Normal,
+                    )
+                )
+            })
 
-        Text(
-            text = "Order Nº${viewOrder.ref}",
-            modifier = Modifier.padding(top = 0.dp),
-            style = TextStyle(
-                fontWeight = FontWeight.Bold,
-                color = Color.LightGray,
-                fontSize = 25.sp
-            )
+        androidx.compose.material.Text(
+            text = viewOrder.status.name,
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(top = 3.dp),
+            fontSize = 17.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onBackground
         )
 
-        Row(
+        TextWithIcon(
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(top = 15.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Status",
-                modifier = Modifier.weight(3F),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Light,
-                color = MaterialTheme.colorScheme.onBackground
-            )
-            Column(horizontalAlignment = Alignment.End, modifier = Modifier.weight(7F)) {
-                Text(
-                    text = viewOrder.status.name,
-                    textAlign = TextAlign.End,
-                    color = when (viewOrder.status) {
-                        OrderStatus.Ongoing -> MaterialTheme.colorScheme.onTertiaryContainer
-                        OrderStatus.Completed -> MaterialTheme.colorScheme.primary
-                        OrderStatus.Cancelled -> MaterialTheme.colorScheme.onError
-                    },
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 14.sp
+                .wrapContentSize()
+                .padding(top = 20.dp), textAndIconGap = 5.dp, icon = {
+                Image(
+                    imageVector = Icons.Default.CalendarMonth,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(16.dp),
+                    colorFilter = ColorFilter.tint(
+                        MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7F))
                 )
-                Text(
-                    text = when (viewOrder.status) {
-                        OrderStatus.Ongoing -> "2 days to delivery"
-                        OrderStatus.Completed -> "Sealed and delivered"
-                        OrderStatus.Cancelled -> "Something went wrong? You can report an issue"
-                    },
-                    textAlign = TextAlign.End,
-                    fontSize = 10.sp,
-                    color = MaterialTheme.colorScheme.onBackground
+            },
+            text = {
+                androidx.compose.material.Text(
+                    text = "Date ordered",
+                    modifier = Modifier.wrapContentSize(),
+                    style = TextStyle(
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7F),
+                        fontSize = 13.sp, fontWeight = FontWeight.Normal,
+                    )
                 )
-            }
-        }
+            })
 
-        Row(
+        androidx.compose.material.Text(
+            text = viewOrder.createdTime,
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(vertical = 25.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Date ordered",
-                modifier = Modifier.weight(5F),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Light,
-                color = MaterialTheme.colorScheme.onBackground
-            )
-            Column(horizontalAlignment = Alignment.End, modifier = Modifier.weight(5F)) {
-                Text(
-                    text = viewOrder.createdTime,
-                    textAlign = TextAlign.End,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 14.sp
-                )
-            }
-        }
+                .wrapContentSize()
+                .padding(top = 3.dp),
+            fontSize = 17.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onBackground
+        )
 
-        Row(
+        TextWithIcon(
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Total payment",
-                modifier = Modifier.weight(4F),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Light,
-                color = MaterialTheme.colorScheme.onBackground
-            )
-            Column(horizontalAlignment = Alignment.End, modifier = Modifier.weight(6F)) {
-                Text(
-                    text = viewOrder.totalAmount,
-                    textAlign = TextAlign.End,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 14.sp
+                .wrapContentSize()
+                .padding(top = 20.dp), textAndIconGap = 5.dp, icon = {
+                Image(
+                    imageVector = Icons.Default.Money,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(16.dp),
+                    colorFilter = ColorFilter.tint(
+                        MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7F)
+                    )
                 )
-                Text(
-                    text = "+ Free delivery",
-                    textAlign = TextAlign.End,
-                    fontSize = 10.sp,
-                    color = MaterialTheme.colorScheme.onBackground
+            },
+            text = {
+                androidx.compose.material.Text(
+                    text = "Total amount",
+                    modifier = Modifier.wrapContentSize(),
+                    style = TextStyle(
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7F),
+                        fontSize = 13.sp, fontWeight = FontWeight.Normal,
+                    )
                 )
-            }
-        }
+            })
+
+        androidx.compose.material.Text(
+            text = viewOrder.totalAmount,
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(top = 3.dp),
+            fontSize = 17.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onBackground
+        )
     }
 }
 

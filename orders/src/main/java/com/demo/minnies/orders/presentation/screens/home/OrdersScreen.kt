@@ -36,12 +36,12 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun Orders(viewModel: OrdersViewModel, gotoOrder: (String) -> Unit) {
-    val uiState = viewModel.uiState.collectAsState(initial = OrdersViewModel.UiState.Loading).value
+    val uiState = viewModel.uiState.collectAsState(initial = OrdersViewModel.UiState.Success()).value
     val scaffoldState = rememberScaffoldState()
 
     OrdersScreen(uiState, scaffoldState, gotoOrder)
 
-    LaunchedEffect(viewModel.uiState) {
+    LaunchedEffect(viewModel.snackBarMessage) {
         viewModel.snackBarMessage.collectLatest { message ->
             scaffoldState.snackbarHostState.showSnackbar(
                 message = message, duration = SnackbarDuration.Short

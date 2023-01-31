@@ -2,10 +2,7 @@ package com.demo.minnies.orders.di
 
 import com.demo.minnies.orders.data.OrdersRepo
 import com.demo.minnies.orders.data.OrdersRepoRoomImpl
-import com.demo.minnies.orders.domain.FetchOrderUseCase
-import com.demo.minnies.orders.domain.FetchOrderUseCaseImpl
-import com.demo.minnies.orders.domain.FetchUserOrdersUseCase
-import com.demo.minnies.orders.domain.FetchUserOrdersUseCaseImpl
+import com.demo.minnies.orders.domain.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,4 +20,10 @@ abstract class OrdersModule {
 
     @Binds
     abstract fun bindFetchOrderUseCase(fetchOrderUseCaseImpl: FetchOrderUseCaseImpl): FetchOrderUseCase
+
+    @Binds
+    abstract fun bindCancelOrderUseCase(cancelOrderUseCaseImpl: CancelOrderUseCaseImpl): CancelOrderUseCase
+
+    @Binds
+    abstract fun bindConfirmOrderUseCase(confirmOrderUseCaseImpl: ConfirmOrderUseCaseImpl): ConfirmOrderUseCase
 }
