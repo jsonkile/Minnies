@@ -57,7 +57,11 @@ fun OrderSummary(viewOrder: ViewOrder, modifier: Modifier) {
                 .padding(top = 3.dp),
             fontSize = 17.sp,
             fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.onBackground
+            color = when (viewOrder.status) {
+                OrderStatus.Ongoing -> MaterialTheme.colorScheme.onBackground
+                OrderStatus.Completed -> MaterialTheme.colorScheme.primary
+                OrderStatus.Cancelled -> MaterialTheme.colorScheme.onError
+            }
         )
 
         TextWithIcon(

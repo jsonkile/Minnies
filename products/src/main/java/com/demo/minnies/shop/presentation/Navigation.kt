@@ -14,13 +14,14 @@ import com.demo.minnies.shop.presentation.screens.Search
 import com.demo.minnies.shop.presentation.screens.Shop
 import com.demo.minnies.shop.presentation.screens.ShopViewModel
 
+
 fun NavGraphBuilder.shopGraph(navController: NavController) {
     navigation(startDestination = ProductScreen.Shop.name, route = "products") {
         composable(ProductScreen.Shop.name) {
-            val shopViewModel = hiltViewModel<ShopViewModel>()
-            Shop(title = "Shop", viewModel = shopViewModel) {
-                navController.navigate("${ProductScreen.Product.name}/$it")
-            }
+            val viewModel = hiltViewModel<ShopViewModel>()
+            Shop(
+                viewModel = viewModel,
+                navigateToProduct = { navController.navigate("${ProductScreen.Product.name}/$it") })
         }
 
         composable(ProductScreen.Search.name) {

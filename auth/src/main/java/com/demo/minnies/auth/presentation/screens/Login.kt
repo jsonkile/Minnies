@@ -32,6 +32,8 @@ import com.demo.minnies.shared.utils.validation.validateAsPassword
 
 const val LOGIN_ERROR_BAR_TEST_TAG = "LOGIN_ERROR_BAR_TEST_TAG"
 const val LOADING_TEXT = "Loading..."
+const val LOGIN_BUTTON_TEST_TAG = "LOGIN_BUTTON_TEST_TAG"
+const val LOGIN_SCREEN_CONTAINER_TEST_TAG = "LOGIN_SCREEN_CONTAINER_TEST_TAG"
 
 @Composable
 fun Login(gotoRegisterScreen: () -> Unit, goBack: () -> Unit) {
@@ -57,6 +59,7 @@ fun LoginScreen(uiState: LoginViewModel.UiState, login: (String, String) -> Unit
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = PAGE_HORIZONTAL_MARGIN)
+            .testTag(LOGIN_SCREEN_CONTAINER_TEST_TAG)
     ) {
 
         PageHeader(
@@ -89,7 +92,8 @@ fun LoginScreen(uiState: LoginViewModel.UiState, login: (String, String) -> Unit
         com.demo.minnies.shared.presentation.components.MinniesOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .wrapContentHeight()
+                .testTag(EMAIL_TEXT_FIELD_TEST_TAG),
             keyboardOptions = KeyboardOptions.Default.copy(
                 autoCorrect = false,
                 keyboardType = KeyboardType.Email,
@@ -127,7 +131,8 @@ fun LoginScreen(uiState: LoginViewModel.UiState, login: (String, String) -> Unit
         com.demo.minnies.shared.presentation.components.MinniesOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .wrapContentHeight()
+                .testTag(PASSWORD_TEXT_FIELD_TEST_TAG),
             keyboardOptions = KeyboardOptions.Default.copy(
                 autoCorrect = false,
                 keyboardType = KeyboardType.Password,
@@ -160,7 +165,7 @@ fun LoginScreen(uiState: LoginViewModel.UiState, login: (String, String) -> Unit
         Spacer(modifier = Modifier.height(30.dp))
 
         MinniesDefaultButton(
-            modifier = Modifier,
+            modifier = Modifier.testTag(LOGIN_BUTTON_TEST_TAG),
             text = when (uiState) {
                 is LoginViewModel.UiState.Loading -> LOADING_TEXT
                 else -> "Let me in"

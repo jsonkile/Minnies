@@ -20,8 +20,8 @@ ext {
     extra["androidXCoreVersion"] = "1.9.0"
     extra["lifecycleVersion"] = "2.6.0-alpha02"
     extra["coroutinesVersion"] = "1.6.4"
-    extra["hiltVersion"] = "2.44"
-    extra["hiltNavigationComposeVersion"] = "1.0.0"
+    extra["hiltVersion"] = "2.44.2"
+    extra["hiltNavigationComposeVersion"] = "1.1.0-alpha01"
 
     extra["composeVersion"] = "1.3.0"
     extra["composeCompilerVersion"] = "1.3.2"

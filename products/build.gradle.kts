@@ -47,12 +47,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
     debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
 
-    implementation("androidx.navigation:navigation-testing:$navigationVersion")
     implementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
-
-    //room
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
 
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")

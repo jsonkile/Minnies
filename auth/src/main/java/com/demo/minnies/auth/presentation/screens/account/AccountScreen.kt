@@ -17,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,6 +30,8 @@ import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
+const val UPDATE_SHIPPING_ADDRESS_BUTTON = "UPDATE_SHIPPING_ADDRESS_BUTTON"
 
 @Composable
 fun Account() {
@@ -256,7 +259,8 @@ fun AccountScreen(
                 MinniesOutlinedDefaultButton(
                     modifier = Modifier
                         .wrapContentSize()
-                        .padding(top = 20.dp),
+                        .padding(top = 20.dp)
+                        .testTag(UPDATE_SHIPPING_ADDRESS_BUTTON),
                     text = "Update shipping address",
                     enabled = uiState.isLoading.not(),
                     isLoading = uiState.isLoading

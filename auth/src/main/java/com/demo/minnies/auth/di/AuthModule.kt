@@ -12,9 +12,6 @@ import dagger.hilt.components.SingletonComponent
 abstract class AuthModule {
 
     @Binds
-    abstract fun bindAuthRepo(authRepoRoomImpl: AuthRepoRoomImpl): AuthRepo
-
-    @Binds
     abstract fun bindUserRepo(userRepoRoomImpl: UserRepoRoomImpl): UserRepo
 
     @Binds
@@ -28,6 +25,9 @@ abstract class AuthModule {
 
     @Binds
     abstract fun bindLoginUserUseCase(loginUserUseCaseImpl: LoginUserUseCaseImpl): LoginUserUseCase
+
+    @Binds
+    abstract fun bindLogoutUserUseCase(logoutUserUseCaseImpl: LogoutUserUseCaseImpl): LogoutUserUseCase
 
     @Binds
     abstract fun bindRegisterUserUseCase(registerUserUseCaseImpl: RegisterUserUseCaseImpl): RegisterUserUseCase

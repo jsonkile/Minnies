@@ -86,6 +86,7 @@ dependencies {
     val testCoreVersion: String by rootProject.extra
     val accompanistSystemControllerVersion: String by rootProject.extra
     val hiltNavigationComposeVersion: String by rootProject.extra
+    val mockkVersion: String by rootProject.extra
 
     implementation(project(":shared"))
     implementation(project(":notifications"))
@@ -95,9 +96,10 @@ dependencies {
     implementation(project(":products"))
 
     implementation("com.google.dagger:hilt-android:$hiltVersion")
+    implementation("androidx.appcompat:appcompat:1.6.0")
+    implementation("com.google.android.material:material:1.4.0")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
-    implementation("androidx.navigation:navigation-testing:$navigationVersion")
     implementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
 
     //ui
@@ -106,6 +108,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
     debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
 
+    testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test:core:$testCoreVersion")
     androidTestImplementation("androidx.test:runner:$testRunnerVersion")
@@ -116,6 +119,11 @@ dependencies {
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
     androidTestImplementation(kotlin("reflect"))
+
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+
+    testImplementation("io.mockk:mockk-android:$mockkVersion")
+    testImplementation("io.mockk:mockk-agent:$mockkVersion")
 }
 
 fun ApplicationDefaultConfig.buildConfigFieldFromGradleProperty(gradlePropertyName: String) {

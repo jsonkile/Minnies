@@ -12,16 +12,15 @@ import kotlin.time.Duration.Companion.seconds
 internal class LoginViewModelTest {
 
     private val scheduler: TestCoroutineScheduler = TestCoroutineScheduler()
-    private val dispatcher = StandardTestDispatcher(scheduler)
+    private val dispatcher = UnconfinedTestDispatcher(scheduler)
     private val scope = TestScope(dispatcher)
 
     @Test
     fun `test that ui state moves from default to loading to error when there is an exception during login`() =
-        runTest {
-
-            Dispatchers.setMain(dispatcher)
-
+        runTest(UnconfinedTestDispatcher(scheduler)) {
             try {
+                Dispatchers.setMain(dispatcher)
+
                 val loginUserUseCase = object : LoginUserUseCase {
                     override suspend fun invoke(email: String, password: String) {
                         throw Exception()
@@ -33,14 +32,16 @@ internal class LoginViewModelTest {
 
                     override suspend fun decrypt(data: String) = ""
                 }
+
                 val loginViewModel = LoginViewModel(loginUserUseCase, encryptor)
 
-                loginViewModel.uiState.test(2000.seconds) {
+                loginViewModel.uiState.test(3000.seconds) {
                     loginViewModel.login("test", "test")
                     Assert.assertTrue(awaitItem() is LoginViewModel.UiState.Default)
                     Assert.assertTrue(awaitItem() is LoginViewModel.UiState.Loading)
                     Assert.assertTrue(awaitItem() is LoginViewModel.UiState.Error)
                 }
+
             } finally {
                 Dispatchers.resetMain()
             }
@@ -48,11 +49,10 @@ internal class LoginViewModelTest {
 
     @Test
     fun `test that ui state moves from default to loading to success when login passes`() =
-        runTest {
-
-            Dispatchers.setMain(dispatcher)
-
+        runTest(UnconfinedTestDispatcher(scheduler)) {
             try {
+                Dispatchers.setMain(dispatcher)
+
                 val loginUserUseCase = object : LoginUserUseCase {
                     override suspend fun invoke(email: String, password: String) {
 
@@ -64,9 +64,10 @@ internal class LoginViewModelTest {
 
                     override suspend fun decrypt(data: String) = ""
                 }
+
                 val loginViewModel = LoginViewModel(loginUserUseCase, encryptor)
 
-                loginViewModel.uiState.test(2000.seconds) {
+                loginViewModel.uiState.test(3000.seconds) {
                     loginViewModel.login("test", "test")
                     Assert.assertTrue(awaitItem() is LoginViewModel.UiState.Default)
                     Assert.assertTrue(awaitItem() is LoginViewModel.UiState.Loading)

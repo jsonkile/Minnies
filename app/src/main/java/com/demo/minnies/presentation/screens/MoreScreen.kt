@@ -5,12 +5,17 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CurrencyExchange
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.filled.ManageAccounts
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,6 +27,9 @@ import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shared.presentation.ui.oxfordBlue
 import com.demo.minnies.shared.utils.Currency
+
+const val LOGOUT_BUTTON_TEST_TAG = "LOGOUT_BUTTON_TEST_TAG"
+const val ACCOUNT_BUTTON_TEST_TAG = "ACCOUNT_BUTTON_TEST_TAG"
 
 @Composable
 fun More(gotoAccountScreen: () -> Unit) {
@@ -73,12 +81,13 @@ fun MoreScreen(
                 actionBox = ActionBox(
                     title = "Account",
                     subtitle = "Manage your profile",
-                    icon = Icons.Outlined.ManageAccounts
+                    icon = Icons.Default.ManageAccounts
                 ) {
                     gotoAccountScreen()
                 }, modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
+                    .testTag(ACCOUNT_BUTTON_TEST_TAG)
             )
 
             Spacer(modifier = Modifier.height(5.dp))
@@ -86,30 +95,31 @@ fun MoreScreen(
                 actionBox = ActionBox(
                     title = "Log out",
                     subtitle = "Go anonymous",
-                    icon = Icons.Outlined.Logout
+                    icon = Icons.Default.ExitToApp
                 ) {
                     logout()
                 }, modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
+                    .testTag(LOGOUT_BUTTON_TEST_TAG)
             )
         }
 
-        Spacer(modifier = Modifier.height(5.dp))
-        SwitchBox(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            switchBox = SwitchBox(
-                title = "Notifications",
-                subtitle = "Turn on or off app alerts",
-                action = {
-                    toggleNotifications(it)
-                },
-                checked = notificationsPreference,
-                icon = Icons.Outlined.Notifications
-            )
-        )
+//        Spacer(modifier = Modifier.height(5.dp))
+//        SwitchBox(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .wrapContentHeight(),
+//            switchBox = SwitchBox(
+//                title = "Notifications",
+//                subtitle = "Turn on or off app alerts",
+//                action = {
+//                    toggleNotifications(it)
+//                },
+//                checked = notificationsPreference,
+//                icon = Icons.Outlined.Notifications
+//            )
+//        )
 
 
         Spacer(modifier = Modifier.height(5.dp))
@@ -123,7 +133,7 @@ fun MoreScreen(
                 optionClickAction = {
                     updateCurrency(it)
                 },
-                icon = Icons.Outlined.CurrencyExchange,
+                icon = Icons.Default.CurrencyExchange,
                 options = Currency.values().map { it.name },
                 selectedValue = currencyPreference
             )

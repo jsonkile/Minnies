@@ -15,22 +15,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OrderViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    fetchOrderUseCase: FetchOrderUseCase,
-    private val cancelOrderUseCase: CancelOrderUseCase,
-    private val confirmOrderUseCase: ConfirmOrderUseCase
+        savedStateHandle: SavedStateHandle,
+        fetchOrderUseCase: FetchOrderUseCase,
+        private val cancelOrderUseCase: CancelOrderUseCase,
+        private val confirmOrderUseCase: ConfirmOrderUseCase
 ) : ViewModel() {
 
     val itemId: String = checkNotNull(savedStateHandle["ref"])
 
     val uiState = fetchOrderUseCase(itemId)
-        .map<ViewOrder, UiState> {
-            UiState.Success(it)
-        }.catch { exception ->
-            emit(UiState.Error(exception))
-        }.onStart {
-            emit(UiState.Loading)
-        }.shareIn(viewModelScope, SharingStarted.Lazily)
+            .map<ViewOrder, UiState> {
+                UiState.Success(it)
+            }.catch { exception ->
+                emit(UiState.Error(exception))
+            }.onStart {
+                emit(UiState.Loading)
+            }.stateIn(viewModelScope, SharingStarted.Lazily, UiState.Loading)
 
     private val _snackBarMessage = Channel<String>()
     val snackBarMessage = _snackBarMessage.receiveAsFlow()
@@ -61,7 +61,7 @@ class OrderViewModel @Inject constructor(
         object Loading : UiState()
         class Error(val throwable: Throwable) : UiState()
         class Success(
-            val order: ViewOrder
+                val order: ViewOrder
         ) : UiState()
     }
 

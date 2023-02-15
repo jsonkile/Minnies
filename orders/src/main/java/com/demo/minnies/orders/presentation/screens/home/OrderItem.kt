@@ -3,6 +3,7 @@ package com.demo.minnies.orders.presentation.screens.home
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -43,7 +44,7 @@ fun OrderItemComposable(order: ViewOrder, modifier: Modifier) {
             style = TextStyle(
                 fontSize = 15.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = androidx.compose.material3.MaterialTheme.colorScheme.onBackground
+                color = MaterialTheme.colorScheme.onBackground
             )
         )
 
@@ -55,7 +56,7 @@ fun OrderItemComposable(order: ViewOrder, modifier: Modifier) {
 
             },
             fontSize = 10.sp,
-            color = androidx.compose.material3.MaterialTheme.colorScheme.onBackground.copy(alpha = .7f)
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7f)
         )
 
         Text(
@@ -65,7 +66,7 @@ fun OrderItemComposable(order: ViewOrder, modifier: Modifier) {
                 bottom.linkTo(status.top)
                 end.linkTo(parent.end)
             },
-            color = androidx.compose.material3.MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.onBackground
         )
 
         Text(
@@ -75,7 +76,11 @@ fun OrderItemComposable(order: ViewOrder, modifier: Modifier) {
                 end.linkTo(parent.end)
                 bottom.linkTo(date.top)
             },
-            color = androidx.compose.material3.MaterialTheme.colorScheme.onBackground,
+            color = when (order.status) {
+                OrderStatus.Ongoing -> MaterialTheme.colorScheme.onBackground
+                OrderStatus.Completed -> MaterialTheme.colorScheme.primary
+                OrderStatus.Cancelled -> MaterialTheme.colorScheme.onError
+            },
             fontSize = 12.sp
         )
     }
@@ -91,7 +96,7 @@ fun PreviewOrderItemComposable() {
                 createdTime = "23/23/23",
                 id = 1,
                 progress = 40,
-                status = OrderStatus.Ongoing,
+                status = OrderStatus.Completed,
                 items = listOf(
                     OrderContent(
                         amount = "",

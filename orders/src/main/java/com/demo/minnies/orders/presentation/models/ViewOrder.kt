@@ -4,10 +4,10 @@ import com.demo.minnies.database.models.OrderStatus
 
 data class ViewOrder(
     val id: Long,
-    val status: OrderStatus,
+    val status: OrderStatus = OrderStatus.Ongoing,
     val createdTime: String,
     val items: List<OrderContent>,
-    val progress: Int,
+    val progress: Int = 0,
     val ref: String,
     val totalAmount: String
 )

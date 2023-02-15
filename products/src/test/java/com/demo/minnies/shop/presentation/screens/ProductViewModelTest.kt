@@ -128,7 +128,6 @@ internal class ProductViewModelTest {
     @Test
     fun `test that addProductToCart sends snack bar message when error occurs`() =
         runTest {
-
             Dispatchers.setMain(dispatcher)
 
             try {
@@ -155,14 +154,15 @@ internal class ProductViewModelTest {
                         getUserCurrencyPreferenceUseCase = getUserCurrencyPreferenceUseCase
                     )
 
-                val values = mutableListOf<String>()
-                val collectJob = launch(UnconfinedTestDispatcher(testScheduler)) {
-                    productViewModel.snackBarMessage.toList(values)
+                val values = mutableListOf<Any>()
+
+                val collectJob = launch(UnconfinedTestDispatcher(scheduler)) {
+                    productViewModel.addedToCartEvent.toList(values)
                 }
 
                 productViewModel.addToCart(1, 1, null)
 
-                Assert.assertEquals(values.size, 1)
+                Assert.assertEquals(1, values.size)
 
                 collectJob.cancel()
 

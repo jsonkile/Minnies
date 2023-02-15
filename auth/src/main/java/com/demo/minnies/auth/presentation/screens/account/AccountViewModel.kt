@@ -8,7 +8,9 @@ import com.demo.minnies.auth.domain.UpdateCachedUserUseCase
 import com.demo.minnies.auth.domain.UpdateUserShippingAddressUseCase
 import com.demo.minnies.database.models.PartialUser
 import com.demo.minnies.database.models.ShippingAddress
+import com.demo.minnies.shared.di.IoDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -20,7 +22,8 @@ class AccountViewModel @Inject constructor(
     private val getCachedUserUseCase: GetCachedUserUseCase,
     private val getUserUseCase: GetUserUseCase,
     private val updateUserShippingAddressUseCase: UpdateUserShippingAddressUseCase,
-    private val updateCachedUserUseCase: UpdateCachedUserUseCase
+    private val updateCachedUserUseCase: UpdateCachedUserUseCase,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _snackBarMessage = Channel<String>()
@@ -46,12 +49,11 @@ class AccountViewModel @Inject constructor(
     }
 
     fun updateShippingAddress(newAddress: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             try {
                 _uiState.update { it.copy(isLoading = true) }
                 val userId = checkNotNull(getCachedUserUseCase().first()?.id)
                 val shippingAddress = ShippingAddress(id = userId, shippingAddress = newAddress)
-                delay(1000) //simulate network call
                 updateUserShippingAddressUseCase(shippingAddress)
                 fetchUser()
             } catch (e: Exception) {

@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
-    getCachedUserUseCaseImpl: GetCachedUserUseCaseImpl,
     private val getUserUseCase: GetUserUseCase,
     private val getCachedUserUseCase: GetCachedUserUseCase,
     private val logoutUserUseCase: LogoutUserUseCase,
@@ -20,7 +19,7 @@ class MainActivityViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    val loggedInUser = getCachedUserUseCaseImpl()
+    val loggedInUser = getCachedUserUseCase()
 
     init {
         vertCachedUser()

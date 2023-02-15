@@ -161,9 +161,8 @@ fun Product.toView(userCurrencyPreference: Currency): ViewProduct {
     return ViewProduct(
         name = name,
         description = description,
-        formattedPrice = "${userCurrencyPreference.sign}${
-            price.toFormattedPrice(userCurrencyPreference)
-        }",
+        formattedPrice =
+        "${userCurrencyPreference.sign}${price.toFormattedPrice(userCurrencyPreference)}",
         price = price,
         sizes = sizes,
         image = image,

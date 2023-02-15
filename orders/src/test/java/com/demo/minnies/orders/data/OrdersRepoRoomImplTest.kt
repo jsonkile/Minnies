@@ -5,11 +5,15 @@ import com.demo.minnies.database.models.OrderIdAndStatus
 import com.demo.minnies.database.models.OrderStatus
 import com.demo.minnies.database.models.OrderWithItems
 import com.demo.minnies.database.room.daos.OrdersDao
+import com.demo.minnies.shared.di.IoDispatcher
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
@@ -28,7 +32,11 @@ internal class OrdersRepoRoomImplTest {
 
     @Before
     fun setup() {
-        ordersRepoRoomImpl = OrdersRepoRoomImpl(ordersDao)
+        ordersRepoRoomImpl = OrdersRepoRoomImpl(
+            ordersDao, UnconfinedTestDispatcher(
+                TestCoroutineScheduler()
+            )
+        )
     }
 
     @Test

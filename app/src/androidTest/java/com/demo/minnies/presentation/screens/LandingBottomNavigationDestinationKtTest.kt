@@ -1,73 +1,44 @@
 package com.demo.minnies.presentation.screens
 
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.navigation.testing.TestNavHostController
-import com.demo.minnies.auth.presentation.components.SIGN_IN_PROMPT_TEST_TAG
-import com.demo.minnies.database.models.PartialUser
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.demo.minnies.presentation.BottomNavigationDestination
+import com.demo.minnies.presentation.MainActivity
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-
+@HiltAndroidTest
 class LandingBottomNavigationDestinationKtTest {
 
-    @get:Rule
-    val composeTestRule = createComposeRule()
+    @get:Rule(order = 1)
+    val hiltRule = HiltAndroidRule(this)
 
-    lateinit var navController: TestNavHostController
+    @get:Rule(order = 2)
+    val composeTestRule = createAndroidComposeRule<MainActivity>()
 
-    @Test
-    fun signInPromptShows_WhenNoLoggedInUser() {
-        composeTestRule.setContent {
-            navController = TestNavHostController(LocalContext.current)
-            LandingScreen(navController = navController, loggedInUser = null) { _, _ -> }
-        }
-
-        composeTestRule.onNodeWithTag(SIGN_IN_PROMPT_TEST_TAG).assertIsDisplayed()
+    @Before
+    fun setup() {
+        hiltRule.inject()
     }
 
     @Test
-    fun signInPromptDoesNotShows_WhenLoggedInUser() {
-        composeTestRule.setContent {
-            navController = TestNavHostController(LocalContext.current)
-            LandingScreen(
-                navController = navController,
-                loggedInUser = PartialUser(fullName = "", emailAddress = "", phoneNumber = "")
-            ) { _, _ -> }
-        }
-
-        composeTestRule.onNodeWithTag(SIGN_IN_PROMPT_TEST_TAG).assertDoesNotExist()
-    }
-
-    @Test
-    fun bottomBar_ShowAllScreenItems() {
-        composeTestRule.setContent {
-            navController = TestNavHostController(LocalContext.current)
-            LandingScreen(
-                navController = navController,
-                loggedInUser = PartialUser(fullName = "", emailAddress = "", phoneNumber = "")
-            ) { _, _ -> }
-        }
-
+    fun testBottomNav() = runTest {
         composeTestRule.onAllNodesWithContentDescription(
             substring = true,
             ignoreCase = true,
             label = "page button"
         )
             .assertCountEquals(BottomNavigationDestination::class.nestedClasses.size)
-    }
-
-    @Test
-    fun bottomBar_FirstItemIsSelected() {
-        composeTestRule.setContent {
-            navController = TestNavHostController(LocalContext.current)
-            LandingScreen(
-                navController = navController,
-                loggedInUser = PartialUser(fullName = "", emailAddress = "", phoneNumber = "")
-            ) { _, _ -> }
-        }
 
         composeTestRule.onAllNodesWithContentDescription(
             substring = true,

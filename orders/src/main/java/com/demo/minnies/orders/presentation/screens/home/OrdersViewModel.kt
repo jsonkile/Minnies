@@ -5,12 +5,15 @@ import androidx.lifecycle.viewModelScope
 import com.demo.minnies.orders.domain.FetchUserOrdersUseCase
 import com.demo.minnies.orders.presentation.models.ViewOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
-class OrdersViewModel @Inject constructor(fetchUserOrdersUseCase: FetchUserOrdersUseCase) :
+class OrdersViewModel @Inject constructor(
+    fetchUserOrdersUseCase: FetchUserOrdersUseCase
+) :
     ViewModel() {
 
     private val _snackBarMessage = Channel<String>()
@@ -22,7 +25,11 @@ class OrdersViewModel @Inject constructor(fetchUserOrdersUseCase: FetchUserOrder
         }.catch { e ->
             emit(UiState.Error(e))
         }.onStart { emit(UiState.Loading) }
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L))
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
+            initialValue = UiState.Loading
+        )
 
 
     sealed class UiState {

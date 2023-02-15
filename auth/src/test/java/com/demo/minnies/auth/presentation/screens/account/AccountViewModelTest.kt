@@ -2,6 +2,7 @@ package com.demo.minnies.auth.presentation.screens.account
 
 import com.demo.minnies.auth.domain.GetCachedUserUseCase
 import com.demo.minnies.auth.domain.GetUserUseCase
+import com.demo.minnies.auth.domain.UpdateCachedUserUseCase
 import com.demo.minnies.auth.domain.UpdateUserShippingAddressUseCase
 import com.demo.minnies.database.models.PartialUser
 import com.demo.minnies.database.models.ShippingAddress
@@ -18,6 +19,7 @@ internal class AccountViewModelTest {
 
     val scheduler = TestCoroutineScheduler()
     val dispatcher = UnconfinedTestDispatcher(scheduler)
+    val scope = TestScope(dispatcher)
 
     @Test
     fun testFetchUser() = runTest {
@@ -43,13 +45,22 @@ internal class AccountViewModelTest {
                 }
             }
             val updateUserShippingAddressUseCase = object : UpdateUserShippingAddressUseCase {
-                override fun invoke(shippingAddress: ShippingAddress) {}
+                override suspend fun invoke(shippingAddress: ShippingAddress): PartialUser? {
+                    throw RuntimeException("mega")
+                }
+            }
+            val updateCachedUserUseCase = object : UpdateCachedUserUseCase {
+                override suspend fun invoke(user: PartialUser) {
+
+                }
             }
 
             val viewModel = AccountViewModel(
                 getCachedUserUseCase,
                 getUserUseCase,
-                updateUserShippingAddressUseCase
+                updateUserShippingAddressUseCase,
+                updateCachedUserUseCase,
+                dispatcher
             )
 
             Assert.assertNull(viewModel.uiState.value.user)
@@ -65,92 +76,103 @@ internal class AccountViewModelTest {
 
     @Test
     fun testUpdateShippingAddress() = runTest {
-        try {
-            Dispatchers.setMain(dispatcher)
+        var step = 0
 
-            val getCachedUserUseCase = object : GetCachedUserUseCase {
-                override fun invoke(): Flow<PartialUser?> = flow {
-                    emit(
-                        PartialUser(
-                            id = 1, fullName = "name", emailAddress = "email", phoneNumber = "phone"
-                        )
+        val getCachedUserUseCase = object : GetCachedUserUseCase {
+            override fun invoke(): Flow<PartialUser?> = flow {
+                emit(
+                    PartialUser(
+                        id = 1, fullName = "name", emailAddress = "email", phoneNumber = "phone"
                     )
-                }
+                )
             }
-            val getUserUseCase = object : GetUserUseCase {
-                override fun invoke(id: Long): Flow<PartialUser?> = flow {
-                    emit(
-                        PartialUser(
-                            id = 1, fullName = "name", emailAddress = "email", phoneNumber = "phone"
-                        )
-                    )
-                }
-            }
-            val updateUserShippingAddressUseCase = object : UpdateUserShippingAddressUseCase {
-                override fun invoke(shippingAddress: ShippingAddress) {}
-            }
-
-            val viewModel = AccountViewModel(
-                getCachedUserUseCase,
-                getUserUseCase,
-                updateUserShippingAddressUseCase
-            )
-
-            Assert.assertNull(viewModel.uiState.value.user)
-            viewModel.updateShippingAddress("")
-            Assert.assertFalse(viewModel.uiState.value.isLoading)
-
-        } finally {
-            Dispatchers.resetMain()
         }
+
+        val getUserUseCase = object : GetUserUseCase {
+            override fun invoke(id: Long): Flow<PartialUser?> = flow {
+                emit(
+                    PartialUser(
+                        id = 1, fullName = "name", emailAddress = "email", phoneNumber = "phone"
+                    )
+                )
+            }
+        }
+
+        val updateUserShippingAddressUseCase = object : UpdateUserShippingAddressUseCase {
+            override suspend fun invoke(shippingAddress: ShippingAddress): PartialUser? {
+                step++
+                return null
+            }
+        }
+
+        val updateCachedUserUseCase = object : UpdateCachedUserUseCase {
+            override suspend fun invoke(user: PartialUser) {}
+        }
+
+        val viewModel = AccountViewModel(
+            getCachedUserUseCase,
+            getUserUseCase,
+            updateUserShippingAddressUseCase,
+            updateCachedUserUseCase,
+            dispatcher
+        )
+
+        viewModel.updateShippingAddress("goal")
+
+        Assert.assertEquals(1, step)
     }
 
     @Test
     fun testSnackBarMessage() = runTest {
-        try {
-            Dispatchers.setMain(dispatcher)
-
-            val getCachedUserUseCase = object : GetCachedUserUseCase {
-                override fun invoke(): Flow<PartialUser?> = flow {
-                    emit(
-                        PartialUser(
-                            id = 1, fullName = "name", emailAddress = "email", phoneNumber = "phone"
-                        )
+        val getCachedUserUseCase = object : GetCachedUserUseCase {
+            override fun invoke(): Flow<PartialUser?> = flow {
+                emit(
+                    PartialUser(
+                        id = 1, fullName = "name", emailAddress = "email", phoneNumber = "phone"
                     )
-                }
+                )
             }
-            val getUserUseCase = object : GetUserUseCase {
-                override fun invoke(id: Long): Flow<PartialUser?> = flow {
-                    emit(
-                        PartialUser(
-                            id = 1, fullName = "name", emailAddress = "email", phoneNumber = "phone"
-                        )
-                    )
-                }
-            }
-            val updateUserShippingAddressUseCase = object : UpdateUserShippingAddressUseCase {
-                override fun invoke(shippingAddress: ShippingAddress) {
-                    throw RuntimeException("mega")
-                }
-            }
-
-            val viewModel = AccountViewModel(
-                getCachedUserUseCase,
-                getUserUseCase,
-                updateUserShippingAddressUseCase
-            )
-
-            val values = mutableListOf<String>()
-            val collectJob = launch(UnconfinedTestDispatcher(testScheduler)) {
-                viewModel.snackBarMessage.toList(values)
-            }
-
-            viewModel.updateShippingAddress("")
-            Assert.assertEquals(values.size, 1)
-
-            collectJob.cancel()
-        } finally {
-            Dispatchers.resetMain()
         }
+
+        val getUserUseCase = object : GetUserUseCase {
+            override fun invoke(id: Long): Flow<PartialUser?> = flow {
+                emit(
+                    PartialUser(
+                        id = 1, fullName = "name", emailAddress = "email", phoneNumber = "phone"
+                    )
+                )
+            }
+        }
+
+        val updateUserShippingAddressUseCase = object : UpdateUserShippingAddressUseCase {
+            override suspend fun invoke(shippingAddress: ShippingAddress): PartialUser? {
+                throw RuntimeException("mega")
+            }
+        }
+
+        val updateCachedUserUseCase = object : UpdateCachedUserUseCase {
+            override suspend fun invoke(user: PartialUser) {
+
+            }
+        }
+
+        val viewModel = AccountViewModel(
+            getCachedUserUseCase,
+            getUserUseCase,
+            updateUserShippingAddressUseCase,
+            updateCachedUserUseCase,
+            dispatcher
+        )
+
+        val values = mutableListOf<String>()
+        val collectJob = launch(UnconfinedTestDispatcher(scheduler)) {
+            viewModel.snackBarMessage.toList(values)
+        }
+
+        viewModel.updateShippingAddress("")
+
+        Assert.assertEquals(1, values.size)
+
+        collectJob.cancel()
     }
 }

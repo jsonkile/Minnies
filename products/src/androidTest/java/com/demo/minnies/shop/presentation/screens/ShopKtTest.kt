@@ -6,8 +6,8 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import com.demo.minnies.shared.utils.Currency
-import com.demo.minnies.database.mock.mockProductsDataSet
-import com.demo.minnies.shop.presentation.models.toView
+import com.demo.minnies.shop.util.mockProducts
+import com.demo.minnies.shop.util.toView
 import org.junit.Rule
 import org.junit.Test
 
@@ -20,20 +20,21 @@ class ShopKtTest {
     fun whenFeaturedItemsExists_FeaturedSectionShows() {
 
         val featuredItems =
-            mockProductsDataSet.filter { it.featured }.map { item ->
+            mockProducts.filter { it.featured }.map { item ->
                 item.toView(Currency.USD).copy(image = "")
             }
 
         val itemsByCategories =
-            mockProductsDataSet.map { item ->
+            mockProducts.map { item ->
                 item.toView(Currency.USD).copy(image = "")
             }.groupBy { it.category }
 
         composeTestRule.setContent {
             ShopScreen(
-                title = "Shop",
-                allItems = itemsByCategories,
-                featuredItems = featuredItems
+                ShopViewModel.UiState.Success(
+                    all = itemsByCategories,
+                    featured = featuredItems
+                )
             ) {}
         }
 
@@ -48,5 +49,4 @@ class ShopKtTest {
         composeTestRule.onNodeWithTag(SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG).onChildren()
             .assertCountEquals(featuredItems.size)
     }
-
 }

@@ -82,7 +82,7 @@ fun ActionBox(actionBox: ActionBox, modifier: Modifier) {
                 },
             style = TextStyle(
                 fontSize = 12.sp,
-                fontWeight = FontWeight.Light
+                fontWeight = FontWeight.Normal
             ), color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7F)
         )
 

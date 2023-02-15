@@ -23,7 +23,7 @@ class ProductsRepoRoomImpl @Inject constructor(
 
     override fun getProductById(id: Int) = productsDao.get(id)
 
-    override fun searchProducts(term: String) = productsDao.searchProducts(term)
+    override fun searchProducts(term: String) = productsDao.searchProducts("%$term%")
 
     override suspend fun addToCart(cartItem: CartItem) = cartDao.insert(cartItem)
 

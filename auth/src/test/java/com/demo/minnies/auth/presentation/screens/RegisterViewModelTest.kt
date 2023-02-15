@@ -17,7 +17,7 @@ internal class RegisterViewModelTest {
 
     @Test
     fun `test that ui state moves from default to loading to error when there is an exception during register`() =
-        runTest {
+        runTest(UnconfinedTestDispatcher(scheduler)) {
 
             Dispatchers.setMain(dispatcher)
 
@@ -53,7 +53,7 @@ internal class RegisterViewModelTest {
 
     @Test
     fun `test that ui state moves from default to loading to success when register passes`() =
-        runTest {
+        runTest(UnconfinedTestDispatcher(scheduler)) {
 
             Dispatchers.setMain(dispatcher)
 

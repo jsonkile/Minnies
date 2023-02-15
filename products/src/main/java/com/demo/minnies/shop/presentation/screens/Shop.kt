@@ -5,6 +5,9 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.HeartBroken
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -18,11 +21,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.demo.minnies.database.models.Category
+import com.demo.minnies.shared.presentation.components.ErrorView
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shared.utils.Currency
-import com.demo.minnies.shop.presentation.models.ViewProduct
+import com.demo.minnies.shared.utils.GENERIC_ERROR_MESSAGE
 import com.demo.minnies.shop.util.mockProducts
 import com.demo.minnies.shop.util.toView
 
@@ -31,96 +36,111 @@ const val SHOP_SCREEN_FEATURED_ITEMS_HEADING_TEST_TAG =
     "SHOP_SCREEN_FEATURED_ITEMS_HEADING_TEST_TAG"
 
 @Composable
-fun Shop(
-    title: String,
-    viewModel: ShopViewModel,
-    navigateToProduct: (Int) -> Unit
-) {
+fun Shop(viewModel: ShopViewModel, navigateToProduct: (Int) -> Unit) {
+    val uiState = viewModel.uiState.collectAsState(initial = ShopViewModel.UiState.Loading).value
 
-    val featuredProducts = viewModel.featuredItems.collectAsState(initial = emptyList()).value
-
-    val allProducts = viewModel.allItems.collectAsState(initial = emptyMap()).value
-
-    ShopScreen(
-        title = title,
-        featuredItems = featuredProducts,
-        allItems = allProducts,
-        navigateToProduct
-    )
+    ShopScreen(uiState, navigateToProduct)
 }
 
 @Composable
 fun ShopScreen(
-    title: String,
-    featuredItems: List<ViewProduct>,
-    allItems: Map<Category, List<ViewProduct>>,
+    uiState: ShopViewModel.UiState,
     navigateToProduct: (Int) -> Unit
 ) {
 
     val scrollState = rememberScrollState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(bottom = 100.dp),
-        horizontalAlignment = Alignment.Start
-    ) {
-
-        //show featured items sections if not empty
-        val showFeaturedSection = remember(featuredItems) { featuredItems.isNotEmpty() }
-
-        if (showFeaturedSection) {
-            Text(
-                text = "Featured",
-                modifier = Modifier
-                    .padding(start = PAGE_HORIZONTAL_MARGIN, top = 40.dp, bottom = 20.dp)
-                    .testTag(SHOP_SCREEN_FEATURED_ITEMS_HEADING_TEST_TAG),
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    color = Color.LightGray,
-                    fontSize = 17.sp
+    Box(modifier = Modifier.fillMaxSize()) {
+        when (uiState) {
+            is ShopViewModel.UiState.Error -> {
+                val message =
+                    uiState.throwable.message.orEmpty().ifEmpty { GENERIC_ERROR_MESSAGE }
+                ErrorView(
+                    message = message,
+                    icon = Icons.Default.HeartBroken,
+                    modifier = Modifier
+                        .align(Alignment.Center)
                 )
-            )
-
-            LazyRow(
-                contentPadding = PaddingValues(horizontal = PAGE_HORIZONTAL_MARGIN),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.testTag(SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG)
-            ) {
-                items(items = featuredItems, key = { it.id }) { shopItem ->
-                    ProductCard(viewProduct = shopItem) { item ->
-                        navigateToProduct(item.id)
-                    }
-                }
             }
-        }
 
-        Category.values().forEach { category ->
-            val products = allItems[category].orEmpty()
-
-            if (products.isNotEmpty()) {
-                Text(
-                    text = category.publicName,
-                    modifier = Modifier.padding(
-                        start = PAGE_HORIZONTAL_MARGIN,
-                        top = 40.dp,
-                        bottom = 20.dp
-                    ),
-                    style = TextStyle(
-                        fontWeight = FontWeight.Bold,
-                        color = Color.LightGray,
-                        fontSize = 17.sp
-                    )
+            ShopViewModel.UiState.Loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.Center)
                 )
+            }
 
-                LazyRow(
-                    contentPadding = PaddingValues(horizontal = PAGE_HORIZONTAL_MARGIN),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+            is ShopViewModel.UiState.Success -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(scrollState)
+                        .padding(bottom = 100.dp),
+                    horizontalAlignment = Alignment.Start
                 ) {
-                    items(items = products, key = { it.id }) { shopItem ->
-                        ProductCard(viewProduct = shopItem) { item ->
-                            navigateToProduct(item.id)
+
+                    //show featured items sections if not empty
+                    val showFeaturedSection =
+                        remember(uiState.featured) { uiState.featured.isNotEmpty() }
+
+                    if (showFeaturedSection) {
+                        Text(
+                            text = "Featured",
+                            modifier = Modifier
+                                .padding(
+                                    start = PAGE_HORIZONTAL_MARGIN,
+                                    top = 40.dp,
+                                    bottom = 20.dp
+                                )
+                                .testTag(SHOP_SCREEN_FEATURED_ITEMS_HEADING_TEST_TAG),
+                            style = TextStyle(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.LightGray,
+                                fontSize = 17.sp
+                            )
+                        )
+
+                        LazyRow(
+                            contentPadding = PaddingValues(horizontal = PAGE_HORIZONTAL_MARGIN),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            modifier = Modifier.testTag(SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG)
+                        ) {
+                            items(items = uiState.featured, key = { it.id }) { shopItem ->
+                                ProductCard(viewProduct = shopItem) { item ->
+                                    navigateToProduct(item.id)
+                                }
+                            }
+                        }
+                    }
+
+                    Category.values().forEach { category ->
+                        val products = uiState.all[category].orEmpty()
+
+                        if (products.isNotEmpty()) {
+                            Text(
+                                text = category.publicName,
+                                modifier = Modifier.padding(
+                                    start = PAGE_HORIZONTAL_MARGIN,
+                                    top = 40.dp,
+                                    bottom = 20.dp
+                                ),
+                                style = TextStyle(
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.LightGray,
+                                    fontSize = 17.sp
+                                )
+                            )
+
+                            LazyRow(
+                                contentPadding = PaddingValues(horizontal = PAGE_HORIZONTAL_MARGIN),
+                                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                            ) {
+                                items(items = products, key = { it.id }) { shopItem ->
+                                    ProductCard(viewProduct = shopItem) { item ->
+                                        navigateToProduct(item.id)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -138,6 +158,11 @@ fun PreviewShopScreen() {
     val itemsByCategories =
         mockProducts.map { item -> item.toView(Currency.USD) }.groupBy { it.category }
     MinniesTheme {
-        ShopScreen(title = "Shop", featuredItems, itemsByCategories) {}
+        ShopScreen(
+            uiState = ShopViewModel.UiState.Success(
+                featured = featuredItems,
+                all = itemsByCategories
+            )
+        ) {}
     }
 }

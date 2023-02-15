@@ -13,13 +13,13 @@ interface UserRepo {
 
     fun getUser(emailAddress: String, password: String): Flow<PartialUser?>
 
-    fun peekPassword(emailAddress: String): String?
+    suspend fun peekPassword(emailAddress: String): String?
 
-    fun addUser(user: User): Long
+    suspend fun addUser(user: User): Long
 
-    fun removeUser(partialUser: PartialUser): Int
+    suspend fun removeUser(partialUser: PartialUser): Int
 
-    fun updateUser(partialUser: PartialUser): Int
+    suspend fun updateUser(partialUser: PartialUser): Int
 
     suspend fun updateUserShippingAddress(shippingAddress: ShippingAddress): PartialUser?
 }

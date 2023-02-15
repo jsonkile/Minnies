@@ -1,6 +1,7 @@
 package com.demo.minnies.cart.presentation.screen
 
 import app.cash.turbine.test
+import com.demo.minnies.cart.domain.usecases.DeleteCartItemUseCase
 import com.demo.minnies.cart.domain.usecases.FetchCartUseCase
 import com.demo.minnies.cart.presentation.screens.cart.CartViewModel
 import com.demo.minnies.cart.presentation.screens.models.ViewCartItem
@@ -38,6 +39,12 @@ internal class CartViewModelTest {
             }
         }
 
+        val deleteCartItemUseCase = object : DeleteCartItemUseCase {
+            override suspend fun invoke(id: Long) {
+
+            }
+        }
+
         val updateCartItemUseCase = object :
             com.demo.minnies.cart.domain.usecases.UpdateCartItemUseCase {
             override suspend fun invoke(cartItem: CartItemIdAndQuantity) {}
@@ -45,7 +52,8 @@ internal class CartViewModelTest {
 
         val cartViewModel = CartViewModel(
             fetchCartUseCase,
-            updateCartItemUseCase
+            updateCartItemUseCase,
+            deleteCartItemUseCase
         )
 
         cartViewModel.uiState.test {
@@ -67,9 +75,14 @@ internal class CartViewModelTest {
             override suspend fun invoke(cartItem: CartItemIdAndQuantity) {}
         }
 
+        val deleteCartItemUseCase = object : DeleteCartItemUseCase {
+            override suspend fun invoke(id: Long) {}
+        }
+
         val cartViewModel = CartViewModel(
             fetchCartUseCase,
-            updateCartItemUseCase
+            updateCartItemUseCase,
+            deleteCartItemUseCase
         )
 
         cartViewModel.uiState.test {
@@ -93,9 +106,14 @@ internal class CartViewModelTest {
             override suspend fun invoke(cartItem: CartItemIdAndQuantity) {}
         }
 
+        val deleteCartItemUseCase = object : DeleteCartItemUseCase {
+            override suspend fun invoke(id: Long) {}
+        }
+
         val cartViewModel = CartViewModel(
             fetchCartUseCase,
-            updateCartItemUseCase
+            updateCartItemUseCase,
+            deleteCartItemUseCase
         )
 
         cartViewModel.uiState.test {

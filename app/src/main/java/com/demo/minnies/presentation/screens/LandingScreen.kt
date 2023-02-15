@@ -53,7 +53,6 @@ fun LandingScreen(
     showBottomBarState.value =
         currentDestination?.route in homeBottomNavigationDestinations.map { it.route }
 
-
     showLoginPromptState.value = currentDestination?.route !in AuthScreen.values().map { it.name }
 
     val selectedItem by rememberSaveable { mutableStateOf(0) }
@@ -78,14 +77,18 @@ fun LandingScreen(
                             label = { Text(screen.title) },
                             selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                             onClick = {
-                                navController.navigate(screen.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
+                                if (currentDestination?.hierarchy?.any { it.route == screen.route } == false) {
+                                    navController.navigate(screen.route) {
+                                        popUpTo(navController.graph.findStartDestination().id) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
                                     }
-                                    launchSingleTop = true
-                                    restoreState = true
                                 }
-                            })
+                            },
+                            alwaysShowLabel = true
+                        )
                     }
 
                 }

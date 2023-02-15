@@ -98,7 +98,9 @@ fun Product(viewModel: ProductViewModel = hiltViewModel(), gotoCartAction: () ->
 
             when (result) {
                 SnackbarResult.Dismissed -> {}
-                SnackbarResult.ActionPerformed -> { gotoCartAction() }
+                SnackbarResult.ActionPerformed -> {
+                    gotoCartAction()
+                }
             }
         }
     }
@@ -235,8 +237,7 @@ fun ProductScreen(
                                     .padding(vertical = 10.dp)
                                     .testTag(ADD_TO_CART_BUTTON_TEST_TAG),
                                 text = "Add to cart",
-                                icon = Icons.Outlined.AddShoppingCart,
-                                enabled = uiState.loggedInUser != null
+                                icon = Icons.Outlined.AddShoppingCart
                             ) {
                                 coroutineScope.launch {
                                     addToCartBottomSheetState.show()

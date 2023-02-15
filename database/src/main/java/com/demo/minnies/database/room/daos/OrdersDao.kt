@@ -28,6 +28,6 @@ interface OrdersDao {
     suspend fun update(item: OrderIdAndStatus)
 
     @Transaction
-    @Query("select * from orders where user = :user")
+    @Query("select * from orders where user = :user order by created_at desc")
     fun getUserOrders(user: Long): Flow<List<OrderWithItems>>
 }

@@ -28,6 +28,13 @@ import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shared.utils.validation.*
 
 const val REGISTER_ERROR_BAR_TEST_TAG = "REGISTER_ERROR_BAR_TEST_TAG"
+const val FULL_NAME_TEXT_FIELD_TEST_TAG = "FULL_NAME_TEXT_FIELD_TEST_TAG"
+const val EMAIL_TEXT_FIELD_TEST_TAG = "EMAIL_TEXT_FIELD_TEST_TAG"
+const val PHONE_TEXT_FIELD_TEST_TAG = "PHONE_TEXT_FIELD_TEST_TAG"
+const val PASSWORD_TEXT_FIELD_TEST_TAG = "PASSWORD_TEXT_FIELD_TEST_TAG"
+const val CONFIRM_PASSWORD_TEXT_FIELD_TEST_TAG = "CONFIRM_PASSWORD_TEXT_FIELD_TEST_TAG"
+const val REGISTER_BUTTON_TEST_TAG = "REGISTER_BUTTON_TEST_TAG"
+const val REGISTER_SCREEN_CONTAINER_TEST_TAG = "REGISTER_SCREEN_CONTAINER_TEST_TAG"
 
 @Composable
 fun Register(gotoLoginScreen: () -> Unit, goBack: () -> Unit) {
@@ -58,6 +65,7 @@ fun RegisterScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = PAGE_HORIZONTAL_MARGIN)
+            .testTag(REGISTER_SCREEN_CONTAINER_TEST_TAG)
     ) {
 
         PageHeader(
@@ -88,7 +96,8 @@ fun RegisterScreen(
         MinniesOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .wrapContentHeight()
+                .testTag(FULL_NAME_TEXT_FIELD_TEST_TAG),
             keyboardOptions = KeyboardOptions.Default.copy(
                 autoCorrect = false,
                 keyboardType = KeyboardType.Text,
@@ -125,7 +134,8 @@ fun RegisterScreen(
         MinniesOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .wrapContentHeight()
+                .testTag(EMAIL_TEXT_FIELD_TEST_TAG),
             keyboardOptions = KeyboardOptions.Default.copy(
                 autoCorrect = false,
                 keyboardType = KeyboardType.Email,
@@ -162,7 +172,8 @@ fun RegisterScreen(
         MinniesOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .wrapContentHeight()
+                .testTag(PHONE_TEXT_FIELD_TEST_TAG),
             keyboardOptions = KeyboardOptions.Default.copy(
                 autoCorrect = false,
                 keyboardType = KeyboardType.Phone,
@@ -199,7 +210,8 @@ fun RegisterScreen(
         MinniesOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .wrapContentHeight()
+                .testTag(PASSWORD_TEXT_FIELD_TEST_TAG),
             keyboardOptions = KeyboardOptions.Default.copy(
                 autoCorrect = false,
                 keyboardType = KeyboardType.Password,
@@ -236,7 +248,8 @@ fun RegisterScreen(
         MinniesOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .wrapContentHeight()
+                .testTag(CONFIRM_PASSWORD_TEXT_FIELD_TEST_TAG),
             keyboardOptions = KeyboardOptions.Default.copy(
                 autoCorrect = false,
                 keyboardType = KeyboardType.Password,
@@ -268,7 +281,7 @@ fun RegisterScreen(
 
 
         MinniesDefaultButton(
-            modifier = Modifier,
+            modifier = Modifier.testTag(REGISTER_BUTTON_TEST_TAG),
             text = when (uiState) {
                 is RegisterViewModel.UiState.Loading -> LOADING_TEXT
                 else -> "Create my account"

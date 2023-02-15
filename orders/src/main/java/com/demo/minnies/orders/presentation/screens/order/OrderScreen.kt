@@ -29,6 +29,7 @@ import com.demo.minnies.shared.presentation.components.MinniesDefaultButton
 import com.demo.minnies.shared.presentation.components.MinniesOutlinedDefaultButton
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
+import com.demo.minnies.shared.utils.GENERIC_ERROR_MESSAGE
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -77,12 +78,12 @@ fun OrderScreen(
         scaffoldState = scaffoldState,
         backgroundColor = MaterialTheme.colorScheme.background
     ) {
-        Box {
+        Box(Modifier.fillMaxSize()) {
             when (uiState) {
 
                 is OrderViewModel.UiState.Error -> {
                     val message =
-                        uiState.throwable.message.orEmpty().ifEmpty { "Something went wrong!" }
+                        uiState.throwable.message.orEmpty().ifEmpty { GENERIC_ERROR_MESSAGE }
                     ErrorView(
                         message = message,
                         icon = Icons.Default.HeartBroken,

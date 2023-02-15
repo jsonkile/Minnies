@@ -10,6 +10,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,6 +19,9 @@ import androidx.compose.ui.unit.sp
 import com.demo.minnies.shared.presentation.components.MinniesDefaultButton
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
+
+const val SHIPPING_ADDRESS_TEXT_FIELD_TEST_TAG = "SHIPPING_ADDRESS_TEXT_FIELD_TEST_TAG"
+const val SUBMIT_BUTTON_TEST_TAG = "SUBMIT_BUTTON_TEST_TAG"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,7 +59,8 @@ fun UpdateShippingAddress(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(100.dp)
-                .padding(top = 15.dp),
+                .padding(top = 15.dp)
+                .testTag(SHIPPING_ADDRESS_TEXT_FIELD_TEST_TAG),
             singleLine = false,
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 cursorColor = MaterialTheme.colorScheme.primary,
@@ -68,7 +73,8 @@ fun UpdateShippingAddress(
         MinniesDefaultButton(
             modifier = Modifier
                 .wrapContentSize()
-                .padding(top = 20.dp),
+                .padding(top = 20.dp)
+                .testTag(SUBMIT_BUTTON_TEST_TAG),
             text = "Submit",
             enabled = address.isNotEmpty(),
             isLoading = loading

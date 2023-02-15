@@ -3,13 +3,15 @@ package com.demo.minnies.auth.presentation.screens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.demo.minnies.auth.domain.LoginUserUseCase
-import com.demo.minnies.auth.domain.LoginUserUseCaseImpl
 import com.demo.minnies.shared.utils.TIME_OUT_MESSAGE
 import com.demo.minnies.shared.utils.encryption.Encryptor
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,7 +24,7 @@ class LoginViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     fun login(emailAddress: String, password: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             try {
                 withTimeout(20_000) {
                     _uiState.value = UiState.Loading
