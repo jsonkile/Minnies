@@ -19,6 +19,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
@@ -29,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.demo.minnies.shared.presentation.components.ScreenInfoView
 import com.demo.minnies.shared.presentation.components.PageInfo
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shared.utils.NO_SEARCH_RESULTS
@@ -39,7 +41,6 @@ const val SEARCH_SCREEN_RESULTS_LIST_TEST_TAG = "SEARCH_SCREEN_RESULTS_LIST_TEST
 
 @Composable
 fun Search(viewModel: SearchViewModel = hiltViewModel(), navigateToProduct: (Int) -> Unit) {
-
     val uiState = viewModel.uiState.collectAsState(initial = SearchViewModel.UiState.Default)
 
     val searchTerm = viewModel.searchTerm.collectAsState()
@@ -71,36 +72,38 @@ fun SearchScreen(
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .constrainAs(searchBox) {
-                    top.linkTo(parent.top, 30.dp)
+                    top.linkTo(parent.top, 15.dp)
                 }, onSearch = onSearch
         )
 
         when (uiState) {
             SearchViewModel.UiState.Default -> {
-                PageInfo(
+                ScreenInfoView(
+                    message = SEARCH_SCREEN_INTRO_LINE,
+                    icon = Icons.TwoTone.Search,
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
                         .constrainAs(searchInfo) {
-                            top.linkTo(searchBox.bottom)
+                            top.linkTo(parent.top)
                             bottom.linkTo(parent.bottom)
-                        }, icon = Icons.TwoTone.Search,
-                    contentDescription = "start search",
-                    message = SEARCH_SCREEN_INTRO_LINE
+                        }
                 )
             }
 
             is SearchViewModel.UiState.Error -> {
-                PageInfo(
+                ScreenInfoView(
+                    message = uiState.throwable.message.orEmpty(),
+                    icon = Icons.TwoTone.SearchOff,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
+                        .wrapContentSize()
                         .constrainAs(searchInfo) {
-                            top.linkTo(searchBox.bottom)
+                            top.linkTo(parent.top)
                             bottom.linkTo(parent.bottom)
-                        }, icon = Icons.TwoTone.SearchOff,
-                    contentDescription = "search error",
-                    message = uiState.throwable.message.orEmpty()
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        },
+                    showAsError = true
                 )
             }
 
@@ -115,20 +118,6 @@ fun SearchScreen(
                             start.linkTo(parent.start)
                         }
                         .testTag(SEARCH_SCREEN_LOADING_INDICATOR_TEST_TAG)
-                )
-            }
-
-            SearchViewModel.UiState.NoResults -> {
-                PageInfo(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .constrainAs(searchInfo) {
-                            top.linkTo(searchBox.bottom)
-                            bottom.linkTo(parent.bottom)
-                        }, icon = Icons.TwoTone.SearchOff,
-                    contentDescription = "no search result",
-                    message = NO_SEARCH_RESULTS
                 )
             }
 
@@ -155,6 +144,22 @@ fun SearchScreen(
                 }
 
             }
+
+            SearchViewModel.UiState.NoResults -> {
+                ScreenInfoView(
+                    message = "$NO_SEARCH_RESULTS for `$searchTerm`",
+                    icon = Icons.TwoTone.SearchOff,
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .constrainAs(searchInfo) {
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        },
+                    showAsError = true
+                )
+            }
         }
 
     }
@@ -167,7 +172,7 @@ fun PreviewSearchScreen() {
     Column(modifier = Modifier.wrapContentSize()) {
         SearchScreen(
             searchTerm = "",
-            uiState = SearchViewModel.UiState.NoResults,
+            uiState = SearchViewModel.UiState.Loading,
             onSearch = {},
             navigateToProduct = {})
 
@@ -193,14 +198,18 @@ fun SearchBox(term: String = "", modifier: Modifier, onSearch: (String) -> Unit)
         },
         shape = RoundedCornerShape(40.dp),
         colors = TextFieldDefaults.textFieldColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
-            textColor = MaterialTheme.colorScheme.onPrimaryContainer
+            textColor = MaterialTheme.colorScheme.onSurfaceVariant
         ),
         leadingIcon = {
-            Image(imageVector = Icons.Default.Search, contentDescription = "search icon")
+            Image(
+                imageVector = Icons.Default.Search,
+                contentDescription = "search icon",
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant)
+            )
         },
         modifier = modifier,
         keyboardActions = KeyboardActions(onSearch = {

@@ -2,7 +2,6 @@ package com.demo.minnies.shared.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -12,7 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -22,16 +23,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ErrorView(message: String, icon: ImageVector, modifier: Modifier) {
+fun ScreenInfoView(
+    message: String, icon: ImageVector, modifier: Modifier, showAsError: Boolean = false
+) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         Image(
             imageVector = icon,
             contentDescription = "error icon",
             modifier = Modifier.size(70.dp),
-            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
+            colorFilter = ColorFilter.tint(if (showAsError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onBackground)
         )
 
         Text(
@@ -40,19 +44,22 @@ fun ErrorView(message: String, icon: ImageVector, modifier: Modifier) {
             style = TextStyle(
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Normal,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                color = if (showAsError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onBackground
             ),
         )
+
     }
 }
 
 @Preview
 @Composable
-fun PreviewErrorView() {
-    ErrorView(
+fun PreviewScreenInfoView() {
+    ScreenInfoView(
         message = "Something went wrong",
         icon = Icons.Default.HeartBroken,
-        modifier = Modifier.wrapContentSize()
+        modifier = Modifier.wrapContentSize(),
+        showAsError = false
     )
 }
 
@@ -63,8 +70,7 @@ fun ErrorBar(message: String, modifier: Modifier) {
             text = message,
             modifier = Modifier
                 .background(
-                    color = MaterialTheme.colorScheme.error,
-                    shape = RoundedCornerShape(5.dp)
+                    color = MaterialTheme.colorScheme.error, shape = RoundedCornerShape(5.dp)
                 )
                 .padding(vertical = 6.dp, horizontal = 10.dp),
             color = MaterialTheme.colorScheme.errorContainer,
@@ -78,9 +84,6 @@ fun ErrorBar(message: String, modifier: Modifier) {
 @Composable
 fun PreviewErrorBar() {
     ErrorBar(
-        message = "Something went wrong",
-        modifier = Modifier
-            .wrapContentSize()
-
+        message = "Something went wrong", modifier = Modifier.wrapContentSize()
     )
 }

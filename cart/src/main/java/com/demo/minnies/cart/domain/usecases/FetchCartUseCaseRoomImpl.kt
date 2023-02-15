@@ -24,7 +24,7 @@ class FetchCartUseCaseRoomImpl @Inject constructor(
 
         val currencyFormattedItems = getCachedUserUseCase().flatMapLatest {
             checkNotNull(it) {
-                "Please sign in to view your cart."
+                "Please sign in to view your cart"
             }
             repo.getCartWithDetails(it.id)
         }.combine(currency) { cart, curr ->

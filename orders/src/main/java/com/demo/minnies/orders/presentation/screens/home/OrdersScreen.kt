@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.demo.minnies.database.models.OrderStatus
 import com.demo.minnies.orders.presentation.models.OrderContent
 import com.demo.minnies.orders.presentation.models.ViewOrder
-import com.demo.minnies.shared.presentation.components.ErrorView
+import com.demo.minnies.shared.presentation.components.ScreenInfoView
 import com.demo.minnies.shared.presentation.components.PageInfo
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
@@ -67,7 +67,7 @@ fun OrdersScreen(
                 is OrdersViewModel.UiState.Error -> {
                     val message =
                         uiState.throwable.message.orEmpty().ifEmpty { "Something went wrong!" }
-                    ErrorView(
+                    ScreenInfoView(
                         message = message,
                         icon = Icons.Default.ShoppingBag,
                         modifier = Modifier

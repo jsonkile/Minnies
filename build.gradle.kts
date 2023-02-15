@@ -25,7 +25,6 @@ ext {
 
     extra["composeVersion"] = "1.3.0"
     extra["composeCompilerVersion"] = "1.3.2"
-    extra["appcompatVersion"] = "1.5.1"
     extra["accompanistSystemControllerVersion"] = "0.27.0"
     extra["constraintLayoutVersion"] = "1.0.1"
     extra["navigationVersion"] = "2.5.2"
@@ -51,6 +50,7 @@ ext {
     extra["apacheCommons"] = "3.12.0"
 
     extra["biometricVersion"] = "1.2.0-alpha05"
+    extra["splashScreenVersion"]= "1.0.0"
 }
 
 tasks.register("clean", Delete::class) {

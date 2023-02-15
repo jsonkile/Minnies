@@ -44,7 +44,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.demo.minnies.shared.presentation.components.MinniesDefaultButton
-import com.demo.minnies.shared.presentation.components.ErrorView
+import com.demo.minnies.shared.presentation.components.ScreenInfoView
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shared.utils.Currency
@@ -139,7 +139,7 @@ fun ProductScreen(
                 is ProductViewModel.UiState.Error -> {
                     val message =
                         uiState.throwable.message.orEmpty().ifEmpty { "Something went wrong!" }
-                    ErrorView(
+                    ScreenInfoView(
                         message = message,
                         icon = Icons.Default.HeartBroken,
                         modifier = Modifier

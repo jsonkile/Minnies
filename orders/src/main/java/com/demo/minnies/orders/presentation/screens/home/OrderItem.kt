@@ -79,7 +79,7 @@ fun OrderItemComposable(order: ViewOrder, modifier: Modifier) {
             color = when (order.status) {
                 OrderStatus.Ongoing -> MaterialTheme.colorScheme.onBackground
                 OrderStatus.Completed -> MaterialTheme.colorScheme.primary
-                OrderStatus.Cancelled -> MaterialTheme.colorScheme.onError
+                OrderStatus.Cancelled -> MaterialTheme.colorScheme.error
             },
             fontSize = 12.sp
         )

@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.demo.minnies.cart.presentation.screens.models.ViewCartItem
 import com.demo.minnies.shared.presentation.components.DeleteSwipeBackground
-import com.demo.minnies.shared.presentation.components.ErrorView
+import com.demo.minnies.shared.presentation.components.ScreenInfoView
 import com.demo.minnies.shared.presentation.components.MinniesDefaultButton
 import com.demo.minnies.shared.presentation.components.PageInfo
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
@@ -99,7 +99,7 @@ fun CartScreen(
                 is CartViewModel.UiState.Error -> {
                     val message =
                         uiState.throwable.message.orEmpty().ifEmpty { "Something went wrong!" }
-                    ErrorView(
+                    ScreenInfoView(
                         message = message,
                         icon = Icons.Default.ShoppingCart,
                         modifier = Modifier

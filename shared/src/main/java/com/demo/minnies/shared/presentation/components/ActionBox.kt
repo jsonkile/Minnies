@@ -37,7 +37,6 @@ fun ActionBox(actionBox: ActionBox, modifier: Modifier) {
     ConstraintLayout(
         modifier = modifier
             .clickable { actionBox.action() }
-            .padding(horizontal = PAGE_HORIZONTAL_MARGIN, vertical = 10.dp)
     ) {
 
         val (title, subtitle, icon) = createRefs()
@@ -121,7 +120,6 @@ data class ActionBox(
 fun SwitchBox(switchBox: SwitchBox, modifier: Modifier) {
     ConstraintLayout(
         modifier = modifier
-            .padding(horizontal = PAGE_HORIZONTAL_MARGIN, vertical = 10.dp)
     ) {
 
         val (title, subtitle, icon, directionArrow) = createRefs()
@@ -150,7 +148,7 @@ fun SwitchBox(switchBox: SwitchBox, modifier: Modifier) {
                     bottom.linkTo(subtitle.top, 2.dp)
                 },
             style = TextStyle(
-                fontSize = 16.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Medium
             ), color = MaterialTheme.colorScheme.onBackground
         )
@@ -226,7 +224,6 @@ fun OptionsBox(optionsBox: OptionsBox, modifier: Modifier) {
     ConstraintLayout(
         modifier = modifier
             .clickable { popUpState = true }
-            .padding(horizontal = PAGE_HORIZONTAL_MARGIN, vertical = 10.dp)
     ) {
 
         val (title, subtitle, icon, directionArrow) = createRefs()
@@ -255,7 +252,7 @@ fun OptionsBox(optionsBox: OptionsBox, modifier: Modifier) {
                     bottom.linkTo(subtitle.top, 2.dp)
                 },
             style = TextStyle(
-                fontSize = 16.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Medium
             ), color = MaterialTheme.colorScheme.onBackground
         )
@@ -302,7 +299,7 @@ fun OptionsBox(optionsBox: OptionsBox, modifier: Modifier) {
                 Column(
                     modifier = Modifier
                         .wrapContentSize()
-                        .background(MaterialTheme.colorScheme.onPrimaryContainer)
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
                 ) {
                     optionsBox.options.forEach { option ->
                         Text(

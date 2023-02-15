@@ -24,7 +24,7 @@ class FetchUserOrdersUseCaseImpl @Inject constructor(
         combine(getCachedUserUseCase(), getUserCurrencyPreferenceUseCase()) { user, currency ->
             UserAndCurrency(
                 checkNotNull(user) {
-                    "Please sign in to view your orders."
+                    "Please sign in to view your orders"
                 }, Currency.valueOf(currency)
             )
         }.flatMapLatest { userAndCurrency ->

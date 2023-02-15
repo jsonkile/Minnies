@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.demo.minnies.database.models.OrderStatus
 import com.demo.minnies.orders.presentation.models.OrderContent
 import com.demo.minnies.orders.presentation.models.ViewOrder
-import com.demo.minnies.shared.presentation.components.ErrorView
+import com.demo.minnies.shared.presentation.components.ScreenInfoView
 import com.demo.minnies.shared.presentation.components.MinniesDefaultButton
 import com.demo.minnies.shared.presentation.components.MinniesOutlinedDefaultButton
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
@@ -84,7 +84,7 @@ fun OrderScreen(
                 is OrderViewModel.UiState.Error -> {
                     val message =
                         uiState.throwable.message.orEmpty().ifEmpty { GENERIC_ERROR_MESSAGE }
-                    ErrorView(
+                    ScreenInfoView(
                         message = message,
                         icon = Icons.Default.HeartBroken,
                         modifier = Modifier

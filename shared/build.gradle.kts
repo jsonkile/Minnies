@@ -49,7 +49,6 @@ dependencies {
     val constraintLayoutVersion: String by rootProject.extra
     val androidXCoreVersion: String by rootProject.extra
     val testExtJunitVersion: String by rootProject.extra
-    val appcompatVersion: String by rootProject.extra
     val composeMaterialVersion: String by rootProject.extra
     val composeMaterialIconsVersion: String by rootProject.extra
     val coroutinesVersion: String by rootProject.extra
@@ -74,7 +73,6 @@ dependencies {
 
 
     //ui
-    api("androidx.appcompat:appcompat:$appcompatVersion")
     api("androidx.compose.material:material:$composeVersion")
     api("androidx.compose.material3:material3:$composeMaterialVersion")
     api("androidx.compose.material:material-icons-extended:$composeMaterialIconsVersion")

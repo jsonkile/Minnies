@@ -26,7 +26,7 @@ fun SignInPrompt(createAccount: () -> Unit, login: () -> Unit) {
             .wrapContentHeight()
             .background(
                 shape = androidx.compose.ui.graphics.RectangleShape,
-                color = MaterialTheme.colorScheme.onPrimaryContainer
+                color = MaterialTheme.colorScheme.tertiaryContainer
             )
             .testTag(SIGN_IN_PROMPT_TEST_TAG)
     ) {
@@ -38,7 +38,7 @@ fun SignInPrompt(createAccount: () -> Unit, login: () -> Unit) {
                 bottom = 15.dp,
                 top = 20.dp
             ),
-            style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.secondaryContainer)
+            style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onTertiaryContainer)
         )
 
         Row(

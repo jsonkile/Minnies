@@ -40,7 +40,6 @@ class SearchViewModel @Inject constructor(private val searchProductsUseCase: Sea
     }
 
     sealed class UiState {
-
         object NoResults : UiState()
         object Default : UiState()
         class SearchResults(val results: List<ViewProduct>) : UiState()

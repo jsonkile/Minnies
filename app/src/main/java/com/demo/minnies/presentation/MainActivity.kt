@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.unit.dp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.FragmentActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -20,6 +22,8 @@ class MainActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        installSplashScreen()
 
         setContent {
 
@@ -37,11 +41,13 @@ class MainActivity : FragmentActivity() {
 
                 val statusBarColor = when {
                     loggedInUser == null && currentDestination?.route !in AuthScreen.values()
-                        .map { it.name } -> MaterialTheme.colorScheme.onPrimaryContainer
+                        .map { it.name } -> MaterialTheme.colorScheme.tertiaryContainer
                     else -> MaterialTheme.colorScheme.background
                 }
 
                 systemUiController.setStatusBarColor(color = statusBarColor)
+
+                systemUiController.setNavigationBarColor(color = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp))
 
                 LandingScreen(
                     navController = navController,

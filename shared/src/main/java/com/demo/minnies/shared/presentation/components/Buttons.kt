@@ -30,8 +30,8 @@ fun MinniesDefaultButton(
 ) {
     Button(
         modifier = modifier,
-        enabled = enabled && !isLoading,
-        onClick = { clickAction() }) {
+        enabled = enabled,
+        onClick = { if (isLoading.not()) clickAction() }) {
 
         Row(
             modifier = Modifier.padding(vertical = 5.dp),
@@ -41,11 +41,11 @@ fun MinniesDefaultButton(
             icon?.let {
                 Image(
                     imageVector = icon,
-                    colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onPrimaryContainer),
+                    colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onPrimary),
                     contentDescription = iconContentDescription,
                     modifier = Modifier
                         .padding(end = 5.dp)
-                        .size(21.dp)
+                        .size(16.dp)
                 )
             }
 
@@ -53,7 +53,7 @@ fun MinniesDefaultButton(
                 text = text,
                 modifier = Modifier,
                 style = TextStyle(
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     fontWeight = FontWeight.Medium
                 )
             )
@@ -64,7 +64,7 @@ fun MinniesDefaultButton(
 
                 CircularProgressIndicator(
                     modifier = Modifier.size(13.dp),
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     strokeWidth = 2.dp
                 )
 
@@ -78,11 +78,10 @@ fun MinniesDefaultButton(
 fun PreviewDefaultButton() {
     MinniesTheme {
         MinniesDefaultButton(
-            modifier = Modifier
-                .wrapContentSize(),
-            text = "Add to Bag",
+            modifier = Modifier.wrapContentSize(),
+            text = "Add to bag",
             icon = Icons.Outlined.AddShoppingCart,
-            isLoading = true
+            isLoading = false
         ) {
 
         }
@@ -114,7 +113,7 @@ fun MinniesOutlinedDefaultButton(
             icon?.let {
                 Image(
                     imageVector = icon,
-                    colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onTertiaryContainer),
+                    colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary),
                     contentDescription = iconContentDescription,
                     modifier = Modifier
                         .padding(end = 5.dp)
@@ -126,7 +125,7 @@ fun MinniesOutlinedDefaultButton(
                 text = text,
                 modifier = Modifier,
                 style = TextStyle(
-                    color = MaterialTheme.colorScheme.onTertiaryContainer,
+                    color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Medium
                 )
             )
@@ -139,7 +138,7 @@ fun MinniesOutlinedDefaultButton(
 
                 CircularProgressIndicator(
                     modifier = Modifier.size(10.dp),
-                    color = MaterialTheme.colorScheme.onTertiaryContainer,
+                    color = MaterialTheme.colorScheme.primary,
                     strokeWidth = 2.dp
                 )
 

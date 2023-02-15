@@ -38,7 +38,7 @@ fun MinniesToolbar(
     navigationButtonAction: () -> Unit
 ) {
     Surface(
-        shadowElevation = 2.dp,
+        shadowElevation = 0.dp,
         color = MaterialTheme.colorScheme.background,
         modifier = Modifier
             .fillMaxWidth()
@@ -57,7 +57,7 @@ fun MinniesToolbar(
                 Image(
                     imageVector = navigationButtonIcon,
                     contentDescription = "back button",
-                    colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.secondaryContainer),
+                    colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.tertiary),
                     modifier = Modifier
                         .wrapContentSize()
                         .clip(CircleShape)
@@ -77,7 +77,7 @@ fun MinniesToolbar(
                 modifier = Modifier.padding(start = if (showNavigationIcon) 15.dp else 0.dp),
                 style = TextStyle(
                     fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.secondaryContainer,
+                    color = MaterialTheme.colorScheme.tertiary,
                     fontSize = 20.sp
                 )
             )

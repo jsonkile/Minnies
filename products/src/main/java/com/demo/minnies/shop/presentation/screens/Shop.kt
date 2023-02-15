@@ -21,9 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.demo.minnies.database.models.Category
-import com.demo.minnies.shared.presentation.components.ErrorView
+import com.demo.minnies.shared.presentation.components.ScreenInfoView
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
 import com.demo.minnies.shared.utils.Currency
@@ -55,7 +54,7 @@ fun ShopScreen(
             is ShopViewModel.UiState.Error -> {
                 val message =
                     uiState.throwable.message.orEmpty().ifEmpty { GENERIC_ERROR_MESSAGE }
-                ErrorView(
+                ScreenInfoView(
                     message = message,
                     icon = Icons.Default.HeartBroken,
                     modifier = Modifier

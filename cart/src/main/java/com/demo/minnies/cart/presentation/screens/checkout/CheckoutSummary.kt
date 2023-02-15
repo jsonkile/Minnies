@@ -113,7 +113,7 @@ fun CheckoutSummary(
                 width = Dimension.fillToConstraints
             },
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
-            color = if (shippingAddress.isNotEmpty()) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onError,
+            color = if (shippingAddress.isNotEmpty()) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.error,
             fontSize = if (shippingAddress.isNotEmpty()) 13.sp else 12.sp,
             fontStyle = if (shippingAddress.isNotEmpty()) FontStyle.Normal else FontStyle.Italic
         )

@@ -87,6 +87,7 @@ dependencies {
     val accompanistSystemControllerVersion: String by rootProject.extra
     val hiltNavigationComposeVersion: String by rootProject.extra
     val mockkVersion: String by rootProject.extra
+    val splashScreenVersion: String by rootProject.extra
 
     implementation(project(":shared"))
     implementation(project(":notifications"))
@@ -96,13 +97,12 @@ dependencies {
     implementation(project(":products"))
 
     implementation("com.google.dagger:hilt-android:$hiltVersion")
-    implementation("androidx.appcompat:appcompat:1.6.0")
-    implementation("com.google.android.material:material:1.4.0")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     implementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
 
     //ui
+    implementation("androidx.core:core-splashscreen:$splashScreenVersion")
     implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistSystemControllerVersion")
 
     debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
