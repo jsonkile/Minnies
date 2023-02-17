@@ -1,5 +1,6 @@
 package com.demo.minnies.shared.presentation.ui
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -8,6 +9,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
+@SuppressLint("NewApi")
 @Composable
 fun MinniesTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
