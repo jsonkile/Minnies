@@ -14,7 +14,10 @@ import com.demo.minnies.orders.presentation.screens.order.OrderViewModel
 import com.demo.minnies.shared.utils.OrdersScreen
 
 fun NavGraphBuilder.ordersGraph(navController: NavController) {
-    navigation(startDestination = OrdersScreen.OrdersHome.name, route = "orders") {
+    navigation(
+        startDestination = OrdersScreen.OrdersHome.name,
+        route = OrdersScreen::class.simpleName.orEmpty()
+    ) {
         composable(OrdersScreen.OrdersHome.name) {
             val viewModel = hiltViewModel<OrdersViewModel>()
             Orders(viewModel) { ref -> navController.navigate("${OrdersScreen.Order.name}/$ref") }

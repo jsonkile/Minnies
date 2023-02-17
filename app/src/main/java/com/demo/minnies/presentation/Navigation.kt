@@ -23,7 +23,7 @@ import com.demo.minnies.shop.presentation.shopGraph
 fun MinniesNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = "products"
+    startDestination: String = ProductScreen::class.simpleName.orEmpty()
 ) {
     NavHost(
         modifier = modifier,

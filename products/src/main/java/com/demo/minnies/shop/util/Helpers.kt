@@ -11,147 +11,152 @@ import com.demo.minnies.shop.presentation.models.ViewProduct
  */
 val mockProducts = listOf(
     Product(
-        0,
-        "Nike Shirt",
-        "https://images.unsplash.com/photo-1606105961732-6332674f4ee6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjF8fG5pa2V8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-        MOCK_PRODUCT_DESCRIPTION,
-        listOf(12, 13),
-        Category.Top,
-        0.5,
+        name = "Nike Shirt",
+        image = "https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/40/2996402/1.jpg?4649",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(12, 13),
+        category = Category.Top,
+        price = 0.5,
         rating = 4.5
     ),
 
     Product(
-        1,
-        "Under Armour Hoodie",
-        "https://images.unsplash.com/photo-1559278092-640149b5a287?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8dW5kZXIlMjBhcm1vdXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-        MOCK_PRODUCT_DESCRIPTION,
-        listOf(12, 13),
-        Category.Top,
-        0.9,
-        rating = 4.0
+        name = "Under Armour Hoodie",
+        image = "https://underarmour.scene7.com/is/image/Underarmour/V5-1373880-012_BC?rp=standard-0pad|gridTileDesktop&scl=1&fmt=jpg&qlt=50&resMode=sharp2&cache=on,on&bgc=F0F0F0&wid=512&hei=640&size=512,640",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(12, 13),
+        category = Category.Top,
+        price = 0.9,
+        rating = 4.0,
+        featured = true
     ),
 
     Product(
-        2,
-        "Puma Shirt",
-        "https://images.unsplash.com/photo-1538406641397-91f410ec4ec2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHB1bWF8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-        MOCK_PRODUCT_DESCRIPTION,
-        listOf(12, 13),
-        Category.Top,
-        0.7
+        name = "Puma Shirt",
+        image = "https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/11/2052231/1.jpg?7897",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(12, 13),
+        category = Category.Top,
+        price = 0.7
     ),
 
     Product(
-        3,
-        "Adidas Shirt",
-        "https://images.unsplash.com/photo-1511746315387-c4a76990fdce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YWRpZGFzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
-        MOCK_PRODUCT_DESCRIPTION,
-        listOf(12, 13),
-        Category.Top,
-        0.2
+        name = "Adidas Shirt",
+        image = "https://assets.adidas.com/images/w_276,h_276,f_auto,q_auto,fl_lossy,c_fill,g_auto/f9867ea840304be1bc41adab00fc76b1_9366/HB7444_21_model.jpg",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(12, 13),
+        category = Category.Top,
+        price = 0.2
     ),
 
     Product(
-        4,
-        "Vans Retro",
-        "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTB8fHNwb3J0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
-        MOCK_PRODUCT_DESCRIPTION,
-        listOf(41, 42),
-        Category.Kicks,
-        3.7,
+        name = "Vans Retro",
+        image = "https://images.asos-media.com/products/vans-ua-old-skool-trainers-in-leopard-print-multi/203591162-1-black?wid=317&fit=constrain",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(41, 42),
+        category = Category.Kicks,
+        price = 3.7,
         rating = 4.1
     ),
 
     Product(
-        5,
-        "Clark Retro",
-        "https://images.unsplash.com/photo-1529900748604-07564a03e7a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTY2fHxzcG9ydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
-        MOCK_PRODUCT_DESCRIPTION,
-        listOf(45, 39),
-        Category.Kicks,
-        5.2
+        name = "Clark Retro",
+        image = "https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/05/522457/1.jpg?5958",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(45, 39),
+        category = Category.Kicks,
+        price = 5.2
     ),
 
     Product(
-        6,
-        "Puma Slides",
-        "https://images.unsplash.com/photo-1619253341026-74c609e6ce50?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDF8fHB1bWElMjBzbGlkZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-        MOCK_PRODUCT_DESCRIPTION,
-        listOf(45, 39),
-        Category.Kicks,
-        3.2
+        name = "Puma Slides",
+        image = "https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/14/528929/1.jpg?8606",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(45, 39),
+        category = Category.Kicks,
+        price = 3.2,
+        featured = true
     ),
 
     Product(
-        7,
-        "Under Armour Joggers",
-        "https://images.unsplash.com/photo-1617602269951-f41db1a32e09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dW5kZXIlMjBhcm1vdXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-        MOCK_PRODUCT_DESCRIPTION,
-        listOf(38, 34),
-        Category.Shorts,
-        2.4
+        name = "Under Armour Joggers",
+        image = "https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/33/5552412/1.jpg?5907",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(38, 34),
+        category = Category.Shorts,
+        price = 2.4
     ),
 
     Product(
-        8,
-        "Nike Sweat Shorts",
-        "https://images.unsplash.com/photo-1619474413782-35a2004d37fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTl8fG5pa2UlMjBzaG9ydHN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-        MOCK_PRODUCT_DESCRIPTION, listOf(38, 34),
-        Category.Shorts,
-        1.8
+        name = "Nike Sweat Shorts",
+        image = "https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/41/5560331/1.jpg?5231",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(38, 34),
+        category = Category.Shorts,
+        price = 1.8
     ),
 
     Product(
-        9,
-        "Nike Bike Pants",
-        "https://images.unsplash.com/photo-1541694458248-5aa2101c77df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTE3fHxzcG9ydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
-        MOCK_PRODUCT_DESCRIPTION,
-        listOf(38, 34),
-        Category.Shorts,
-        2.0
+        name = "Nike Bike Pants",
+        image = "https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/36/172318/1.jpg?8067",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(38, 34),
+        category = Category.Shorts,
+        price = 2.0
     ),
 
     Product(
-        10,
-        "Adidas Running Shorts",
-        "https://images.unsplash.com/photo-1547941126-3d5322b218b0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjR8fHNwb3J0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
-        MOCK_PRODUCT_DESCRIPTION, listOf(38, 34),
-        Category.Shorts,
-        2.3
+        name = "Adidas Running Shorts",
+        image = "https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/81/9027011/1.jpg?8891",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(38, 34),
+        category = Category.Shorts,
+        price = 2.3,
+        featured = true
     ),
 
     Product(
-        11,
-        "Versace Prism",
-        "https://images.unsplash.com/photo-1606105961732-6332674f4ee6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjF8fG5pa2V8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-        MOCK_PRODUCT_DESCRIPTION, listOf(12, 13),
-        Category.Top,
-        0.5,
-        true,
+        name = "Versace Prism",
+        image = "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/64/153998/1.jpg?5815",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(12, 13),
+        category = Category.Accessory,
+        price = 0.5,
+        featured = true,
         rating = 4.3
     ),
 
     Product(
-        12,
-        "Nike Plush Slippers",
-        "https://images.unsplash.com/photo-1559278092-640149b5a287?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8dW5kZXIlMjBhcm1vdXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-        MOCK_PRODUCT_DESCRIPTION, listOf(12, 13),
-        Category.Accessory,
-        10.3,
-        true,
+        name = "Nike Duffle Bag",
+        image = "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/84/2698502/1.jpg?1344",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(12, 13),
+        category = Category.Accessory,
+        price = 10.3,
+        featured = false,
         rating = 4.8
     ),
 
     Product(
-        13,
-        "Balanciaga Boomers",
-        "https://images.unsplash.com/photo-1538406641397-91f410ec4ec2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHB1bWF8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-        MOCK_PRODUCT_DESCRIPTION, listOf(12, 13),
-        Category.Accessory,
-        8.9,
-        true,
+        name = "Balanciaga Boomers",
+        image = "https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/69/518153/1.jpg?7357",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(12, 13),
+        category = Category.Accessory,
+        price = 8.9,
+        featured = true,
         rating = 4.5
+    ),
+
+    Product(
+        name = "Under Armour Blitzing Adj Cap",
+        image = "https://www.tradeinn.com/h/13941/139418734/under-armour-blitzing-adj-cap.jpg",
+        description = MOCK_PRODUCT_DESCRIPTION,
+        sizes = listOf(12, 13),
+        category = Category.Accessory,
+        price = 2.9,
+        featured = false,
+        rating = 4.2
     )
 )
 

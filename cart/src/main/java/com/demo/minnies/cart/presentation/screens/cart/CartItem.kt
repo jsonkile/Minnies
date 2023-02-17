@@ -102,7 +102,7 @@ fun CartItem(
                         }
                     } else Modifier
                 ),
-            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground)
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary)
         )
 
         Text(
@@ -144,7 +144,7 @@ fun CartItem(
                     //add quantity
                     updateQuantityAction(viewCartItem, 1)
                 },
-            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground)
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary)
         )
     }
 }

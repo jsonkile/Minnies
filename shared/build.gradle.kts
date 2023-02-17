@@ -37,7 +37,7 @@ android {
 
 dependencies {
     val lifecycleVersion: String by rootProject.extra
-    val composeVersion: String by rootProject.extra
+    val composeBomVersion: String by rootProject.extra
     val navigationVersion: String by rootProject.extra
     val hiltVersion: String by rootProject.extra
     val roomVersion: String by rootProject.extra
@@ -49,6 +49,7 @@ dependencies {
     val constraintLayoutVersion: String by rootProject.extra
     val androidXCoreVersion: String by rootProject.extra
     val testExtJunitVersion: String by rootProject.extra
+    val appcompatversion: String by rootProject.extra
     val composeMaterialVersion: String by rootProject.extra
     val composeMaterialIconsVersion: String by rootProject.extra
     val coroutinesVersion: String by rootProject.extra
@@ -63,28 +64,25 @@ dependencies {
     api("androidx.core:core-ktx:$androidXCoreVersion")
     api("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
-    api("androidx.compose.ui:ui-tooling-preview:$composeVersion")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
-
-    //room
-    api("androidx.room:room-runtime:$roomVersion")
-    api("androidx.room:room-ktx:$roomVersion")
-
+    val composeBom = platform("androidx.compose:compose-bom:$composeBomVersion")
+    api(composeBom)
+    androidTestImplementation(composeBom)
 
     //ui
-    api("androidx.compose.material:material:$composeVersion")
-    api("androidx.compose.material3:material3:$composeMaterialVersion")
-    api("androidx.compose.material:material-icons-extended:$composeMaterialIconsVersion")
+    api("androidx.appcompat:appcompat:$appcompatversion")
+    api("androidx.compose.material:material")
+    api("androidx.compose.material3:material3")
+    api("androidx.compose.material:material-icons-extended")
     api("io.coil-kt:coil:$coilVersion")
     api("io.coil-kt:coil-compose:$coilVersion")
     api("androidx.constraintlayout:constraintlayout-compose:$constraintLayoutVersion")
     api("androidx.navigation:navigation-compose:$navigationVersion")
     api("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
-
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
-    debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
-
+    api("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    debugImplementation("androidx.compose.ui:ui-tooling")
 
     //lifecycle
     api("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")

@@ -131,15 +131,29 @@ fun CartScreen(
                     ) {
 
                         item {
-                            androidx.compose.material3.Text(
-                                text = "Shopping cart",
-                                modifier = Modifier,
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.LightGray,
-                                    fontSize = 25.sp
+                            Column {
+                                androidx.compose.material3.Text(
+                                    text = "Shopping cart",
+                                    modifier = Modifier,
+                                    style = TextStyle(
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color.LightGray,
+                                        fontSize = 25.sp
+                                    )
                                 )
-                            )
+
+                                Spacer(modifier = Modifier.height(2.dp))
+
+                                androidx.compose.material3.Text(
+                                    text = "Swipe on an item to remove",
+                                    modifier = Modifier,
+                                    style = TextStyle(
+                                        fontWeight = FontWeight.Normal,
+                                        color = Color.LightGray,
+                                        fontSize = 12.sp
+                                    )
+                                )
+                            }
                         }
 
                         items(items = uiState.cartItems, key = { item -> item.id }) { item ->

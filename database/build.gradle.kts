@@ -28,7 +28,7 @@ dependencies {
     val dataStoreVersion: String by rootProject.extra
     val kotlinSerializationVersion: String by rootProject.extra
 
-    api("com.google.dagger:hilt-android:$hiltVersion")
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     api("androidx.room:room-runtime:$roomVersion")

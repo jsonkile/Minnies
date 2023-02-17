@@ -1,5 +1,6 @@
 package com.demo.minnies.auth.presentation
 
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -10,11 +11,14 @@ import com.demo.minnies.auth.presentation.screens.account.Account
 import com.demo.minnies.shared.utils.AuthScreen
 
 fun NavGraphBuilder.authGraph(navController: NavController) {
-    navigation(startDestination = AuthScreen.Register.name, route = "auth") {
+    navigation(
+        startDestination = AuthScreen.Register.name,
+        route = AuthScreen::class.simpleName.orEmpty()
+    ) {
         composable(AuthScreen.Register.name) {
             Register(
                 gotoLoginScreen = { navController.navigate(AuthScreen.Login.name) },
-                goBack = { navController.popBackStack() }
+                goBack = { navController.navigateUp() }
             )
         }
 
@@ -22,10 +26,10 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
             Login(
                 gotoRegisterScreen = { navController.navigate(AuthScreen.Register.name) },
                 goBack = {
-                    navController.popBackStack()
+                    Log.e("BSE", navController.backQueue.map { it.destination.route }.toString())
+                    navController.navigateUp()
                 }
             )
-
         }
 
         composable(AuthScreen.Account.name) {

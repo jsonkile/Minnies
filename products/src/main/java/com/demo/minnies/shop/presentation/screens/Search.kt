@@ -78,7 +78,7 @@ fun SearchScreen(
 
         when (uiState) {
             SearchViewModel.UiState.Default -> {
-                ScreenInfoView(
+                PageInfo(
                     message = SEARCH_SCREEN_INTRO_LINE,
                     icon = Icons.TwoTone.Search,
                     modifier = Modifier
@@ -87,7 +87,8 @@ fun SearchScreen(
                         .constrainAs(searchInfo) {
                             top.linkTo(parent.top)
                             bottom.linkTo(parent.bottom)
-                        }
+                        },
+                    contentDescription = "search"
                 )
             }
 

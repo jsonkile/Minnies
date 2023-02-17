@@ -34,7 +34,7 @@ class NavigationKtTest {
             navController = TestNavHostController(LocalContext.current)
             navController.navigatorProvider.addNavigator(ComposeNavigator())
 
-            NavHost(navController = navController, startDestination = "products") {
+            NavHost(navController = navController, startDestination = ProductScreen::class.simpleName.orEmpty()) {
                 shopGraph(navController)
             }
 

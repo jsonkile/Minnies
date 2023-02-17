@@ -10,18 +10,8 @@ android {
 
     compileSdk = compileSdkVersion
 
-    buildFeatures {
-        compose = true
-    }
-
     defaultConfig {
         minSdk = minSdkVersion
-    }
-
-    composeOptions {
-        val composeCompilerVersion: String by rootProject.extra
-
-        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 }
 

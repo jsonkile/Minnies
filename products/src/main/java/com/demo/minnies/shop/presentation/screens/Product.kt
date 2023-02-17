@@ -362,7 +362,7 @@ fun AddToCartBottomSheet(
                 ) {
                     if (quantityCount > 1) quantityCount--
                 },
-            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground)
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary)
         )
 
         Text(
@@ -403,7 +403,7 @@ fun AddToCartBottomSheet(
                 ) {
                     quantityCount++
                 },
-            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground)
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary)
         )
 
         MinniesDefaultButton(

@@ -23,7 +23,9 @@ ext {
     extra["hiltVersion"] = "2.44.2"
     extra["hiltNavigationComposeVersion"] = "1.1.0-alpha01"
 
+    extra["appcompatversion"] = "1.6.1"
     extra["composeVersion"] = "1.3.0"
+    extra["composeBomVersion"] = "2023.01.00"
     extra["composeCompilerVersion"] = "1.3.2"
     extra["accompanistSystemControllerVersion"] = "0.27.0"
     extra["constraintLayoutVersion"] = "1.0.1"

@@ -8,6 +8,7 @@ import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.test.core.app.ApplicationProvider
 import com.demo.minnies.auth.di.DataStoreModule
@@ -20,8 +21,6 @@ import com.demo.minnies.database.models.UserSerializer
 import com.demo.minnies.presentation.MainActivity
 import com.demo.minnies.presentation.screens.ACCOUNT_BUTTON_TEST_TAG
 import com.demo.minnies.presentation.screens.LOGOUT_BUTTON_TEST_TAG
-import com.demo.minnies.shared.utils.TEST_PREFERENCE_DATASTORE_FILE_NAME
-import com.demo.minnies.shared.utils.TEST_PROTO_DATASTORE_FILE_NAME
 import com.demo.minnies.shared.utils.getRandomString
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -30,8 +29,10 @@ import dagger.hilt.android.testing.UninstallModules
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -48,7 +49,8 @@ class AuthenticationTest {
     @get:Rule(order = 2)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
-    private val scope = TestScope(UnconfinedTestDispatcher(TestCoroutineScheduler()))
+    private val dispatcher = UnconfinedTestDispatcher(TestCoroutineScheduler())
+    private val scope = TestScope(dispatcher + Job())
 
     @BindValue
     @JvmField
@@ -56,7 +58,7 @@ class AuthenticationTest {
         serializer = UserSerializer,
         produceFile = {
             ApplicationProvider.getApplicationContext<Context>()
-                .dataStoreFile(TEST_PROTO_DATASTORE_FILE_NAME)
+                .dataStoreFile(this::class.simpleName.orEmpty())
         },
         corruptionHandler = null,
         migrations = emptyList(),
@@ -69,7 +71,7 @@ class AuthenticationTest {
         scope = scope,
         produceFile = {
             ApplicationProvider.getApplicationContext<Context>()
-                .preferencesDataStoreFile(TEST_PREFERENCE_DATASTORE_FILE_NAME)
+                .preferencesDataStoreFile(this::class.simpleName.orEmpty())
         })
 
     @Before
@@ -79,6 +81,10 @@ class AuthenticationTest {
 
     @After
     fun clean() {
+        scope.runTest {
+            preferenceDataStore.edit { it.clear() }
+            protoDataStore.updateData { null }
+        }
         scope.cancel()
     }
 

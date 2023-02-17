@@ -8,6 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.HeartBroken
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -94,7 +95,7 @@ fun ShopScreen(
                                 .testTag(SHOP_SCREEN_FEATURED_ITEMS_HEADING_TEST_TAG),
                             style = TextStyle(
                                 fontWeight = FontWeight.Bold,
-                                color = Color.LightGray,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontSize = 17.sp
                             )
                         )
@@ -125,7 +126,7 @@ fun ShopScreen(
                                 ),
                                 style = TextStyle(
                                     fontWeight = FontWeight.Bold,
-                                    color = Color.LightGray,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     fontSize = 17.sp
                                 )
                             )
@@ -134,8 +135,8 @@ fun ShopScreen(
                                 contentPadding = PaddingValues(horizontal = PAGE_HORIZONTAL_MARGIN),
                                 horizontalArrangement = Arrangement.spacedBy(10.dp)
                             ) {
-                                items(items = products, key = { it.id }) { shopItem ->
-                                    ProductCard(viewProduct = shopItem) { item ->
+                                items(items = products, key = { it.id }) { product ->
+                                    ProductCard(viewProduct = product) { item ->
                                         navigateToProduct(item.id)
                                     }
                                 }

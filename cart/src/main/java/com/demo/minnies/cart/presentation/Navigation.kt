@@ -15,7 +15,10 @@ import com.demo.minnies.shared.utils.OrdersScreen
 import com.demo.minnies.shared.utils.ProductScreen
 
 fun NavGraphBuilder.cartGraph(navController: NavController) {
-    navigation(startDestination = CartScreen.CartHome.name, route = "cart") {
+    navigation(
+        startDestination = CartScreen.CartHome.name,
+        route = CartScreen::class.simpleName.orEmpty()
+    ) {
         composable(CartScreen.CartHome.name) {
             val cartViewModel = hiltViewModel<CartViewModel>()
             Cart(

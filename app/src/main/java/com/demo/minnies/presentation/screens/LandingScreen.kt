@@ -95,16 +95,20 @@ fun LandingScreen(
             })
     }, topBar = {
         Column {
-            if (loggedInUser == null && showLoginPromptState.value) SignInPrompt(createAccount = {
-                navController.navigate(AuthScreen.Register.name)
-            }, login = {
-                navController.navigate(AuthScreen.Login.name)
-            })
+            if (loggedInUser == null && showLoginPromptState.value) {
+                SignInPrompt(
+                    createAccount = {
+                        navController.navigate(AuthScreen.Register.name)
+                    }, login = {
+                        navController.navigate(AuthScreen.Login.name)
+                    })
+            }
 
-            if (showBottomBarState.value.not())
+            if (showBottomBarState.value.not()) {
                 MinniesToolbar(
                     toolBarTitle = "", showNavigationIcon = true
                 ) { navController.popBackStack() }
+            }
         }
     }) { innerPadding ->
 

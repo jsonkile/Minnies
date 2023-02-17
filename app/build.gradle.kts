@@ -99,7 +99,6 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
-    implementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
 
     //ui
     implementation("androidx.core:core-splashscreen:$splashScreenVersion")

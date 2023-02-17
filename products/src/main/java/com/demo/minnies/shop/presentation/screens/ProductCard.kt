@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -73,7 +74,7 @@ fun ProductCard(viewProduct: ViewProduct, clickAction: ((ViewProduct) -> Unit)) 
             style = TextStyle(
                 fontWeight = FontWeight.Normal,
                 fontSize = 13.sp,
-                color = Color.White
+                color = MaterialTheme.colorScheme.onBackground
             ),
             modifier = Modifier
                 .padding(end = 2.dp)
@@ -92,7 +93,7 @@ fun ProductCard(viewProduct: ViewProduct, clickAction: ((ViewProduct) -> Unit)) 
             style = TextStyle(
                 fontWeight = FontWeight.Normal,
                 fontSize = 13.sp,
-                color = Color.LightGray
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7F)
             ),
             modifier = Modifier
                 .constrainAs(price) {
@@ -113,7 +114,7 @@ fun ProductCard(viewProduct: ViewProduct, clickAction: ((ViewProduct) -> Unit)) 
                 style = TextStyle(
                     fontWeight = FontWeight.Normal,
                     fontSize = 11.sp,
-                    color = Color.LightGray
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7F)
                 ),
                 modifier = Modifier
                     .constrainAs(rating) {
@@ -135,7 +136,7 @@ fun ProductCard(viewProduct: ViewProduct, clickAction: ((ViewProduct) -> Unit)) 
                         end.linkTo(image.end)
                     }
                     .testTag(SHOP_ITEM_RATING_ICON_TEST_TAG),
-                colorFilter = ColorFilter.tint(color = Color.LightGray)
+                colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7F))
             )
 
         }
