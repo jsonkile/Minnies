@@ -1,6 +1,5 @@
 package com.demo.minnies.auth.presentation
 
-import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -26,7 +25,6 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
             Login(
                 gotoRegisterScreen = { navController.navigate(AuthScreen.Register.name) },
                 goBack = {
-                    Log.e("BSE", navController.backQueue.map { it.destination.route }.toString())
                     navController.navigateUp()
                 }
             )
