@@ -47,7 +47,7 @@ workflows:
   test-and-build:
     jobs:
       - unit-test
-      - android-test
+      - android-test:
           filters:
             branches:
               only: develop
