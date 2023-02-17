@@ -20,7 +20,6 @@ jobs:
   android-test:
     executor:
       name: android/android-machine
-      resource-class: xlarge
       tag: 2022.12.1
     steps:
       - checkout
@@ -31,7 +30,6 @@ jobs:
   release-build:
     executor:
       name: android/android-machine
-      resource-class: xlarge
       tag: 2022.12.1
     steps:
       - checkout
