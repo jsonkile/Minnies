@@ -20,6 +20,8 @@ jobs:
   android-test:
     executor:
       name: android/android-machine
+      resource-class: xlarge
+      tag: 2022.12.1
     steps:
       - checkout
       - android/start-emulator-and-run-tests:
@@ -29,6 +31,8 @@ jobs:
   release-build:
     executor:
       name: android/android-machine
+      resource-class: xlarge
+      tag: 2022.12.1
     steps:
       - checkout
       - android/restore-gradle-cache
