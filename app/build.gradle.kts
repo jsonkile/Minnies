@@ -32,7 +32,7 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("/Users/jayson/AndroidStudioProjects/Minnies/keystores/upload.jks")
+            storeFile = file(rootDir.canonicalPath + "/upload.jks")
             keyAlias = "upload"
             storePassword = "d^U97HU2%BVd"
             keyPassword = "d^U97HU2%BVd"
