@@ -2,7 +2,6 @@ package com.demo.minnies.shop.presentation
 
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.navigation.NavArgument
 import androidx.navigation.NavType
 import androidx.navigation.compose.ComposeNavigator
@@ -24,7 +23,7 @@ class NavigationKtTest {
     val hiltAndroidRule = HiltAndroidRule(this)
 
     @get:Rule(order = 2)
-    val composeTestRule = createAndroidComposeRule<DummyActivity>()
+    val composeTestRule = createAndroidComposeRule<com.demo.minnies.shared.DummyActivity>()
 
     private lateinit var navController: TestNavHostController
 

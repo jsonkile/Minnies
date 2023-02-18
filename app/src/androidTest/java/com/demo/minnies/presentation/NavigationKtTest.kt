@@ -2,8 +2,6 @@ package com.demo.minnies.presentation
 
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.navigation.NavArgument
-import androidx.navigation.NavType
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
 import com.demo.minnies.shared.DummyActivity
