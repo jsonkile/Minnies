@@ -1,10 +1,7 @@
 package com.demo.minnies.shop.presentation.screens
 
-import androidx.compose.ui.test.assertCountEquals
-import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onChildren
-import androidx.compose.ui.test.onNodeWithTag
 import com.demo.minnies.shared.utils.Currency
 import com.demo.minnies.shop.util.mockProducts
 import com.demo.minnies.shop.util.toView
@@ -20,13 +17,13 @@ class ShopKtTest {
     fun whenFeaturedItemsExists_FeaturedSectionShows() {
 
         val featuredItems =
-            mockProducts.filter { it.featured }.map { item ->
-                item.toView(Currency.USD).copy(image = "")
+            mockProducts.filter { it.featured }.mapIndexed { index, item ->
+                item.toView(Currency.USD).copy(image = "", id = index)
             }
 
         val itemsByCategories =
-            mockProducts.map { item ->
-                item.toView(Currency.USD).copy(image = "")
+            mockProducts.mapIndexed { index, item ->
+                item.toView(Currency.USD).copy(image = "", id = index)
             }.groupBy { it.category }
 
         composeTestRule.setContent {
@@ -46,7 +43,10 @@ class ShopKtTest {
             if (featuredItems.isEmpty()) assertDoesNotExist() else assertIsDisplayed()
         }
 
-        composeTestRule.onNodeWithTag(SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG).onChildren()
-            .assertCountEquals(featuredItems.size)
+        composeTestRule.onNodeWithTag(SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG)
+            .performScrollToIndex(featuredItems.size - 1).apply {
+                printToLog("TAG")
+                onChildren().assertAny(hasText(featuredItems.last().name))
+            }
     }
 }

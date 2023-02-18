@@ -14,7 +14,9 @@ import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -34,59 +36,55 @@ internal class MainActivityViewModelTest {
     @MockK
     lateinit var logoutUserUseCase: LogoutUserUseCase
 
+    @Before
+    fun setup() {
+        Dispatchers.setMain(UnconfinedTestDispatcher(TestCoroutineScheduler()))
+    }
+
+    @After
+    fun cleanUp() {
+        Dispatchers.resetMain()
+    }
+
     @Test
     fun testVertCacheUser_CachedUserNotFound_Logout() = run {
-        try {
-            Dispatchers.setMain(UnconfinedTestDispatcher(TestCoroutineScheduler()))
+        var running = true
 
-            var running = true
+        val mockUser = PartialUser(emailAddress = "email", phoneNumber = "phone", fullName = "")
 
-            val mockUser = PartialUser(emailAddress = "email", phoneNumber = "phone", fullName = "")
+        coEvery { getCachedUserUseCase() } returns flow { emit(mockUser) }
+        coEvery { getUserUseCase(any()) } returns flow { emit(null) }
+        coEvery { logoutUserUseCase() } answers { running = false }
+        coEvery { updateCachedUserUseCase(mockUser) }
 
-            coEvery { getCachedUserUseCase() } returns flow { emit(mockUser) }
-            coEvery { getUserUseCase(any()) } returns flow { emit(null) }
-            coEvery { logoutUserUseCase() } answers { running = false }
-            coEvery { updateCachedUserUseCase(mockUser) }
+        MainActivityViewModel(
+            getUserUseCase,
+            getCachedUserUseCase,
+            logoutUserUseCase,
+            updateCachedUserUseCase
+        )
 
-            MainActivityViewModel(
-                getUserUseCase,
-                getCachedUserUseCase,
-                logoutUserUseCase,
-                updateCachedUserUseCase
-            )
-
-            Assert.assertFalse(running)
-
-        } finally {
-            Dispatchers.resetMain()
-        }
+        Assert.assertFalse(running)
     }
 
     @Test
     fun testVertCacheUser_CachedUserFound_UpdateCache() = run {
-        try {
-            Dispatchers.setMain(UnconfinedTestDispatcher(TestCoroutineScheduler()))
+        var running = true
 
-            var running = true
+        val mockUser = PartialUser(emailAddress = "email", phoneNumber = "phone", fullName = "")
 
-            val mockUser = PartialUser(emailAddress = "email", phoneNumber = "phone", fullName = "")
+        coEvery { getCachedUserUseCase() } returns flow { emit(mockUser) }
+        coEvery { getUserUseCase(any()) } returns flow { emit(mockUser) }
 
-            coEvery { getCachedUserUseCase() } returns flow { emit(mockUser) }
-            coEvery { getUserUseCase(any()) } returns flow { emit(mockUser) }
+        coEvery { updateCachedUserUseCase(mockUser) } answers { running = false }
 
-            coEvery { updateCachedUserUseCase(mockUser) } answers { running = false }
+        MainActivityViewModel(
+            getUserUseCase,
+            getCachedUserUseCase,
+            logoutUserUseCase,
+            updateCachedUserUseCase
+        )
 
-            MainActivityViewModel(
-                getUserUseCase,
-                getCachedUserUseCase,
-                logoutUserUseCase,
-                updateCachedUserUseCase
-            )
-
-            Assert.assertFalse(running)
-
-        } finally {
-            Dispatchers.resetMain()
-        }
+        Assert.assertFalse(running)
     }
 }
