@@ -11,6 +11,11 @@ deploy_to_dropbox: &deploy_to_dropbox
     name: Deploy to DropBox
     command: ./dropbox_deploy.sh
 
+fix_permissions: &fix_permissions
+  run:
+    name: Chmod permissions
+    command: sudo chmod +x ./dropbox_deploy.sh
+
 jobs:
   unit-test:
     executor:
@@ -50,8 +55,8 @@ jobs:
       - run:
           name: Remove release key
           command: rm ./upload.jks
+      - <<: *fix_permissions
       - <<: *deploy_to_dropbox
-
 
 
 workflows:
