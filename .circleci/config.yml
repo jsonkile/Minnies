@@ -4,6 +4,7 @@ version: 2.1
 
 orbs:
   android: circleci/android@2.1.2
+  gh: circleci/github-cli@1.0
 
 jobs:
   unit-test:
@@ -25,7 +26,7 @@ jobs:
       - checkout
       - android/start-emulator-and-run-tests:
           test-command: ./gradlew connectedAndroidTest
-          system-image: system-images;android-29;google_apis;x86_64
+          system-image: system-images;android-30;google_apis;x86
 
   release-build:
     executor:
@@ -46,15 +47,28 @@ jobs:
 workflows:
   test-and-build:
     jobs:
-      - unit-test
+      - unit-test:
+          filters:
+            branches:
+              only: develop
       - android-test:
+          requires:
+            - unit-test
           filters:
             branches:
               only: develop
       - release-build:
-          requires:
-            - unit-test
-            - android-test
           filters:
             branches:
-              only: develop
+              only: main
+      - gh/release:
+          tag: 1.0.0
+          title: Minnies Installer
+          files: app/build/outputs/apk/release/app-release.apk
+          context:
+            - GITHUB_CREDENTIALS
+          requires:
+            - release-build
+          filters:
+            branches:
+              only: main
