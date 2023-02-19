@@ -60,7 +60,7 @@ workflows:
       - release-build:
           filters:
             branches:
-              only: main
+              only: master
       - gh/release:
           tag: 1.0.0
           title: Minnies Installer
@@ -71,4 +71,4 @@ workflows:
             - release-build
           filters:
             branches:
-              only: main
+              only: master
