@@ -64,7 +64,7 @@ workflows:
       - gh/release:
           tag: 1.0.0
           title: Minnies Installer
-          files: app/build/outputs/apk/release/app-release.apk
+          files: ./app/build/outputs/apk/release/app-release.apk
           context:
             - GITHUB_CREDENTIALS
           requires:
