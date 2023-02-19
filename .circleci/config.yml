@@ -9,7 +9,7 @@ orbs:
 deploy_to_dropbox: &deploy_to_dropbox
   deploy:
     name: Deploy to DropBox
-    command: dropbox_deploy.sh
+    command: ./dropbox_deploy.sh
 
 jobs:
   unit-test:
