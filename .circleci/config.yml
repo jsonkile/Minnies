@@ -6,6 +6,11 @@ orbs:
   android: circleci/android@2.1.2
   gh: circleci/github-cli@1.0
 
+deploy_to_dropbox: &deploy_to_dropbox
+  deploy:
+    name: Deploy to DropBox
+    command: ./dropbox_deploy.sh
+
 jobs:
   unit-test:
     executor:
@@ -45,6 +50,7 @@ jobs:
       - run:
           name: Remove release key
           command: rm ./upload.jks
+      - <<: *deploy_to_dropbox
 
 
 
@@ -66,7 +72,7 @@ workflows:
             branches:
               only: master
       - gh/release:
-          tag: 1.0.0
+          tag: 1.1.0
           title: Minnies Installer
           context:
             - GITHUB_CREDENTIALS
