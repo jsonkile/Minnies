@@ -64,7 +64,6 @@ workflows:
       - gh/release:
           tag: 1.0.0
           title: Minnies Installer
-          files: /home/circleci/project/app/build/outputs/apk/release/app-release.apk
           context:
             - GITHUB_CREDENTIALS
           requires:
