@@ -63,6 +63,7 @@ workflows:
               only: master
       - gh/release:
           tag: 1.0.0
+          files: ./dist/*.apk
           title: Minnies Installer
           context:
             - GITHUB_CREDENTIALS
