@@ -1,6 +1,7 @@
 # Minnies - My Android Showcase App ⭐
 Showcase project 22. Codename: Minnies.
 
+## Overview 🔦
 This project focuses on showcasing some key practices I utilize to produce scalable and maintainable android applications
 - Feature modularization
 - MVVM
@@ -10,12 +11,10 @@ This project focuses on showcasing some key practices I utilize to produce scala
 - Unit and UI Testing
 - CI/CD
 
-## Preview
+## Preview 📲
 Feel free to go through the app for yourself - Download the app [here](https://www.dropbox.com/s/2hgr9ec02d8qyqe/minnies_app.apk?dl=0).
 
-## Scope
-
-## Tech Stack
+## Tech Stack 🏗️
 Popular and stable android development libraries and tools used 
 - Data
   - [Kotlin flows](https://developer.android.com/kotlin/flow) - data flow throughout the app
@@ -35,5 +34,14 @@ Popular and stable android development libraries and tools used
   - [Mocck](http://mockk.io) - Kotlin library to create test mocks
 - CI
   - [Circle CI](https://circleci.com/) - Automating testing and build processes
- 
+  
+## Upcoming changes
+The project will continue to be updated. Here are some improvements and changes i plan to implement soon.
+  - Dependency management with gradle version catalog
+  
+  
+## Author 🧑🏽‍💻
+![20788593](https://user-images.githubusercontent.com/20788593/220057339-8edf3ca0-a2f3-450b-a9ca-def9748bf563.jpeg)
+
+[Connect on Linkedin](https://linkedin.com/in/jsonkile)
 
