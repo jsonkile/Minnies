@@ -76,13 +76,3 @@ workflows:
           filters:
             branches:
               only: master
-      - gh/release:
-          tag: 1.1.0
-          title: Minnies Installer
-          context:
-            - GITHUB_CREDENTIALS
-          requires:
-            - release-build
-          filters:
-            branches:
-              only: master
