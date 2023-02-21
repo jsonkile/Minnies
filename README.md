@@ -2,7 +2,16 @@
 Showcase project 22. Codename: Minnies.
 
 ## Overview 🔦
-This project focuses on showcasing some key practices I utilize to produce scalable and maintainable android applications
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/20788593/220423298-33ed0956-591c-4116-b773-75e1cd4a0fdf.jpg" width="230" />
+  <img src="https://user-images.githubusercontent.com/20788593/220423384-4d1ea21f-a0bc-4e39-80ac-39f2e0f43bcd.jpg" width="230" /> 
+  <img src="https://user-images.githubusercontent.com/20788593/220423436-4aa1a31b-d3fc-45ec-b806-cd01b8022a1d.jpg" width="230" />
+  <img src="https://user-images.githubusercontent.com/20788593/220423464-57def923-bfbc-4da8-84db-386dd0b96ac4.jpg" width="230" />
+  <img src="https://user-images.githubusercontent.com/20788593/220423619-69940723-5e8a-4ec3-9ba8-ba72be1469e1.jpg" width="230" /> 
+  <img src="https://user-images.githubusercontent.com/20788593/220423643-9a1c2771-0608-4749-86a9-dad4af90c7f9.jpg" width="230" />
+</p>
+
+This project focuses on showcasing some key practices I utilize to produce easily scalable and maintainable android applications
 - Feature modularization
 - MVVM
 - Clean architecture
@@ -16,11 +25,12 @@ Feel free to go through the app for yourself - Download the app [here](https://w
 
 ## Tech Stack 🏗️
 Popular and stable android development libraries and tools used 
-- Data
+- Core
   - [Kotlin flows](https://developer.android.com/kotlin/flow) - data flow throughout the app
   - [Coroutines](https://developer.android.com/kotlin/coroutines) - handles concurrent operations
-  - [Kotlin Serialization](https://kotlinlang.org/docs/serialization.html) - data class format conversion
   - [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Dependency injection
+- Data
+  - [Kotlin Serialization](https://kotlinlang.org/docs/serialization.html) - data class format conversion
   - [Room](https://developer.android.com/training/data-storage/room) - Local database
   - [Datastore](https://developer.android.com/topic/libraries/architecture/datastore) - Caching preferences
   - [Easy Validation](https://github.com/wajahatkarim3/EasyValidation) - Form validation
@@ -31,7 +41,7 @@ Popular and stable android development libraries and tools used
 - Testing
   - [Turbine](https://github.com/cashapp/turbine) - Testing kotlin flows
   - [JUnit4](https://junit.org/junit4/) - Testing framework
-  - [Mocck](http://mockk.io) - Kotlin library to create test mocks
+  - [Mockk](http://mockk.io) - Kotlin library to create test mocks
 - CI
   - [Circle CI](https://circleci.com/) - Automating testing and build processes
   
