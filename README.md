@@ -11,12 +11,13 @@ Showcase project 22. Codename: Minnies.
   <img src="https://user-images.githubusercontent.com/20788593/220423643-9a1c2771-0608-4749-86a9-dad4af90c7f9.jpg" width="230" />
 </p>
 
-This project focuses on showcasing some key practices I utilize to produce easily scalable and maintainable android applications
+This project focuses on showcasing some key practices I utilize to produce beautiful, stable, easily scalable and maintainable android applications
 - Feature modularization
 - MVVM
 - Clean architecture
 - Single activity architecture
 - Solid principles
+- Material design 3 with dynamic theming
 - Unit, UI and end to end Testing 
 - CI/CD
 
