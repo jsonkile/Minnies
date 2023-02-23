@@ -17,7 +17,7 @@ This project focuses on showcasing some key practices I utilize to produce easil
 - Clean architecture
 - Single activity architecture
 - Solid principles
-- Unit and UI Testing
+- Unit, UI and end to end Testing 
 - CI/CD
 
 ## Preview 📲
