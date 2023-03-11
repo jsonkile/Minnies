@@ -1,20 +1,19 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
     namespace = "com.demo.minnies.notifications"
-    val compileSdkVersion: Int by rootProject.extra
-    val minSdkVersion: Int by rootProject.extra
-
-    compileSdk = compileSdkVersion
+    compileSdk = libs.versions.compilesdk.get().toInt()
 
     defaultConfig {
-        minSdk = minSdkVersion
+        minSdk = libs.versions.minsdk.get().toInt()
     }
 }
 
 dependencies {
     implementation(project(":shared"))
+    kapt(libs.dagger.hilt.compiler)
 }

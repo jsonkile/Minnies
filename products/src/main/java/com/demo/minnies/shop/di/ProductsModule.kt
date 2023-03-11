@@ -21,6 +21,9 @@ abstract class ProductsModule {
     abstract fun bindGetAllProductsUseCase(getAllProductsUseCaseImpl: GetAllProductsUseCaseImpl): GetAllProductsUseCase
 
     @Binds
+    abstract fun bindCountAllProductsUseCase(countAllProductsUseCaseImpl: CountAllProductsUseCaseImpl): CountAllProductsUseCase
+
+    @Binds
     abstract fun bindAddProductsUseCase(addProductsUseCaseImpl: AddProductsUseCaseImpl): AddProductsUseCase
 
     @Binds

@@ -10,14 +10,17 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductsDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: Product): Long
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(items: List<Product>): List<Long>
 
     @Query("select * from products")
     fun getAll(): Flow<List<Product>>
+
+    @Query("select count(name) from products")
+    fun countAll() : Flow<Int>
 
     @Query("select * from products where category = :category")
     fun getItemsByCategory(category: Category): Flow<List<Product>>

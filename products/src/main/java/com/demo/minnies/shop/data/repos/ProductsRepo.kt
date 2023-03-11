@@ -12,6 +12,8 @@ interface ProductsRepo {
 
     fun getAllItems(): Flow<List<Product>>
 
+    fun countAllItems(): Flow<Int>
+
     fun getItemsByCategory(category: Category): Flow<List<Product>>
 
     fun getFeaturedItems(): Flow<List<Product>>

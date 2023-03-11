@@ -1,29 +1,24 @@
 import com.android.build.api.dsl.ApplicationDefaultConfig
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-android")
-
-    id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
-    val compileSdkVersion: Int by rootProject.extra
-    val targetSdkVersion: Int by rootProject.extra
     val appVersionCode: Int by rootProject.extra
     val appVersionName: String by rootProject.extra
     val appId: String by rootProject.extra
-    val minSdkVersion: Int by rootProject.extra
 
     namespace = appId
-    compileSdk = compileSdkVersion
+    compileSdk = libs.versions.compilesdk.get().toInt()
 
     defaultConfig {
         applicationId = appId
-        minSdk = minSdkVersion
-        targetSdk = targetSdkVersion
+        minSdk = libs.versions.minsdk.get().toInt()
+        targetSdk = libs.versions.targetsdk.get().toInt()
         versionCode = appVersionCode
         versionName = appVersionName
 
@@ -58,9 +53,7 @@ android {
     }
 
     composeOptions {
-        val composeCompilerVersion: String by rootProject.extra
-
-        kotlinCompilerExtensionVersion = composeCompilerVersion
+        kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
     }
 
     compileOptions {
@@ -77,18 +70,6 @@ android {
 }
 
 dependencies {
-    val composeVersion: String by rootProject.extra
-    val navigationVersion: String by rootProject.extra
-    val hiltVersion: String by rootProject.extra
-    val coroutinesVersion: String by rootProject.extra
-    val jUnitVersion: String by rootProject.extra
-    val testRunnerVersion: String by rootProject.extra
-    val testCoreVersion: String by rootProject.extra
-    val accompanistSystemControllerVersion: String by rootProject.extra
-    val hiltNavigationComposeVersion: String by rootProject.extra
-    val mockkVersion: String by rootProject.extra
-    val splashScreenVersion: String by rootProject.extra
-
     implementation(project(":shared"))
     implementation(project(":notifications"))
     implementation(project(":orders"))
@@ -96,33 +77,22 @@ dependencies {
     implementation(project(":cart"))
     implementation(project(":products"))
 
-    implementation("com.google.dagger:hilt-android:$hiltVersion")
-    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
 
+    val composeBom = platform(libs.composebom)
+    implementation(composeBom)
+    implementation(libs.bundles.ui)
+    implementation(libs.splashscreen)
+    implementation(libs.systemuicontroller)
+    debugImplementation(libs.compose.manifest)
+    debugImplementation(libs.compose.tooling.preview)
 
-    //ui
-    implementation("androidx.core:core-splashscreen:$splashScreenVersion")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistSystemControllerVersion")
-
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
-    debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
-
-    testImplementation("junit:junit:$jUnitVersion")
-    androidTestImplementation("junit:junit:$jUnitVersion")
-    androidTestImplementation("androidx.test:core:$testCoreVersion")
-    androidTestImplementation("androidx.test:runner:$testRunnerVersion")
-    androidTestImplementation("androidx.navigation:navigation-testing:$navigationVersion")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
-    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
-    androidTestImplementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    testImplementation(libs.bundles.test)
+    androidTestImplementation(composeBom)
+    androidTestImplementation(libs.bundles.test.android)
+    kaptAndroidTest(libs.dagger.hilt.compiler)
     androidTestImplementation(kotlin("reflect"))
-
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
-
-    testImplementation("io.mockk:mockk-android:$mockkVersion")
-    testImplementation("io.mockk:mockk-agent:$mockkVersion")
 }
 
 fun ApplicationDefaultConfig.buildConfigFieldFromGradleProperty(gradlePropertyName: String) {

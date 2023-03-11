@@ -1,12 +1,8 @@
 package com.demo.minnies.shared.presentation.ui
 
-import android.os.Build
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 
 val md_theme_light_primary = Color(0xFF4C6700)
 val md_theme_light_onPrimary = Color(0xFFFFFFFF)

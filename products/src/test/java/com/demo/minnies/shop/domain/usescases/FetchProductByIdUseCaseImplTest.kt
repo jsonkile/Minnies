@@ -40,6 +40,8 @@ internal class FetchProductByIdUseCaseImplTest {
 
             override fun getAllItems(): Flow<List<Product>> = emptyFlow()
 
+            override fun countAllItems(): Flow<Int>  = emptyFlow()
+
             override fun getItemsByCategory(category: Category): Flow<List<Product>> = emptyFlow()
 
             override fun getFeaturedItems(): Flow<List<Product>> = emptyFlow()

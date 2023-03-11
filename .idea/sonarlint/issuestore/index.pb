@@ -5,20 +5,12 @@ Q
 !cart/src/main/AndroidManifest.xml,0/4/04e678bb914a08ea71920c1cfac4b0815782b074
 F
 app/proguard-rules.pro,9/e/9e08934d811afe28fbc77aaa3c0d747b94348db9
-X
-(gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
-v
-Fshared/src/main/java/com/demo/minnies/shared/presentation/ui/Dimens.kt,1/1/11a633665986634dac71d8fb325c515e3ee051f1
 „
 Tdatabase/src/main/java/com/demo/minnies/database/room/converters/IntListConverter.kt,a/8/a8ba929a91f90574e30689b8f7b4c5c2cb4f7688
 k
 ;shared/src/main/java/com/demo/minnies/shared/utils/Error.kt,f/e/fee89cd9e08fbcaaecb135013c7e1cf2d974c57f
 ƒ
 Sproducts/src/main/java/com/demo/minnies/shop/domain/usescases/AddProductsUseCase.kt,7/8/78d1976d32c101536162b3a93a08a0f998cd4df6
-G
-shared/build.gradle.kts,c/7/c75a46202110405791c74357375762fb05087d5b
-o
-?database/src/main/java/com/demo/minnies/database/di/DBModule.kt,4/f/4f3d18be23a516812ceb301b78b7f7e731d3e06c
 |
 Lcart/src/main/java/com/demo/minnies/cart/domain/usecases/FetchCartUseCase.kt,b/f/bf3d365028d4c9116c81e57275e9eb0045d70f8a
 „
@@ -49,8 +41,6 @@ q
 Acart/src/androidTest/java/com/demo/minnies/cart/HiltTestRunner.kt,7/1/71fb5776354502fddf5618078cec1c028a07db89
 v
 Fdatabase/src/main/java/com/demo/minnies/database/room/daos/UsersDao.kt,5/6/56df1cdd24b8eae4c28b4fed588467b893e3a65d
-G
-orders/build.gradle.kts,3/5/35d72f14757a7c17c0ac1a6204029ff8dba949aa
 o
 ?database/src/main/java/com/demo/minnies/database/models/User.kt,2/b/2bb69af2409bb8e1832d1c1da349aa9393727d15
 ]
@@ -59,8 +49,6 @@ r
 Bdatabase/src/main/java/com/demo/minnies/database/models/Product.kt,d/e/deced4a5f4770b4349318c4885351c87e234f3d4
 €
 Pproducts/src/main/java/com/demo/minnies/shop/presentation/screens/ProductCard.kt,0/4/0406ffb997e724e9273aecce23bdeca4efcac602
-t
-Ddatabase/src/main/java/com/demo/minnies/database/room/AppDatabase.kt,e/6/e60d45503829b5ae3992a050c3f1a7d848d4a78f
 
 Oshared/src/main/java/com/demo/minnies/shared/presentation/components/Buttons.kt,4/f/4fcd9b0a20d8b1206e3de7a6da4e1c0c86c136e7
 u
@@ -82,8 +70,6 @@ Oproducts/src/main/java/com/demo/minnies/shop/presentation/models/ViewProduct.kt
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
-
-]shared/src/main/java/com/demo/minnies/shared/presentation/components/DeleteSwipeBackground.kt,d/3/d36040c2e051a37d0053bee39d5f38f76abee124
 Œ
 \products/src/main/java/com/demo/minnies/shop/domain/usescases/FetchProductByIdUseCaseImpl.kt,3/c/3c99423e4c9a7d828780e7f22701dec1de4217e2
 ~
@@ -98,8 +84,6 @@ Morders/src/main/java/com/demo/minnies/orders/domain/FetchUserOrdersUseCase.kt,
 Ycart/src/main/java/com/demo/minnies/cart/presentation/screens/checkout/CheckoutSummary.kt,c/e/ce749a3638c92ffb5a98094e3d19966c359c7dd9
 s
 Ccart/src/main/java/com/demo/minnies/cart/presentation/Navigation.kt,7/6/768e1ce2cf016571dd69e59ee3d047b664cd1176
-€
-Pcart/src/main/java/com/demo/minnies/cart/presentation/screens/cart/CartScreen.kt,0/b/0b48bef95de203966361e25bed992f89690e8969
 ƒ
 Scart/src/main/java/com/demo/minnies/cart/presentation/screens/cart/CartViewModel.kt,c/4/c47e2409ca2365c3efe5e80eb7daa3db81816bbf
 l
@@ -116,12 +100,8 @@ o
 Zproducts/src/main/java/com/demo/minnies/shop/domain/usescases/SearchProductsUseCaseImpl.kt,2/e/2e1acbba2117d98dc4b79e1a741ba8b015d25cd9
 w
 Gproducts/src/main/java/com/demo/minnies/shop/data/repos/ProductsRepo.kt,a/d/ad6ce48a0a6215f0a6b9b279a26403d229349cf8
-y
-Idatabase/src/main/java/com/demo/minnies/database/room/daos/ProductsDao.kt,7/1/71f69c35bd1bc50d9c71b2720252af7cfaedf3b6
 ˆ
 Xproducts/src/test/java/com/demo/minnies/shop/presentation/screens/SearchViewModelTest.kt,3/c/3c6780be8556db82e9dfba88f526574f6f4590c5
-E
-cart/build.gradle.kts,7/d/7d3bbd69da4f81a3e4202866a97ac54db6a99a7b
 ƒ
 Sauth/src/main/java/com/demo/minnies/auth/domain/UpdateUserShippingAddressUseCase.kt,6/3/6397512d5e061aa4ef8b89bca4e89c1e1e8e9139
 k
@@ -212,8 +192,6 @@ w
 Gorders/src/main/java/com/demo/minnies/orders/presentation/Navigation.kt,1/9/19f78dc2e914b82b4b784c3a0eb5e457a40f3321
 q
 Aproducts/src/main/java/com/demo/minnies/shop/di/ProductsModule.kt,1/a/1af53619f1bbaafdb6b833beafd0d54f8f2c0ce8
-o
-?app/src/main/java/com/demo/minnies/presentation/MainActivity.kt,9/c/9c7d2eca303916114a493603449bd5048c81d06f
 q
 Aauth/src/androidTest/java/com/demo/minnies/auth/HiltTestRunner.kt,4/a/4aafb3df8173fe41cf02055e71e3c32eb2de0910
 €
@@ -228,8 +206,6 @@ Mauth/src/main/java/com/demo/minnies/auth/data/repos/CacheRepoDataStoreImpl.kt,
 Vshared/src/main/java/com/demo/minnies/shared/presentation/components/MinniesToolbar.kt,e/9/e9e31cefb7e96b3cbff2ed814bea6bc61b63947d
 T
 $shared/src/debug/AndroidManifest.xml,9/7/97c7b07b9453fe15f185ad6e20e446e3c9896329
-m
-=app/src/main/java/com/demo/minnies/presentation/Navigation.kt,9/d/9dd6bce887d2c4ef0de650d2ed496072b58861eb
 ‹
 [products/src/androidTest/java/com/demo/minnies/shop/presentation/screens/ProductCardTest.kt,a/4/a43d386da332e00ffaa68c2bc018cda37aa85762
 
@@ -254,3 +230,13 @@ n
 >auth/src/main/java/com/demo/minnies/auth/di/DataStoreModule.kt,1/2/128f881c191f5f6d7a0851b19f22e8cf22644880
 t
 Dauth/src/androidTest/java/com/demo/minnies/auth/di/UseCasesModule.kt,a/9/a9cae9d28ffb5015669bb7847f70ad7a3ab271c1
+P
+ app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
+D
+.circleci/config.yml,f/d/fd5da61396a8376845bee5cdf71aaf3c98a888ae
+A
+dropbox_deploy.sh,6/8/68654f6e5340a5ac7540608ebbc76e6c4f4ece21
+z
+Jshared/src/main/java/com/demo/minnies/shared/presentation/ui/Typography.kt,3/7/37d080efd6f436c2c670d19474fa39094dc62a47
+v
+Fshared/src/main/java/com/demo/minnies/shared/presentation/ui/Dimens.kt,1/1/11a633665986634dac71d8fb325c515e3ee051f1

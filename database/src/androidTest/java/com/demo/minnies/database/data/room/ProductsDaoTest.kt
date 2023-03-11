@@ -83,6 +83,27 @@ class ProductsDaoTest {
     }
 
     @Test
+    fun testCountAll(){
+        runTest {
+            dao.insert(
+                Product(
+                    name = "Test Item", category = Category.Shorts, image = "",
+                    sizes = listOf(0), description = "", price = 4.0
+                )
+            )
+
+            dao.insert(
+                Product(
+                    name = "Test Item", category = Category.Shorts, image = "",
+                    sizes = listOf(0), description = "", price = 4.0
+                )
+            )
+
+            Assert.assertEquals(2, dao.countAll().first())
+        }
+    }
+
+    @Test
     fun testGetByCategory() {
         runTest {
             dao.insert(

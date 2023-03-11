@@ -22,7 +22,7 @@ internal class ProductsRepoImplTest {
     val hiltAndroidRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var shopRepoRoomImpl: ProductsRepoRoomImpl
+    lateinit var productsRepoRoomImpl: ProductsRepoRoomImpl
 
     @Before
     fun setup() {
@@ -33,9 +33,9 @@ internal class ProductsRepoImplTest {
     @Test
     fun getAllItems_ReturnsAllItems() = runTest {
 
-        val currentSize = shopRepoRoomImpl.getAllItems().first().size
+        val currentSize = productsRepoRoomImpl.getAllItems().first().size
 
-        shopRepoRoomImpl.addItem(
+        productsRepoRoomImpl.addItem(
             Product(
                 name = "",
                 image = "",
@@ -46,7 +46,7 @@ internal class ProductsRepoImplTest {
             )
         )
 
-        shopRepoRoomImpl.addItem(
+        productsRepoRoomImpl.addItem(
             Product(
                 name = "",
                 image = "",
@@ -57,15 +57,15 @@ internal class ProductsRepoImplTest {
             )
         )
 
-        Assert.assertEquals(currentSize + 2, shopRepoRoomImpl.getAllItems().first().size)
+        Assert.assertEquals(currentSize + 2, productsRepoRoomImpl.getAllItems().first().size)
     }
 
     @Test
     fun addItem_SuccessfullyAddsItem() = runTest {
 
-        val currentSize = shopRepoRoomImpl.getAllItems().first().size
+        val currentSize = productsRepoRoomImpl.getAllItems().first().size
 
-        shopRepoRoomImpl.addItem(
+        productsRepoRoomImpl.addItem(
             Product(
                 name = "",
                 image = "",
@@ -76,7 +76,7 @@ internal class ProductsRepoImplTest {
             )
         )
 
-        shopRepoRoomImpl.addItem(
+        productsRepoRoomImpl.addItem(
             Product(
                 name = "",
                 image = "",
@@ -87,13 +87,13 @@ internal class ProductsRepoImplTest {
             )
         )
 
-        Assert.assertEquals(currentSize + 2, shopRepoRoomImpl.getAllItems().first().size)
+        Assert.assertEquals(currentSize + 2, productsRepoRoomImpl.getAllItems().first().size)
     }
 
     @Test
     fun getProductById_ReturnsCorrectProduct() = runTest {
 
-        val id = shopRepoRoomImpl.addItem(
+        val id = productsRepoRoomImpl.addItem(
             Product(
                 name = "Happy",
                 image = "",
@@ -104,15 +104,15 @@ internal class ProductsRepoImplTest {
             )
         )
 
-        Assert.assertEquals("Happy", shopRepoRoomImpl.getProductById(id.toInt()).first()?.name)
+        Assert.assertEquals("Happy", productsRepoRoomImpl.getProductById(id.toInt()).first()?.name)
     }
 
     @Test
     fun getFeaturedItems_ReturnsFeaturedItems() = runTest {
 
-        val currentFeaturedListSize = shopRepoRoomImpl.getFeaturedItems().first().size
+        val currentFeaturedListSize = productsRepoRoomImpl.getFeaturedItems().first().size
 
-        shopRepoRoomImpl.addItem(
+        productsRepoRoomImpl.addItem(
             Product(
                 name = "",
                 image = "",
@@ -124,7 +124,7 @@ internal class ProductsRepoImplTest {
             )
         )
 
-        shopRepoRoomImpl.addItem(
+        productsRepoRoomImpl.addItem(
             Product(
                 name = "",
                 image = "",
@@ -136,7 +136,7 @@ internal class ProductsRepoImplTest {
             )
         )
 
-        shopRepoRoomImpl.addItem(
+        productsRepoRoomImpl.addItem(
             Product(
                 name = "",
                 image = "",
@@ -150,7 +150,7 @@ internal class ProductsRepoImplTest {
 
         Assert.assertEquals(
             currentFeaturedListSize + 2,
-            shopRepoRoomImpl.getFeaturedItems().first().size
+            productsRepoRoomImpl.getFeaturedItems().first().size
         )
     }
 
@@ -158,9 +158,9 @@ internal class ProductsRepoImplTest {
     @Test
     fun getItemsByCategory_ReturnsCorrectItems() = runTest {
 
-        val currentTopsListSize = shopRepoRoomImpl.getItemsByCategory(Category.Top).first().size
+        val currentTopsListSize = productsRepoRoomImpl.getItemsByCategory(Category.Top).first().size
 
-        shopRepoRoomImpl.addItem(
+        productsRepoRoomImpl.addItem(
             Product(
                 name = "",
                 image = "",
@@ -172,7 +172,7 @@ internal class ProductsRepoImplTest {
             )
         )
 
-        shopRepoRoomImpl.addItem(
+        productsRepoRoomImpl.addItem(
             Product(
                 name = "",
                 image = "",
@@ -184,7 +184,7 @@ internal class ProductsRepoImplTest {
             )
         )
 
-        shopRepoRoomImpl.addItem(
+        productsRepoRoomImpl.addItem(
             Product(
                 name = "",
                 image = "",
@@ -198,7 +198,7 @@ internal class ProductsRepoImplTest {
 
         Assert.assertEquals(
             currentTopsListSize + 2,
-            shopRepoRoomImpl.getItemsByCategory(Category.Top).first().size
+            productsRepoRoomImpl.getItemsByCategory(Category.Top).first().size
         )
     }
 }

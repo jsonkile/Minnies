@@ -5,6 +5,7 @@ import com.demo.minnies.database.room.daos.ProductsDao
 import com.demo.minnies.database.models.CartItem
 import com.demo.minnies.database.models.Category
 import com.demo.minnies.database.models.Product
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ProductsRepoRoomImpl @Inject constructor(
@@ -16,6 +17,8 @@ class ProductsRepoRoomImpl @Inject constructor(
     override suspend fun addItems(products: List<Product>) = productsDao.insert(products)
 
     override fun getAllItems() = productsDao.getAll()
+
+    override fun countAllItems(): Flow<Int> = productsDao.countAll()
 
     override fun getItemsByCategory(category: Category) = productsDao.getItemsByCategory(category)
 
