@@ -1,53 +1,37 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("kotlinx-serialization")
-
-    kotlin("kapt")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
     namespace = "com.demo.minnies.database"
-    val compileSdkVersion: Int by rootProject.extra
-    val minSdkVersion: Int by rootProject.extra
 
-    compileSdk = compileSdkVersion
+    compileSdk = libs.versions.compilesdk.get().toInt()
 
     defaultConfig {
-        minSdk = minSdkVersion
+        minSdk = libs.versions.minsdk.get().toInt()
         testInstrumentationRunner = "com.demo.minnies.database.HiltTestRunner"
     }
 }
 
 dependencies {
-    val roomVersion: String by rootProject.extra
-    val hiltVersion: String by rootProject.extra
-    val jUnitVersion: String by rootProject.extra
-    val testRunnerVersion: String by rootProject.extra
-    val coroutinesVersion: String by rootProject.extra
-    val dataStoreVersion: String by rootProject.extra
-    val kotlinSerializationVersion: String by rootProject.extra
+    annotationProcessor(libs.room.compiler)
+    kapt(libs.room.compiler)
+    implementation(libs.bundles.room)
 
-    implementation("com.google.dagger:hilt-android:$hiltVersion")
-    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    implementation(libs.bundles.core)
+    kapt(libs.dagger.hilt.compiler)
 
-    api("androidx.room:room-runtime:$roomVersion")
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
-    api("androidx.room:room-ktx:$roomVersion")
+    api(libs.datastore)
+    api(libs.datastore.preference)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
-
-    //datastore
-    api("androidx.datastore:datastore-preferences:$dataStoreVersion")
-    api("androidx.datastore:datastore:$dataStoreVersion")
-
-    testImplementation("junit:junit:$jUnitVersion")
-    androidTestImplementation("junit:junit:$jUnitVersion")
-    androidTestImplementation("androidx.test:runner:$testRunnerVersion")
-    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
-    androidTestImplementation("androidx.room:room-testing:$roomVersion")
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.test.runner)
+    androidTestImplementation(libs.coroutines.test)
+    androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.dagger.hilt.testing)
+    kaptAndroidTest(libs.dagger.hilt.compiler)
+    androidTestImplementation(libs.room.testing)
 }

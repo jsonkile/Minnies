@@ -1,67 +1,46 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("kotlinx-serialization")
-
-    kotlin("kapt")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
     namespace = "com.demo.minnies.auth"
-    val compileSdkVersion: Int by rootProject.extra
-    val minSdkVersion: Int by rootProject.extra
 
-    compileSdk = compileSdkVersion
+    compileSdk = libs.versions.compilesdk.get().toInt()
 
     buildFeatures {
         compose = true
     }
 
     defaultConfig {
-        minSdk = minSdkVersion
+        minSdk = libs.versions.minsdk.get().toInt()
         testInstrumentationRunner = "com.demo.minnies.auth.HiltTestRunner"
     }
 
     composeOptions {
-        val composeCompilerVersion: String by rootProject.extra
-
-        kotlinCompilerExtensionVersion = composeCompilerVersion
+        kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
     }
 }
 
 dependencies {
-    val hiltVersion: String by rootProject.extra
-    val coroutinesVersion: String by rootProject.extra
-    val composeVersion: String by rootProject.extra
-    val jUnitVersion: String by rootProject.extra
-    val testRunnerVersion: String by rootProject.extra
-    val turbineVersion: String by rootProject.extra
-    val biometricVersion: String by rootProject.extra
-    val mockkVersion: String by rootProject.extra
-
     implementation(project(":shared"))
 
-    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    kapt(libs.dagger.hilt.compiler)
 
-    implementation("androidx.biometric:biometric:$biometricVersion")
+    implementation(libs.biometric)
 
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
-    debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
+    val composeBom = platform(libs.composebom)
+    implementation(composeBom)
+    implementation(libs.bundles.ui)
+    debugImplementation(libs.compose.manifest)
+    debugImplementation(libs.compose.tooling.preview)
 
-    testImplementation("junit:junit:$jUnitVersion")
-    androidTestImplementation("junit:junit:$jUnitVersion")
-    androidTestImplementation("androidx.test:runner:$testRunnerVersion")
-    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
-    androidTestImplementation("app.cash.turbine:turbine:$turbineVersion")
-
-    testImplementation("app.cash.turbine:turbine:$turbineVersion")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
-
-    testImplementation("io.mockk:mockk-android:$mockkVersion")
-    testImplementation("io.mockk:mockk-agent:$mockkVersion")
+    testImplementation(libs.bundles.test)
+    androidTestImplementation(composeBom)
+    androidTestImplementation(libs.bundles.test.android)
+    kaptAndroidTest(libs.dagger.hilt.compiler)
+    androidTestImplementation(kotlin("reflect"))
 }
 
 kapt {
