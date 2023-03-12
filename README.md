@@ -48,7 +48,7 @@ Popular and stable android development libraries and tools used
   
 ## Upcoming changes
 The project will continue to be updated. Here are some improvements and changes i plan to implement soon
-  - [ ] Dependency management with gradle version catalog
+  - [x] ~~Dependency management with gradle version catalog~~
   - [ ] Order progress and notifications
   - [ ] Increase test coverage
   
