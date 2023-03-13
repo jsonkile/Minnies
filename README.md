@@ -30,6 +30,7 @@ Popular and stable android development libraries and tools used
   - [Kotlin flows](https://developer.android.com/kotlin/flow) - data flow throughout the app
   - [Coroutines](https://developer.android.com/kotlin/coroutines) - handles concurrent operations
   - [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Dependency injection
+  - [Version Catalog](https://docs.gradle.org/current/userguide/platforms.html)
 - Data
   - [Kotlin Serialization](https://kotlinlang.org/docs/serialization.html) - data class format conversion
   - [Room](https://developer.android.com/training/data-storage/room) - Local database
