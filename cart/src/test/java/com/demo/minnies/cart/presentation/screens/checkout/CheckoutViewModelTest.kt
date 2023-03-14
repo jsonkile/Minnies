@@ -19,7 +19,6 @@ import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 
-
 internal class CheckoutViewModelTest {
 
     val scheduler = TestCoroutineScheduler()
@@ -79,7 +78,6 @@ internal class CheckoutViewModelTest {
             Assert.assertEquals(mockCart, viewModel.uiState.value.checkoutItems)
             Assert.assertEquals("haven", viewModel.uiState.value.shippingAddress)
             Assert.assertEquals("$0.1", viewModel.uiState.value.formattedTotalAmount)
-
         } finally {
             Dispatchers.resetMain()
         }

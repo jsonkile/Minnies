@@ -72,7 +72,8 @@ class AuthenticationTest {
         produceFile = {
             ApplicationProvider.getApplicationContext<Context>()
                 .preferencesDataStoreFile(this::class.simpleName.orEmpty())
-        })
+        }
+    )
 
     @Before
     fun setup() {
@@ -122,7 +123,6 @@ class AuthenticationTest {
 
         composeTestRule.onNodeWithContentDescription("More page button").performClick()
 
-
         composeTestRule.onNodeWithTag(ACCOUNT_BUTTON_TEST_TAG).performClick()
 
         composeTestRule.onNodeWithText("Jayson Kile").assertIsDisplayed()
@@ -130,7 +130,6 @@ class AuthenticationTest {
         composeTestRule.onNodeWithText(phone).assertIsDisplayed()
 
         composeTestRule.onNodeWithContentDescription("back button").performClick()
-
 
         composeTestRule.onNodeWithTag(LOGOUT_BUTTON_TEST_TAG).performClick()
 

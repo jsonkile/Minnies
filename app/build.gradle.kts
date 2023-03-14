@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ktlint.android)
 }
 
 android {
@@ -38,7 +39,8 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
         }
@@ -66,6 +68,17 @@ android {
     kotlinOptions {
         val jvmTargetVersion: String by rootProject.extra
         jvmTarget = jvmTargetVersion
+    }
+}
+
+ktlint {
+    android.set(true)
+    ignoreFailures.set(false)
+    disabledRules.set(setOf("final-newline", "no-wildcard-imports"))
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.SARIF)
     }
 }
 

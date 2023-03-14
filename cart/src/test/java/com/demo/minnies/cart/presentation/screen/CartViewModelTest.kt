@@ -40,9 +40,7 @@ internal class CartViewModelTest {
         }
 
         val deleteCartItemUseCase = object : DeleteCartItemUseCase {
-            override suspend fun invoke(id: Long) {
-
-            }
+            override suspend fun invoke(id: Long) {}
         }
 
         val updateCartItemUseCase = object :
@@ -62,7 +60,6 @@ internal class CartViewModelTest {
             awaitComplete()
         }
     }
-
 
     @Test
     fun `test that uiState goes from loading to empty when cart it empty`() = runTest {
@@ -92,7 +89,6 @@ internal class CartViewModelTest {
         }
     }
 
-
     @Test
     fun `test that uiState goes from loading to error when there is an exception`() = runTest {
         val fetchCartUseCase = object : com.demo.minnies.cart.domain.usecases.FetchCartUseCase {
@@ -119,7 +115,8 @@ internal class CartViewModelTest {
         cartViewModel.uiState.test {
             Assert.assertTrue(awaitItem() is CartViewModel.UiState.Loading)
             Assert.assertEquals(
-                "problem", (awaitItem() as CartViewModel.UiState.Error).throwable.message,
+                "problem",
+                (awaitItem() as CartViewModel.UiState.Error).throwable.message
             )
             awaitComplete()
         }

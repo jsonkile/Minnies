@@ -14,7 +14,6 @@ import androidx.test.core.app.ApplicationProvider
 import com.demo.minnies.auth.di.DataStoreModule
 import com.demo.minnies.auth.presentation.components.SIGN_IN_PROMPT_CREATE_ACCOUNT_BUTTON_TAG
 import com.demo.minnies.auth.presentation.components.SIGN_IN_PROMPT_TEST_TAG
-import com.demo.minnies.auth.presentation.components.SIGN_IN_PROMPT__LOGIN_BUTTON_TEST_TAG
 import com.demo.minnies.auth.presentation.screens.*
 import com.demo.minnies.auth.presentation.screens.account.SHIPPING_ADDRESS_TEXT_FIELD_TEST_TAG
 import com.demo.minnies.auth.presentation.screens.account.SUBMIT_BUTTON_TEST_TAG
@@ -24,7 +23,6 @@ import com.demo.minnies.database.models.UserSerializer
 import com.demo.minnies.presentation.MainActivity
 import com.demo.minnies.presentation.screens.ACCOUNT_BUTTON_TEST_TAG
 import com.demo.minnies.presentation.screens.LOGOUT_BUTTON_TEST_TAG
-import com.demo.minnies.shared.utils.TEST_PROTO_DATASTORE_FILE_NAME
 import com.demo.minnies.shared.utils.getRandomString
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -71,7 +69,8 @@ class UpdateShippingAddressTest {
         produceFile = {
             ApplicationProvider.getApplicationContext<Context>()
                 .preferencesDataStoreFile(this::class.simpleName.orEmpty())
-        })
+        }
+    )
 
     @Before
     fun setup() {
@@ -86,7 +85,6 @@ class UpdateShippingAddressTest {
         }
         scope.cancel()
     }
-
 
     @Test
     fun updateAddressTest() = runTest {
@@ -143,5 +141,4 @@ class UpdateShippingAddressTest {
 
         composeTestRule.onNodeWithTag(SIGN_IN_PROMPT_TEST_TAG).assertIsDisplayed()
     }
-
 }
