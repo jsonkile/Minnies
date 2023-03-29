@@ -1,7 +1,7 @@
 package com.demo.minnies.shop.presentation.screens
 
 import app.cash.turbine.test
-import com.demo.minnies.database.models.Category
+import com.demo.minnies.database.models.ProductCategory
 import com.demo.minnies.shared.utils.Currency
 import com.demo.minnies.shop.domain.usescases.FetchFeaturedShopItemsUseCase
 import com.demo.minnies.shop.domain.usescases.FetchProductsByCategoriesUseCase
@@ -38,10 +38,10 @@ class ShopViewModelTest {
             }
 
             val fetchProductsByCategoriesUseCase = object : FetchProductsByCategoriesUseCase {
-                override fun invoke(): Flow<Map<Category, List<ViewProduct>>> = flow {
+                override fun invoke(): Flow<Map<ProductCategory, List<ViewProduct>>> = flow {
                     val items = mockProducts
                     val currencyFormattedItems =
-                        items.map { item -> item.toView(Currency.USD) }.groupBy { it.category }
+                        items.map { item -> item.toView(Currency.USD) }.groupBy { it.productCategory }
                     emit(currencyFormattedItems)
                 }
             }

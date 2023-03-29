@@ -1,7 +1,7 @@
 package com.demo.minnies.shop.data.repos
 
 import com.demo.minnies.database.models.CartItem
-import com.demo.minnies.database.models.Category
+import com.demo.minnies.database.models.ProductCategory
 import com.demo.minnies.database.models.Product
 import kotlinx.coroutines.flow.Flow
 
@@ -14,7 +14,7 @@ interface ProductsRepo {
 
     fun countAllItems(): Flow<Int>
 
-    fun getItemsByCategory(category: Category): Flow<List<Product>>
+    fun getItemsByCategory(productCategory: ProductCategory): Flow<List<Product>>
 
     fun getFeaturedItems(): Flow<List<Product>>
 

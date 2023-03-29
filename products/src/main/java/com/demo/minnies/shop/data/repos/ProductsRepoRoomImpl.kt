@@ -3,7 +3,7 @@ package com.demo.minnies.shop.data.repos
 import com.demo.minnies.database.room.daos.CartDao
 import com.demo.minnies.database.room.daos.ProductsDao
 import com.demo.minnies.database.models.CartItem
-import com.demo.minnies.database.models.Category
+import com.demo.minnies.database.models.ProductCategory
 import com.demo.minnies.database.models.Product
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -20,7 +20,7 @@ class ProductsRepoRoomImpl @Inject constructor(
 
     override fun countAllItems(): Flow<Int> = productsDao.countAll()
 
-    override fun getItemsByCategory(category: Category) = productsDao.getItemsByCategory(category)
+    override fun getItemsByCategory(productCategory: ProductCategory) = productsDao.getItemsByCategory(productCategory)
 
     override fun getFeaturedItems() = productsDao.getFeaturedItems()
 

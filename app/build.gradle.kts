@@ -48,6 +48,11 @@ android {
         getByName("debug") {
             signingConfig = signingConfigs.getByName("debug")
         }
+        create("benchmark") {
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+            isDebuggable = false
+        }
     }
 
     buildFeatures {
@@ -106,6 +111,8 @@ dependencies {
     androidTestImplementation(libs.bundles.test.android)
     kaptAndroidTest(libs.dagger.hilt.compiler)
     androidTestImplementation(kotlin("reflect"))
+
+    implementation(libs.profile.installer)
 }
 
 fun ApplicationDefaultConfig.buildConfigFieldFromGradleProperty(gradlePropertyName: String) {

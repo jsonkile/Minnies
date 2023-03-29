@@ -1,6 +1,6 @@
 package com.demo.minnies.shop.presentation.models
 
-import com.demo.minnies.database.models.Category
+import com.demo.minnies.database.models.ProductCategory
 import com.demo.minnies.database.models.Product
 import com.demo.minnies.shared.utils.Currency
 import com.demo.minnies.shop.util.toView
@@ -18,7 +18,7 @@ class ViewProductKtTest {
                 image = "Y",
                 description = "Z",
                 sizes = listOf(0, 1),
-                category = Category.Shorts,
+                productCategory = ProductCategory.Shorts,
                 price = 0.2,
                 featured = false,
                 rating = 9.0

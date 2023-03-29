@@ -11,13 +11,13 @@ data class Product(
     var image: String,
     var description: String,
     var sizes: List<Int> = emptyList(),
-    var category: Category,
+    var productCategory: ProductCategory,
     var price: Double,
     var featured: Boolean = false,
     var rating: Double = 0.0
 )
 
-enum class Category {
+enum class ProductCategory {
     Accessory {
         override val publicName: String = "Accessories"
     },

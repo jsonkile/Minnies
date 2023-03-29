@@ -1,11 +1,10 @@
 package com.demo.minnies.shop.domain.usescases
 
 import com.demo.minnies.database.models.CartItem
-import com.demo.minnies.database.models.Category
+import com.demo.minnies.database.models.ProductCategory
 import com.demo.minnies.database.models.Product
 import com.demo.minnies.shared.domain.GetUserCurrencyPreferenceUseCase
 import com.demo.minnies.shop.data.repos.ProductsRepo
-import com.demo.minnies.shop.util.mockProducts
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
@@ -26,7 +25,7 @@ internal class FetchProductByIdUseCaseImplTest {
             val items = listOf(
                 Product(
                     id = 1,
-                    category = Category.Accessory,
+                    productCategory = ProductCategory.Accessory,
                     description = "",
                     name = "mimic",
                     image = "",
@@ -42,7 +41,7 @@ internal class FetchProductByIdUseCaseImplTest {
 
             override fun countAllItems(): Flow<Int>  = emptyFlow()
 
-            override fun getItemsByCategory(category: Category): Flow<List<Product>> = emptyFlow()
+            override fun getItemsByCategory(productCategory: ProductCategory): Flow<List<Product>> = emptyFlow()
 
             override fun getFeaturedItems(): Flow<List<Product>> = emptyFlow()
 

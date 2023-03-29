@@ -1,6 +1,6 @@
 package com.demo.minnies.shop.domain.usescases
 
-import com.demo.minnies.database.models.Category
+import com.demo.minnies.database.models.ProductCategory
 import com.demo.minnies.shared.domain.GetUserCurrencyPreferenceUseCase
 import com.demo.minnies.shop.util.mockProducts
 import kotlinx.coroutines.flow.first
@@ -28,9 +28,9 @@ internal class FetchProductsByCategoriesUseCaseImplTest {
         )
 
         val items = fetchShopItemsByCategoriesUseCase().first()
-        Assert.assertEquals(true, items[Category.Top]?.isNotEmpty())
-        Assert.assertEquals(true, items[Category.Kicks]?.isNotEmpty())
-        Assert.assertEquals(true, items[Category.Accessory]?.isNotEmpty())
-        Assert.assertEquals(true, items[Category.Shorts]?.isNotEmpty())
+        Assert.assertEquals(true, items[ProductCategory.Top]?.isNotEmpty())
+        Assert.assertEquals(true, items[ProductCategory.Kicks]?.isNotEmpty())
+        Assert.assertEquals(true, items[ProductCategory.Accessory]?.isNotEmpty())
+        Assert.assertEquals(true, items[ProductCategory.Shorts]?.isNotEmpty())
     }
 }

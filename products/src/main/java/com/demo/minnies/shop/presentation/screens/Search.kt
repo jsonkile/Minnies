@@ -22,6 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -62,6 +64,7 @@ fun SearchScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = PAGE_HORIZONTAL_MARGIN)
+            .semantics { testTagsAsResourceId = true }
     ) {
 
         val (searchBox, resultsArea, loadingIndicator, searchInfo) = createRefs()
@@ -73,7 +76,8 @@ fun SearchScreen(
                 .wrapContentHeight()
                 .constrainAs(searchBox) {
                     top.linkTo(parent.top, 15.dp)
-                }, onSearch = onSearch
+                }
+                .testTag("search_bar_test_tag"), onSearch = onSearch
         )
 
         when (uiState) {
@@ -137,7 +141,12 @@ fun SearchScreen(
                 ) {
 
                     items(items = uiState.results) { product ->
-                        ProductCard(viewProduct = product) { item ->
+                        ProductCard(
+                            viewProduct = product,
+                            modifier = Modifier
+                                .width(130.dp)
+                                .wrapContentHeight()
+                        ) { item ->
                             navigateToProduct(item.id)
                         }
                     }
@@ -213,21 +222,28 @@ fun SearchBox(term: String = "", modifier: Modifier, onSearch: (String) -> Unit)
             )
         },
         modifier = modifier,
-        keyboardActions = KeyboardActions(onSearch = {
-            onSearch(text.text)
-            keyboardController?.hide()
-        }, onGo = {
-            onSearch(text.text)
-            keyboardController?.hide()
-        }, onSend = {
-            onSearch(text.text)
-            keyboardController?.hide()
-        }),
+        keyboardActions = KeyboardActions(
+            onSearch = {
+                onSearch(text.text)
+                keyboardController?.hide()
+            }, onGo = {
+                this.defaultKeyboardAction(ImeAction.Search)
+                onSearch(text.text)
+                keyboardController?.hide()
+            }, onSend = {
+                onSearch(text.text)
+                keyboardController?.hide()
+            },
+            onDone = {
+                onSearch(text.text)
+                keyboardController?.hide()
+            }
+        ),
         keyboardOptions = KeyboardOptions.Default.copy(
             capitalization = KeyboardCapitalization.None,
             autoCorrect = false,
             keyboardType = KeyboardType.Text,
-            imeAction = ImeAction.Search
+            imeAction = ImeAction.Done
         ),
         singleLine = true,
         maxLines = 1
