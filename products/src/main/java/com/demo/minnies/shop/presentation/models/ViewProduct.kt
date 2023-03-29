@@ -1,12 +1,6 @@
 package com.demo.minnies.shop.presentation.models
 
-import com.demo.minnies.database.models.Category
-import com.demo.minnies.database.models.Product
-import com.demo.minnies.shared.utils.Currency
-import com.demo.minnies.shared.utils.toFormattedPrice
-import java.math.BigDecimal
-import java.math.RoundingMode
-import java.text.DecimalFormat
+import com.demo.minnies.database.models.ProductCategory
 
 data class ViewProduct(
     var id: Int = -1,
@@ -16,7 +10,7 @@ data class ViewProduct(
     var formattedPrice: String = "",
     var image: String = "",
     var sizes: List<Int> = emptyList(),
-    var category: Category = Category.Top,
+    var productCategory: ProductCategory = ProductCategory.Top,
     var featured: Boolean = false,
     var rating: Double = 0.0
 )

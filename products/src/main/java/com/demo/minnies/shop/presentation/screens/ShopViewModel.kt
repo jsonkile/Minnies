@@ -2,7 +2,7 @@ package com.demo.minnies.shop.presentation.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.demo.minnies.database.models.Category
+import com.demo.minnies.database.models.ProductCategory
 import com.demo.minnies.shop.domain.usescases.FetchFeaturedShopItemsUseCase
 import com.demo.minnies.shop.domain.usescases.FetchProductsByCategoriesUseCase
 import com.demo.minnies.shop.presentation.models.ViewProduct
@@ -34,7 +34,7 @@ class ShopViewModel @Inject constructor(
         class Error(val throwable: Throwable) : UiState()
         class Success(
             val featured: List<ViewProduct> = emptyList(),
-            val all: Map<Category, List<ViewProduct>> = emptyMap()
+            val all: Map<ProductCategory, List<ViewProduct>> = emptyMap()
         ) : UiState()
     }
 }

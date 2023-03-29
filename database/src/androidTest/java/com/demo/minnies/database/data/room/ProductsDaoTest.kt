@@ -1,9 +1,9 @@
 package com.demo.minnies.database.data.room
 
+import com.demo.minnies.database.models.Product
+import com.demo.minnies.database.models.ProductCategory
 import com.demo.minnies.database.room.AppDatabase
 import com.demo.minnies.database.room.daos.ProductsDao
-import com.demo.minnies.database.models.Category
-import com.demo.minnies.database.models.Product
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -43,7 +43,7 @@ class ProductsDaoTest {
                 1L,
                 dao.insert(
                     Product(
-                        name = "Test Item", category = Category.Shorts, image = "",
+                        name = "Test Item", productCategory = ProductCategory.Shorts, image = "",
                         sizes = listOf(0), description = "", price = 4.0
                     )
                 )
@@ -53,7 +53,7 @@ class ProductsDaoTest {
                 2L,
                 dao.insert(
                     Product(
-                        name = "Test Item", category = Category.Shorts, image = "",
+                        name = "Test Item", productCategory = ProductCategory.Shorts, image = "",
                         sizes = listOf(0), description = "", price = 4.0
                     )
                 )
@@ -66,14 +66,14 @@ class ProductsDaoTest {
         runTest {
             dao.insert(
                 Product(
-                    name = "Test Item", category = Category.Shorts, image = "",
+                    name = "Test Item", productCategory = ProductCategory.Shorts, image = "",
                     sizes = listOf(0), description = "", price = 4.0
                 )
             )
 
             dao.insert(
                 Product(
-                    name = "Test Item", category = Category.Shorts, image = "",
+                    name = "Test Item", productCategory = ProductCategory.Shorts, image = "",
                     sizes = listOf(0), description = "", price = 4.0
                 )
             )
@@ -83,18 +83,18 @@ class ProductsDaoTest {
     }
 
     @Test
-    fun testCountAll(){
+    fun testCountAll() {
         runTest {
             dao.insert(
                 Product(
-                    name = "Test Item", category = Category.Shorts, image = "",
+                    name = "Test Item", productCategory = ProductCategory.Shorts, image = "",
                     sizes = listOf(0), description = "", price = 4.0
                 )
             )
 
             dao.insert(
                 Product(
-                    name = "Test Item", category = Category.Shorts, image = "",
+                    name = "Test Item", productCategory = ProductCategory.Shorts, image = "",
                     sizes = listOf(0), description = "", price = 4.0
                 )
             )
@@ -108,26 +108,26 @@ class ProductsDaoTest {
         runTest {
             dao.insert(
                 Product(
-                    name = "Test Item", category = Category.Shorts, image = "",
+                    name = "Test Item", productCategory = ProductCategory.Shorts, image = "",
                     sizes = listOf(0), description = "", price = 4.0
                 )
             )
 
             dao.insert(
                 Product(
-                    name = "Test Item", category = Category.Shorts, image = "",
+                    name = "Test Item", productCategory = ProductCategory.Shorts, image = "",
                     sizes = listOf(0), description = "", price = 4.0
                 )
             )
 
             dao.insert(
                 Product(
-                    name = "Test Item", category = Category.Top, image = "",
+                    name = "Test Item", productCategory = ProductCategory.Top, image = "",
                     sizes = listOf(0), description = "", price = 4.0
                 )
             )
 
-            Assert.assertEquals(1, dao.getItemsByCategory(Category.Top).first().size)
+            Assert.assertEquals(1, dao.getItemsByCategory(ProductCategory.Top).first().size)
         }
     }
 
@@ -135,14 +135,14 @@ class ProductsDaoTest {
     fun testGet() = runTest {
         dao.insert(
             Product(
-                name = "Test Item 1", category = Category.Shorts, image = "",
+                name = "Test Item 1", productCategory = ProductCategory.Shorts, image = "",
                 sizes = listOf(0), description = "", price = 4.0
             )
         )
 
         dao.insert(
             Product(
-                name = "Test Item 2", category = Category.Shorts, image = "",
+                name = "Test Item 2", productCategory = ProductCategory.Shorts, image = "",
                 sizes = listOf(0), description = "", price = 4.0
             )
         )

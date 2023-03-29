@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -27,7 +29,7 @@ import com.demo.minnies.shared.utils.AuthScreen
 
 const val NAVIGATION_BAR_TEST_TAG = "NAVIGATION_BAR_TEST_TAG"
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun LandingScreen(
     navController: NavHostController,
@@ -57,60 +59,65 @@ fun LandingScreen(
 
     val selectedItem by rememberSaveable { mutableStateOf(0) }
 
-    Scaffold(bottomBar = {
-        AnimatedVisibility(visible = showBottomBarState.value,
-            enter = slideInVertically(initialOffsetY = { it }),
-            exit = ExitTransition.None,
-            content = {
-                NavigationBar(modifier = Modifier.testTag(NAVIGATION_BAR_TEST_TAG)) {
+    Scaffold(
+        modifier = Modifier.semantics { testTagsAsResourceId = true },
+        bottomBar = {
+            AnimatedVisibility(
+                visible = showBottomBarState.value,
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = ExitTransition.None,
+                content = {
+                    NavigationBar(modifier = Modifier.testTag(NAVIGATION_BAR_TEST_TAG)) {
 
-                    homeBottomNavigationDestinations.forEachIndexed { index, screen ->
-                        NavigationBarItem(modifier = Modifier.semantics {
-                            contentDescription = "${screen.title} page button"
-                        },
-                            icon = {
-                                Icon(
-                                    if (selectedItem == index) screen.selectedIcon else screen.icon,
-                                    contentDescription = screen.title
-                                )
-                            },
-                            label = { Text(screen.title) },
-                            selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                            onClick = {
-                                if (currentDestination?.hierarchy?.any { it.route == screen.route } == false) {
-                                    navController.navigate(screen.route) {
-                                        popUpTo(navController.graph.findStartDestination().id) {
-                                            saveState = true
-                                        }
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
+                        homeBottomNavigationDestinations.forEachIndexed { index, screen ->
+                            NavigationBarItem(modifier = Modifier
+                                .semantics {
+                                    contentDescription = "${screen.title} page button"
                                 }
-                            },
-                            alwaysShowLabel = true
-                        )
+                                .testTag("${screen.title}_nav_button_test_tag"),
+                                icon = {
+                                    Icon(
+                                        if (selectedItem == index) screen.selectedIcon else screen.icon,
+                                        contentDescription = screen.title
+                                    )
+                                },
+                                label = { Text(screen.title) },
+                                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                                onClick = {
+                                    if (currentDestination?.hierarchy?.any { it.route == screen.route } == false) {
+                                        navController.navigate(screen.route) {
+                                            popUpTo(navController.graph.findStartDestination().id) {
+                                                saveState = true
+                                            }
+                                            launchSingleTop = true
+                                            restoreState = true
+                                        }
+                                    }
+                                },
+                                alwaysShowLabel = true
+                            )
+                        }
+
                     }
-
+                })
+        }, topBar = {
+            Column {
+                if (loggedInUser == null && showLoginPromptState.value) {
+                    SignInPrompt(
+                        createAccount = {
+                            navController.navigate(AuthScreen.Register.name)
+                        }, login = {
+                            navController.navigate(AuthScreen.Login.name)
+                        })
                 }
-            })
-    }, topBar = {
-        Column {
-            if (loggedInUser == null && showLoginPromptState.value) {
-                SignInPrompt(
-                    createAccount = {
-                        navController.navigate(AuthScreen.Register.name)
-                    }, login = {
-                        navController.navigate(AuthScreen.Login.name)
-                    })
-            }
 
-            if (showBottomBarState.value.not()) {
-                MinniesToolbar(
-                    toolBarTitle = "", showNavigationIcon = true
-                ) { navController.popBackStack() }
+                if (showBottomBarState.value.not()) {
+                    MinniesToolbar(
+                        toolBarTitle = "", showNavigationIcon = true
+                    ) { navController.popBackStack() }
+                }
             }
-        }
-    }) { innerPadding ->
+        }) { innerPadding ->
 
         navHost(Modifier.padding(innerPadding), navController)
     }

@@ -1,8 +1,12 @@
 package com.demo.minnies.shop.presentation.screens
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import com.demo.minnies.database.models.Category
+import com.demo.minnies.database.models.ProductCategory
 import com.demo.minnies.shop.presentation.models.ViewProduct
 
 import org.junit.Rule
@@ -20,13 +24,13 @@ class ProductCardTest {
                 viewProduct = ViewProduct(
                     name = "Test",
                     description = "Test",
-                    category = Category.Shorts,
+                    productCategory = ProductCategory.Shorts,
                     image = "",
                     formattedPrice = "",
                     sizes = emptyList(),
                     id = 0
-                )
-            ){}
+                ), modifier = Modifier.fillMaxSize().testTag(SHOP_ITEM_CARD_TEST_TAG)
+            ) {}
         }
 
         composeTestRule.onNodeWithTag(SHOP_ITEM_CARD_TEST_TAG).assertHasClickAction()
@@ -39,14 +43,14 @@ class ProductCardTest {
                 viewProduct = ViewProduct(
                     name = "Test Product",
                     description = "Test",
-                    category = Category.Shorts,
+                    productCategory = ProductCategory.Shorts,
                     image = "",
                     formattedPrice = "$0.10",
                     sizes = emptyList(),
                     rating = 2.2,
                     id = 0
-                )
-            ){}
+                ), modifier = Modifier.fillMaxSize()
+            ) {}
         }
 
         composeTestRule.onNodeWithText("Test Product", useUnmergedTree = true).assertIsDisplayed()
@@ -60,13 +64,13 @@ class ProductCardTest {
                 viewProduct = ViewProduct(
                     name = "Test",
                     description = "Test",
-                    category = Category.Shorts,
+                    productCategory = ProductCategory.Shorts,
                     image = "",
                     formattedPrice = "",
                     sizes = emptyList(),
                     id = 0
-                )
-            ){}
+                ), modifier = Modifier.wrapContentSize()
+            ) {}
         }
 
         composeTestRule.onNodeWithTag(SHOP_ITEM_RATING_TEST_TAG).assertDoesNotExist()
@@ -81,14 +85,14 @@ class ProductCardTest {
                 viewProduct = ViewProduct(
                     name = "Test",
                     description = "Test",
-                    category = Category.Shorts,
+                    productCategory = ProductCategory.Shorts,
                     image = "",
                     formattedPrice = "",
                     sizes = emptyList(),
                     rating = 1.5,
                     id = 0
-                )
-            ){}
+                ), modifier = Modifier.fillMaxSize()
+            ) {}
         }
 
         composeTestRule.onNodeWithTag(SHOP_ITEM_RATING_TEST_TAG, useUnmergedTree = true)

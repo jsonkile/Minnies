@@ -9,16 +9,18 @@ import com.demo.minnies.notifications.domain.SetUserPushNotificationsPreferenceU
 import com.demo.minnies.shared.domain.GetUserCurrencyPreferenceUseCaseImpl
 import com.demo.minnies.shared.domain.SetUserCurrencyPreferenceUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class MoreScreenViewModel @Inject constructor(
     private val logoutUserUseCase: LogoutUserUseCase,
     private val getCachedUserUseCaseImpl: GetCachedUserUseCaseImpl,
-    private val setUserPushNotificationsPreferenceUseCase: SetUserPushNotificationsPreferenceUseCase,
-    private val getUserPushNotificationsPreferenceUseCase: GetUserPushNotificationsPreferenceUseCase,
+    private val setUserPushNotificationsPreferenceUseCase:
+        SetUserPushNotificationsPreferenceUseCase,
+    private val getUserPushNotificationsPreferenceUseCase:
+        GetUserPushNotificationsPreferenceUseCase,
     private val getUserCurrencyPreferenceUseCaseImpl: GetUserCurrencyPreferenceUseCaseImpl,
     private val setUserCurrencyPreferenceUseCase: SetUserCurrencyPreferenceUseCase
 ) :

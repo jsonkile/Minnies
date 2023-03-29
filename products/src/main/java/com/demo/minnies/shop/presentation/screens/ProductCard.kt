@@ -3,12 +3,10 @@ package com.demo.minnies.shop.presentation.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +28,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.demo.minnies.database.models.Category
+import com.demo.minnies.database.models.ProductCategory
 import com.demo.minnies.shop.presentation.models.ViewProduct
 
 const val SHOP_ITEM_CARD_TEST_TAG = "SHOP_ITEM_CARD_TEST_TAG"
@@ -38,15 +36,14 @@ const val SHOP_ITEM_RATING_TEST_TAG = "SHOP_ITEM_RATING_TEST_TAG"
 const val SHOP_ITEM_RATING_ICON_TEST_TAG = "SHOP_ITEM_RATING_ICON_TEST_TAG"
 
 @Composable
-fun ProductCard(viewProduct: ViewProduct, clickAction: ((ViewProduct) -> Unit)) {
+fun ProductCard(
+    viewProduct: ViewProduct,
+    modifier: Modifier,
+    clickAction: ((ViewProduct) -> Unit)
+) {
 
-    ConstraintLayout(modifier = Modifier
-        .width(130.dp)
-        .wrapContentHeight()
-        .clickable {
-            clickAction(viewProduct)
-        }
-        .testTag(SHOP_ITEM_CARD_TEST_TAG)) {
+    ConstraintLayout(modifier = modifier
+        .clickable { clickAction(viewProduct) }) {
 
         val (image, title, price, rating, ratingIcon) = createRefs()
 
@@ -136,7 +133,11 @@ fun ProductCard(viewProduct: ViewProduct, clickAction: ((ViewProduct) -> Unit)) 
                         end.linkTo(image.end)
                     }
                     .testTag(SHOP_ITEM_RATING_ICON_TEST_TAG),
-                colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7F))
+                colorFilter = ColorFilter.tint(
+                    color = MaterialTheme.colorScheme.onBackground.copy(
+                        alpha = .7F
+                    )
+                )
             )
 
         }
@@ -156,9 +157,11 @@ fun ProductCard() {
             formattedPrice = "$3",
             "",
             listOf(1, 3),
-            Category.Kicks,
+            ProductCategory.Kicks,
             false,
             4.5
-        )
+        ), modifier = Modifier
+            .width(130.dp)
+            .wrapContentHeight()
     ) {}
 }

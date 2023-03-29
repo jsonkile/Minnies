@@ -24,7 +24,7 @@ class ShopKtTest {
         val itemsByCategories =
             mockProducts.mapIndexed { index, item ->
                 item.toView(Currency.USD).copy(image = "", id = index)
-            }.groupBy { it.category }
+            }.groupBy { it.productCategory }
 
         composeTestRule.setContent {
             ShopScreen(

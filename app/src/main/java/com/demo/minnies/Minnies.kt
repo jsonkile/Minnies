@@ -3,12 +3,14 @@ package com.demo.minnies
 import android.app.Application
 import com.demo.minnies.shop.domain.usescases.AddProductsUseCase
 import com.demo.minnies.shop.domain.usescases.CountAllProductsUseCase
-import com.demo.minnies.shop.domain.usescases.GetAllProductsUseCase
 import com.demo.minnies.shop.util.mockProducts
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @HiltAndroidApp
 class Minnies : Application() {
@@ -24,8 +26,9 @@ class Minnies : Application() {
         super.onCreate()
         applicationScope.launch {
             withContext(Dispatchers.IO) {
-                if (countAllProductsUseCase().first() == 0)
+                if (countAllProductsUseCase().first() == 0) {
                     addProductsUseCase(mockProducts)
+                }
             }
         }
     }

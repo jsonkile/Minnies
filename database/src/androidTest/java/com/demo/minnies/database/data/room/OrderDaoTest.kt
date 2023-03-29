@@ -77,7 +77,7 @@ class OrderDaoTest {
         productsDao.insert(
             Product(
                 name = "omega",
-                category = Category.Accessory,
+                productCategory = ProductCategory.Accessory,
                 image = "",
                 description = "",
                 price = 0.2

@@ -3,6 +3,7 @@ package com.demo.minnies.shop.presentation.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -14,15 +15,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.demo.minnies.database.models.Category
+import com.demo.minnies.database.models.ProductCategory
 import com.demo.minnies.shared.presentation.components.ScreenInfoView
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
 import com.demo.minnies.shared.presentation.ui.PAGE_HORIZONTAL_MARGIN
@@ -42,6 +45,7 @@ fun Shop(viewModel: ShopViewModel, navigateToProduct: (Int) -> Unit) {
     ShopScreen(uiState, navigateToProduct)
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ShopScreen(
     uiState: ShopViewModel.UiState,
@@ -50,7 +54,9 @@ fun ShopScreen(
 
     val scrollState = rememberScrollState()
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .semantics { testTagsAsResourceId = true }) {
         when (uiState) {
             is ShopViewModel.UiState.Error -> {
                 val message =
@@ -75,7 +81,8 @@ fun ShopScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(scrollState)
-                        .padding(bottom = 100.dp),
+                        .padding(bottom = 100.dp)
+                        .testTag("products_list"),
                     horizontalAlignment = Alignment.Start
                 ) {
 
@@ -105,25 +112,34 @@ fun ShopScreen(
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
                             modifier = Modifier.testTag(SHOP_SCREEN_FEATURED_ITEMS_LIST_TEST_TAG)
                         ) {
-                            items(items = uiState.featured, key = { it.id }) { shopItem ->
-                                ProductCard(viewProduct = shopItem) { item ->
+                            itemsIndexed(
+                                items = uiState.featured,
+                                key = { _, product -> product.id }) { index, product ->
+                                ProductCard(
+                                    viewProduct = product,
+                                    modifier = Modifier
+                                        .width(130.dp)
+                                        .wrapContentHeight()
+                                        .testTag(SHOP_ITEM_CARD_TEST_TAG + "_FEATURED_$index")
+                                ) { item ->
                                     navigateToProduct(item.id)
                                 }
                             }
                         }
                     }
 
-                    Category.values().forEach { category ->
+                    ProductCategory.values().forEach { category ->
                         val products = uiState.all[category].orEmpty()
 
                         if (products.isNotEmpty()) {
                             Text(
                                 text = category.publicName,
-                                modifier = Modifier.padding(
-                                    start = PAGE_HORIZONTAL_MARGIN,
-                                    top = 40.dp,
-                                    bottom = 20.dp
-                                ),
+                                modifier = Modifier
+                                    .padding(
+                                        start = PAGE_HORIZONTAL_MARGIN,
+                                        top = 40.dp,
+                                        bottom = 20.dp
+                                    ),
                                 style = TextStyle(
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onBackground,
@@ -135,8 +151,16 @@ fun ShopScreen(
                                 contentPadding = PaddingValues(horizontal = PAGE_HORIZONTAL_MARGIN),
                                 horizontalArrangement = Arrangement.spacedBy(10.dp)
                             ) {
-                                items(items = products, key = { it.id }) { product ->
-                                    ProductCard(viewProduct = product) { item ->
+                                itemsIndexed(
+                                    items = products,
+                                    key = { _, product -> product.id }) { index, product ->
+                                    ProductCard(
+                                        viewProduct = product,
+                                        modifier = Modifier
+                                            .width(130.dp)
+                                            .wrapContentHeight()
+                                            .testTag("${SHOP_ITEM_CARD_TEST_TAG}_${category.name}_$index")
+                                    ) { item ->
                                         navigateToProduct(item.id)
                                     }
                                 }
@@ -156,7 +180,7 @@ fun PreviewShopScreen() {
     val featuredItems =
         mockProducts.filter { it.featured }.map { item -> item.toView(Currency.USD) }
     val itemsByCategories =
-        mockProducts.map { item -> item.toView(Currency.USD) }.groupBy { it.category }
+        mockProducts.map { item -> item.toView(Currency.USD) }.groupBy { it.productCategory }
     MinniesTheme {
         ShopScreen(
             uiState = ShopViewModel.UiState.Success(

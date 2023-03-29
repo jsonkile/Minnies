@@ -19,7 +19,7 @@ class SearchViewModel @Inject constructor(private val searchProductsUseCase: Sea
     val searchTerm = _searchTerm.asStateFlow()
 
     val uiState =
-        searchTerm.filterNot { it.length < 2 }
+        searchTerm.filter { it.length > 2 }.debounce(2000)
             .flatMapLatest { term ->
                 UiState.Loading
                 searchProductsUseCase(term.trim())

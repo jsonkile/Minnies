@@ -1,6 +1,5 @@
 package com.demo.minnies.cart.di
 
-
 import com.demo.minnies.cart.data.repos.CartRepo
 import com.demo.minnies.cart.data.repos.CartRepoRoomImpl
 import com.demo.minnies.cart.domain.usecases.*

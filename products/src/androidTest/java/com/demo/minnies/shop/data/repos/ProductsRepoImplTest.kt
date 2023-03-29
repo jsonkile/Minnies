@@ -1,7 +1,7 @@
 package com.demo.minnies.shop.data.repos
 
-import com.demo.minnies.database.models.Category
 import com.demo.minnies.database.models.Product
+import com.demo.minnies.database.models.ProductCategory
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -41,7 +41,7 @@ internal class ProductsRepoImplTest {
                 image = "",
                 description = "",
                 sizes = emptyList(),
-                category = Category.Kicks,
+                productCategory = ProductCategory.Kicks,
                 price = 0.0
             )
         )
@@ -52,7 +52,7 @@ internal class ProductsRepoImplTest {
                 image = "",
                 description = "",
                 sizes = emptyList(),
-                category = Category.Kicks,
+                productCategory = ProductCategory.Kicks,
                 price = 0.0
             )
         )
@@ -71,7 +71,7 @@ internal class ProductsRepoImplTest {
                 image = "",
                 description = "",
                 sizes = emptyList(),
-                category = Category.Kicks,
+                productCategory = ProductCategory.Kicks,
                 price = 0.0
             )
         )
@@ -82,7 +82,7 @@ internal class ProductsRepoImplTest {
                 image = "",
                 description = "",
                 sizes = emptyList(),
-                category = Category.Kicks,
+                productCategory = ProductCategory.Kicks,
                 price = 0.0
             )
         )
@@ -99,7 +99,7 @@ internal class ProductsRepoImplTest {
                 image = "",
                 description = "",
                 sizes = emptyList(),
-                category = Category.Kicks,
+                productCategory = ProductCategory.Kicks,
                 price = 0.0
             )
         )
@@ -118,7 +118,7 @@ internal class ProductsRepoImplTest {
                 image = "",
                 description = "",
                 sizes = emptyList(),
-                category = Category.Kicks,
+                productCategory = ProductCategory.Kicks,
                 price = 0.0,
                 featured = true
             )
@@ -130,7 +130,7 @@ internal class ProductsRepoImplTest {
                 image = "",
                 description = "",
                 sizes = emptyList(),
-                category = Category.Kicks,
+                productCategory = ProductCategory.Kicks,
                 price = 0.0,
                 featured = false
             )
@@ -142,7 +142,7 @@ internal class ProductsRepoImplTest {
                 image = "",
                 description = "",
                 sizes = emptyList(),
-                category = Category.Kicks,
+                productCategory = ProductCategory.Kicks,
                 price = 0.0,
                 featured = true
             )
@@ -158,7 +158,7 @@ internal class ProductsRepoImplTest {
     @Test
     fun getItemsByCategory_ReturnsCorrectItems() = runTest {
 
-        val currentTopsListSize = productsRepoRoomImpl.getItemsByCategory(Category.Top).first().size
+        val currentTopsListSize = productsRepoRoomImpl.getItemsByCategory(ProductCategory.Top).first().size
 
         productsRepoRoomImpl.addItem(
             Product(
@@ -166,7 +166,7 @@ internal class ProductsRepoImplTest {
                 image = "",
                 description = "",
                 sizes = emptyList(),
-                category = Category.Top,
+                productCategory = ProductCategory.Top,
                 price = 0.0,
                 featured = true
             )
@@ -178,7 +178,7 @@ internal class ProductsRepoImplTest {
                 image = "",
                 description = "",
                 sizes = emptyList(),
-                category = Category.Top,
+                productCategory = ProductCategory.Top,
                 price = 0.0,
                 featured = false
             )
@@ -190,7 +190,7 @@ internal class ProductsRepoImplTest {
                 image = "",
                 description = "",
                 sizes = emptyList(),
-                category = Category.Kicks,
+                productCategory = ProductCategory.Kicks,
                 price = 0.0,
                 featured = true
             )
@@ -198,7 +198,7 @@ internal class ProductsRepoImplTest {
 
         Assert.assertEquals(
             currentTopsListSize + 2,
-            productsRepoRoomImpl.getItemsByCategory(Category.Top).first().size
+            productsRepoRoomImpl.getItemsByCategory(ProductCategory.Top).first().size
         )
     }
 }
