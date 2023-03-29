@@ -19,6 +19,7 @@ This project focuses on showcasing some key practices I utilize to produce beaut
 - Solid principles
 - Material design 3 with dynamic theming
 - Unit, UI and end to end Testing 
+- Baseline profiles
 - CI/CD
 
 ## Preview 📲
@@ -30,6 +31,7 @@ Popular and stable android development libraries and tools used
   - [Kotlin flows](https://developer.android.com/kotlin/flow) - data flow throughout the app
   - [Coroutines](https://developer.android.com/kotlin/coroutines) - handles concurrent operations
   - [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Dependency injection
+  - [Version Catalog](https://docs.gradle.org/current/userguide/platforms.html) - Dependencies management
 - Data
   - [Kotlin Serialization](https://kotlinlang.org/docs/serialization.html) - data class format conversion
   - [Room](https://developer.android.com/training/data-storage/room) - Local database
@@ -48,8 +50,8 @@ Popular and stable android development libraries and tools used
   
 ## Upcoming changes
 The project will continue to be updated. Here are some improvements and changes i plan to implement soon
-  - [ ] Dependency management with gradle version catalog
-  - [ ] Order progress and notifications
+  - [x] ~~Dependency management with gradle version catalog~~
+  - [x] ~~Generate and add baseline profile~~
   - [ ] Increase test coverage
   
   
