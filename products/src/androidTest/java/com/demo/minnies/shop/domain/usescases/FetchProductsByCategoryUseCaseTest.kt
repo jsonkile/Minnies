@@ -1,6 +1,6 @@
 package com.demo.minnies.shop.domain.usescases
 
-import com.demo.minnies.database.models.Category
+import com.demo.minnies.database.models.ProductCategory
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -40,9 +40,9 @@ internal class FetchProductsByCategoryUseCaseTest {
     @Test
     fun useCase_correctlyFetchesProductsByCategory() {
         scope.launch {
-            val items = fetchProductsByCategoryUseCase(Category.Top).first()
+            val items = fetchProductsByCategoryUseCase(ProductCategory.Top).first()
             Assert.assertTrue(items.isNotEmpty())
-            Assert.assertTrue(items.none { it.category != Category.Top })
+            Assert.assertTrue(items.none { it.productCategory != ProductCategory.Top })
         }
     }
 }

@@ -12,6 +12,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Direction
+import androidx.test.uiautomator.SearchCondition
 import androidx.test.uiautomator.Until
 import org.junit.Rule
 import org.junit.Test
@@ -50,6 +51,8 @@ fun MacrobenchmarkScope.performSearch() {
     searchBar.text = "puma"
     device.waitForIdle()
     device.click(device.displayWidth - 3, device.displayHeight - 3)
+
+    device.wait(Until.hasObject(By.res("SEARCH_SCREEN_RESULTS_LIST_TEST_TAG")), 3000)
 
     val searchResultList = device.findObject(By.res("SEARCH_SCREEN_RESULTS_LIST_TEST_TAG"))
     searchResultList.setGestureMargin(device.displayWidth / 5)

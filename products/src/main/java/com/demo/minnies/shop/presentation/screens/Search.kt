@@ -77,7 +77,8 @@ fun SearchScreen(
                 .constrainAs(searchBox) {
                     top.linkTo(parent.top, 15.dp)
                 }
-                .testTag("search_bar_test_tag"), onSearch = onSearch
+                .testTag("search_bar_test_tag"),
+            onSearch = onSearch
         )
 
         when (uiState) {
@@ -196,7 +197,11 @@ fun PreviewSearchScreen() {
 
 
 @Composable
-fun SearchBox(term: String = "", modifier: Modifier, onSearch: (String) -> Unit) {
+fun SearchBox(
+    term: String = "",
+    modifier: Modifier,
+    onSearch: (String) -> Unit
+) {
     var text by remember { mutableStateOf(TextFieldValue(text = term)) }
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -205,6 +210,7 @@ fun SearchBox(term: String = "", modifier: Modifier, onSearch: (String) -> Unit)
         value = text,
         onValueChange = { newText ->
             text = newText
+            onSearch(newText.text)
         },
         shape = RoundedCornerShape(40.dp),
         colors = TextFieldDefaults.textFieldColors(

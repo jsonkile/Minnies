@@ -11,7 +11,7 @@ import com.demo.minnies.database.room.daos.UsersDao
 import com.demo.minnies.database.room.daos.OrdersDao
 
 @Database(
-    version = 11,
+    version = 12,
     entities = [Product::class, User::class, CartItem::class, Order::class, OrderItem::class],
     views = [CartItemDetail::class, OrderItemDetail::class],
     exportSchema = false
