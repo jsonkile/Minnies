@@ -147,7 +147,7 @@ fun CheckoutScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentHeight(),
-                            totalCartCount = uiState.checkoutItems.size,
+                            deliveryFee = uiState.deliveryFee,
                             totalCheckoutAmount = uiState.formattedTotalAmount,
                             shippingAddress = uiState.shippingAddress
                         ) {

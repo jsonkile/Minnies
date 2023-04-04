@@ -3,9 +3,11 @@ package com.demo.minnies.cart.presentation.screens.checkout
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.demo.minnies.auth.domain.GetCachedUserUseCase
+import com.demo.minnies.cart.BuildConfig
 import com.demo.minnies.cart.domain.usecases.CheckoutCartUseCase
 import com.demo.minnies.cart.domain.usecases.FetchCartUseCase
 import com.demo.minnies.cart.presentation.screens.models.ViewCartItem
+import com.demo.minnies.shared.domain.FetchDeliveryFeeUseCase
 import com.demo.minnies.shared.utils.Currency
 import com.demo.minnies.shared.utils.toFormattedPriceWithSign
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +21,8 @@ import javax.inject.Inject
 class CheckoutViewModel @Inject constructor(
     private val fetchCartUseCase: FetchCartUseCase,
     private val getCachedUserUseCase: GetCachedUserUseCase,
-    private val checkoutCartUseCase: CheckoutCartUseCase
+    private val checkoutCartUseCase: CheckoutCartUseCase,
+    private val getDeliveryFeeUseCase: FetchDeliveryFeeUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UiState())
@@ -54,7 +57,9 @@ class CheckoutViewModel @Inject constructor(
                     UiState(
                         checkoutItems = cart,
                         formattedTotalAmount = totalCheckoutAmount.toFormattedPriceWithSign(currency),
-                        shippingAddress = user?.shippingAddress.orEmpty()
+                        shippingAddress = user?.shippingAddress.orEmpty(),
+                        deliveryFee = (if (BuildConfig.FLAVOR.contains("premium", ignoreCase = true)
+                        ) 0.00 else getDeliveryFeeUseCase()).toFormattedPriceWithSign(currency)
                     )
                 }
             } catch (e: Exception) {
@@ -83,6 +88,7 @@ class CheckoutViewModel @Inject constructor(
         val checkoutItems: List<ViewCartItem> = emptyList(),
         val formattedTotalAmount: String = "-",
         val shippingAddress: String = "",
+        val deliveryFee: String = "",
         val isLoadingCart: Boolean = false,
         val isCheckingOut: Boolean = false
     )

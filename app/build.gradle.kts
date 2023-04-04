@@ -60,11 +60,13 @@ android {
 
     productFlavors {
         create("premium") {
-            ext.set("applicationIdSuffix", ".paid")
+            applicationIdSuffix = ".paid"
+            resValue("string", "app_name","Minnies Premium")
         }
 
         create("free") {
-            ext.set("applicationIdSuffix", ".free")
+            applicationIdSuffix = ".free"
+            resValue("string", "app_name","Minnies")
         }
     }
 

@@ -1,5 +1,7 @@
 package com.demo.minnies.shop.di
 
+import com.demo.minnies.shared.data.repos.HelpersRepository
+import com.demo.minnies.shared.data.repos.HelpersRepositoryHardImpl
 import com.demo.minnies.shop.data.repos.ProductsRepo
 import com.demo.minnies.shop.data.repos.ProductsRepoRoomImpl
 import com.demo.minnies.shop.domain.usescases.*
@@ -16,6 +18,9 @@ abstract class ProductsModule {
 
     @Binds
     abstract fun bindProductsRepo(productsRepoRoomImpl: ProductsRepoRoomImpl): ProductsRepo
+
+    @Binds
+    abstract fun bindHelpersRepo(helpersRepositoryHardImpl: HelpersRepositoryHardImpl): HelpersRepository
 
     @Binds
     abstract fun bindGetAllProductsUseCase(getAllProductsUseCaseImpl: GetAllProductsUseCaseImpl): GetAllProductsUseCase

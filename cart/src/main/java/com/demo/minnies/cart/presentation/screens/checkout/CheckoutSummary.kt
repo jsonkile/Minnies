@@ -30,7 +30,7 @@ import com.demo.minnies.shared.presentation.ui.MinniesTheme
 @Composable
 fun CheckoutSummary(
     modifier: Modifier,
-    totalCartCount: Int,
+    deliveryFee: String,
     totalCheckoutAmount: String,
     shippingAddress: String,
     updateBillingAddressAction: () -> Unit
@@ -74,7 +74,7 @@ fun CheckoutSummary(
         )
 
         Text(
-            text = "${totalCheckoutAmount.getOrNull(0) ?: "$"}0",
+            text = deliveryFee,
             textAlign = TextAlign.End,
             modifier = Modifier.constrainAs(deliveryCost) {
                 end.linkTo(parent.end)
@@ -152,7 +152,7 @@ fun PreviewCheckoutSummary() {
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
-            totalCartCount = 3,
+            deliveryFee = "N3",
             totalCheckoutAmount = "N3,000",
             shippingAddress = ""
         ) {
