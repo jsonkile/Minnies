@@ -12,6 +12,14 @@ android {
     namespace = "com.demo.minnies.shared"
     compileSdk = libs.versions.compilesdk.get().toInt()
 
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("premium")
+
+        create("free")
+    }
+
     defaultConfig {
         minSdk = libs.versions.minsdk.get().toInt()
         testInstrumentationRunner = "com.demo.minnies.shared.HiltTestRunner"
