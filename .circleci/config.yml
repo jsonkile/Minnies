@@ -19,7 +19,8 @@ deploy_to_dropbox_free: &deploy_to_dropbox_free
 fix_permissions: &fix_permissions
   run:
     name: Chmod permissions
-    command: sudo chmod +x ./premium_apk_dropbox_deploy.sh
+    command: |
+      sudo chmod +x ./premium_apk_dropbox_deploy.sh | sudo chmod +x ./free_apk_dropbox_deploy.sh
 
 jobs:
   unit-test:
