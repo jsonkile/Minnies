@@ -8,6 +8,7 @@ import com.demo.minnies.cart.domain.usecases.CheckoutCartUseCase
 import com.demo.minnies.cart.domain.usecases.FetchCartUseCase
 import com.demo.minnies.cart.presentation.screens.models.ViewCartItem
 import com.demo.minnies.shared.domain.FetchDeliveryFeeUseCase
+import com.demo.minnies.shared.domain.GetUserCurrencyPreferenceUseCase
 import com.demo.minnies.shared.utils.Currency
 import com.demo.minnies.shared.utils.toFormattedPriceWithSign
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +23,8 @@ class CheckoutViewModel @Inject constructor(
     private val fetchCartUseCase: FetchCartUseCase,
     private val getCachedUserUseCase: GetCachedUserUseCase,
     private val checkoutCartUseCase: CheckoutCartUseCase,
-    private val getDeliveryFeeUseCase: FetchDeliveryFeeUseCase
+    private val getDeliveryFeeUseCase: FetchDeliveryFeeUseCase,
+    private val getUserCurrencyPreferenceUseCase: GetUserCurrencyPreferenceUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UiState())
@@ -35,33 +37,36 @@ class CheckoutViewModel @Inject constructor(
     val checkoutCompleteEvent = _checkoutCompleteEvent.receiveAsFlow()
 
     init {
-        loadCart()
+        fetchUiData()
 
         getCachedUserUseCase().onEach { user -> _uiState.update { it.copy(shippingAddress = user?.shippingAddress.orEmpty()) } }
             .launchIn(viewModelScope)
     }
 
-    private fun loadCart() {
+    private fun fetchUiData() {
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(isLoadingCart = true) }
+
                 val cart = fetchCartUseCase().first()
                 val user = getCachedUserUseCase().first()
+                val currency = cart.getOrNull(0)?.currency ?: Currency.USD
+
+                val deliveryFee = (if (BuildConfig.FLAVOR.contains("premium", ignoreCase = true)
+                ) 0.00 else getDeliveryFeeUseCase()).toFormattedPriceWithSign(currency)
 
                 val totalCheckoutAmount =
                     cart.sumOf { product -> product.quantity * product.baseProductPrice }
-
-                val currency = cart.getOrNull(0)?.currency ?: Currency.USD
 
                 _uiState.update {
                     UiState(
                         checkoutItems = cart,
                         formattedTotalAmount = totalCheckoutAmount.toFormattedPriceWithSign(currency),
                         shippingAddress = user?.shippingAddress.orEmpty(),
-                        deliveryFee = (if (BuildConfig.FLAVOR.contains("premium", ignoreCase = true)
-                        ) 0.00 else getDeliveryFeeUseCase()).toFormattedPriceWithSign(currency)
+                        deliveryFee = deliveryFee
                     )
                 }
+
             } catch (e: Exception) {
                 _snackBarMessage.trySend(e.message.orEmpty())
             } finally {
