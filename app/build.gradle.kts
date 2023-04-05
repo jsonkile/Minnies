@@ -48,10 +48,25 @@ android {
         getByName("debug") {
             signingConfig = signingConfigs.getByName("debug")
         }
+
         create("benchmark") {
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
             isDebuggable = false
+        }
+    }
+
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("premium") {
+            applicationIdSuffix = ".paid"
+            resValue("string", "app_name","Minnies Premium")
+        }
+
+        create("free") {
+            applicationIdSuffix = ".free"
+            resValue("string", "app_name","Minnies")
         }
     }
 

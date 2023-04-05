@@ -25,6 +25,8 @@ class MainActivity : FragmentActivity() {
 
         installSplashScreen()
 
+
+
         setContent {
 
             val navController = rememberNavController()

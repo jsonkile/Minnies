@@ -8,6 +8,14 @@ android {
     namespace = "com.demo.minnies.orders"
     compileSdk = libs.versions.compilesdk.get().toInt()
 
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("premium")
+
+        create("free")
+    }
+
     buildFeatures {
         compose = true
     }

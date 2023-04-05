@@ -3,7 +3,7 @@
 #Token from Dropbox Settings.
 #DROPBOX_TOKEN="add this token to Circle CI Environment Variables in the project settings"
 
-APK_FILES="./app/build/outputs/apk/release/app-release.apk"
+APK_FILES="./app/build/outputs/apk/premium/release/app-premium-release.apk"
 
 for FILE in $APK_FILES
 do
@@ -13,7 +13,7 @@ do
   then
 
      echo "Found APK: ${FILE}"
-     FILE_NAME="minnies_app.apk"
+     FILE_NAME="premium_minnies_app.apk"
 
      curl -X POST https://content.dropboxapi.com/2/files/upload \
        --header "Authorization: Bearer ${DROPBOX_TOKEN}" \

@@ -43,6 +43,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.demo.minnies.products.BuildConfig
 import com.demo.minnies.shared.presentation.components.MinniesDefaultButton
 import com.demo.minnies.shared.presentation.components.ScreenInfoView
 import com.demo.minnies.shared.presentation.ui.MinniesTheme
@@ -222,8 +223,10 @@ fun ProductScreen(
                                 )
                             )
 
+
                             Text(
-                                text = "*Free Shipping Worldwide",
+                                text = if (BuildConfig.FLAVOR.contains("premium", ignoreCase = true)
+                                ) "*Free Shipping Worldwide" else "*Upgrade to Premium to enjoy free shipping",
                                 modifier = Modifier.padding(top = 1.dp, bottom = 5.dp),
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     fontWeight = FontWeight.Medium,
