@@ -22,8 +22,11 @@ This project focuses on showcasing some key practices I utilize to produce beaut
 - Baseline profiles
 - CI/CD
 
+## Build Variants
+Minnies has a free and premium flavor. The free flavor includes paid deliveries while the premium flavor which in a real world scenerio would be a 'paid' version of the app offers free delivery. Both versions can be installed and tested simultaneously on a device.
+
 ## Preview 📲
-Feel free to go through the app for yourself - Download the app [here](https://www.dropbox.com/s/2hgr9ec02d8qyqe/minnies_app.apk?dl=0).
+Feel free to go through the app for yourself - Download the free version [here](https://www.dropbox.com/s/b4wts0ycburpuz8/free_minnies_app.apk?dl=0) | Download the premium version [here](https://www.dropbox.com/s/99w5wn5entwrhid/premium_minnies_app.apk?dl=0)
 
 ## Tech Stack 🏗️
 Popular and stable android development libraries and tools used 
@@ -52,6 +55,7 @@ Popular and stable android development libraries and tools used
 The project will continue to be updated. Here are some improvements and changes i plan to implement soon
   - [x] ~~Dependency management with gradle version catalog~~
   - [x] ~~Generate and add baseline profile~~
+  - [x] ~~Include a premium and free flavor~~
   - [ ] Increase test coverage
   
   
