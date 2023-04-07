@@ -1,11 +1,18 @@
 package com.demo.minnies.cart.presentation.screens.checkout
 
+import app.cash.turbine.test
 import com.demo.minnies.auth.domain.GetCachedUserUseCase
+import com.demo.minnies.cart.BuildConfig
+import com.demo.minnies.cart.MainDispatcherRule
 import com.demo.minnies.cart.domain.usecases.CheckoutCartUseCase
 import com.demo.minnies.cart.domain.usecases.FetchCartUseCase
+import com.demo.minnies.cart.domain.usecases.FetchCartUseCaseMockImpl
 import com.demo.minnies.cart.presentation.screens.models.ViewCartItem
 import com.demo.minnies.database.models.PartialUser
+import com.demo.minnies.shared.domain.FetchDeliveryFeeUseCase
+import com.demo.minnies.shared.domain.GetUserCurrencyPreferenceUseCase
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
 import io.mockk.just
@@ -21,8 +28,11 @@ import org.junit.Test
 
 internal class CheckoutViewModelTest {
 
-    val scheduler = TestCoroutineScheduler()
-    val dispatcher = UnconfinedTestDispatcher(scheduler)
+    private val scheduler = TestCoroutineScheduler()
+    private val dispatcher = UnconfinedTestDispatcher(scheduler)
+
+    @get:Rule
+    val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     @get:Rule
     val mockRule = MockKRule(this)
@@ -33,113 +43,103 @@ internal class CheckoutViewModelTest {
     @MockK
     lateinit var checkoutCartUseCase: CheckoutCartUseCase
 
+    @MockK
+    lateinit var fetchDeliveryFeeUseCase: FetchDeliveryFeeUseCase
+
     @MockK(relaxed = true)
     lateinit var getCachedUserUseCase: GetCachedUserUseCase
 
     @Test
     fun testLoadCart() = runTest {
-        try {
-            Dispatchers.setMain(dispatcher)
+        val mockCart = listOf(
+            ViewCartItem(
+                quantity = 1, productId = 1, id = 1,
+                productImage = "image",
+                productName = "name",
+                baseProductPrice = 0.1,
+                formattedTotalAmount = "$0.1",
+                formattedProductPrice = "$0.1"
+            )
+        )
 
-            val mockCart = listOf(
-                ViewCartItem(
-                    quantity = 1,
-                    productId = 1,
-                    id = 1,
-                    productImage = "image",
-                    productName = "name",
-                    baseProductPrice = 0.1,
-                    formattedTotalAmount = "$0.1",
-                    formattedProductPrice = "$0.1"
+        coEvery { fetchDeliveryFeeUseCase() } returns 20.0
+
+        coEvery { fetchCartUseCase() } returns flow { emit(mockCart) }
+
+        coEvery { getCachedUserUseCase() } returns flow {
+            emit(
+                PartialUser(
+                    shippingAddress = "haven", fullName = "", emailAddress = "", phoneNumber = ""
                 )
             )
+        }
 
-            coEvery { fetchCartUseCase() } returns flow { emit(mockCart) }
+        val viewModel = CheckoutViewModel(
+            fetchCartUseCase = fetchCartUseCase,
+            checkoutCartUseCase = checkoutCartUseCase,
+            getCachedUserUseCase = getCachedUserUseCase,
+            getDeliveryFeeUseCase = fetchDeliveryFeeUseCase
+        )
 
-            coEvery { getCachedUserUseCase() } returns flow {
-                emit(
-                    PartialUser(
-                        shippingAddress = "haven",
-                        fullName = "",
-                        emailAddress = "",
-                        phoneNumber = ""
-                    )
-                )
-            }
-
-            val viewModel = CheckoutViewModel(
-                fetchCartUseCase = fetchCartUseCase,
-                checkoutCartUseCase = checkoutCartUseCase,
-                getCachedUserUseCase = getCachedUserUseCase
+        viewModel.uiState.test {
+            val uiState = awaitItem()
+            Assert.assertEquals(mockCart, uiState.checkoutItems)
+            Assert.assertEquals("haven", uiState.shippingAddress)
+            Assert.assertEquals("$0.1", uiState.formattedTotalAmount)
+            Assert.assertEquals(
+                if (BuildConfig.FLAVOR.contains("premium")) "$0" else "$20",
+                uiState.deliveryFee
             )
-
-            viewModel.checkout()
-
-            Assert.assertEquals(mockCart, viewModel.uiState.value.checkoutItems)
-            Assert.assertEquals("haven", viewModel.uiState.value.shippingAddress)
-            Assert.assertEquals("$0.1", viewModel.uiState.value.formattedTotalAmount)
-        } finally {
-            Dispatchers.resetMain()
         }
     }
 
     @Test
     fun testCheckout() = runTest {
-        try {
-            Dispatchers.setMain(dispatcher)
+        coEvery { checkoutCartUseCase() } just runs
 
-            coEvery { checkoutCartUseCase() } just runs
+        val viewModel = CheckoutViewModel(
+            fetchCartUseCase = fetchCartUseCase,
+            checkoutCartUseCase = checkoutCartUseCase,
+            getCachedUserUseCase = getCachedUserUseCase,
+            getDeliveryFeeUseCase = fetchDeliveryFeeUseCase
+        )
 
-            val viewModel = CheckoutViewModel(
-                fetchCartUseCase = fetchCartUseCase,
-                checkoutCartUseCase = checkoutCartUseCase,
-                getCachedUserUseCase = getCachedUserUseCase
-            )
+        val events = mutableListOf<Any>()
 
-            val events = mutableListOf<Any>()
+        val checkoutEventsJob =
+            launch(dispatcher) {
+                viewModel.checkoutCompleteEvent.toList(events)
+            }
 
-            Assert.assertEquals(0, events.size)
+        viewModel.checkout()
 
-            val checkoutEventsJob =
-                launch(dispatcher) { viewModel.checkoutCompleteEvent.toList(events) }
+        Assert.assertEquals(1, events.size)
 
-            viewModel.checkout()
-
-            Assert.assertEquals(1, events.size)
-
-            checkoutEventsJob.cancel()
-        } finally {
-            Dispatchers.resetMain()
-        }
+        checkoutEventsJob.cancel()
     }
 
     @Test
     fun testSnackBarMessage() = runTest {
-        try {
-            Dispatchers.setMain(dispatcher)
+        coEvery { checkoutCartUseCase() } answers { throw Exception("ogoni") }
 
-            coEvery { checkoutCartUseCase() } answers { throw Exception("ogoni") }
+        val viewModel = CheckoutViewModel(
+            fetchCartUseCase = fetchCartUseCase,
+            checkoutCartUseCase = checkoutCartUseCase,
+            getCachedUserUseCase = getCachedUserUseCase,
+            getDeliveryFeeUseCase = fetchDeliveryFeeUseCase
+        )
 
-            val viewModel = CheckoutViewModel(
-                fetchCartUseCase = fetchCartUseCase,
-                checkoutCartUseCase = checkoutCartUseCase,
-                getCachedUserUseCase = getCachedUserUseCase
-            )
+        val messages = mutableListOf<String>()
 
-            val messages = mutableListOf<String>()
+        val messageEventsJob =
+            launch(dispatcher) {
+                viewModel.snackBarMessage.toList(messages)
+            }
 
-            Assert.assertEquals(0, messages.size)
+        viewModel.checkout()
 
-            val messageEventsJob =
-                launch(dispatcher) { viewModel.snackBarMessage.toList(messages) }
+        Assert.assertEquals("ogoni", messages.first())
 
-            viewModel.checkout()
-
-            Assert.assertEquals("ogoni", messages.first())
-
-            messageEventsJob.cancel()
-        } finally {
-            Dispatchers.resetMain()
-        }
+        messageEventsJob.cancel()
     }
 }
