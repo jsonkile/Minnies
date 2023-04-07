@@ -41,7 +41,7 @@ jobs:
     steps:
       - checkout
       - android/start-emulator-and-run-tests:
-          test-command: ./gradlew connectedDebugAndroidTest
+          test-command: ./gradlew connectedFreeDebugAndroidTest
           system-image: system-images;android-30;google_apis;x86
 
   release-free-build:
