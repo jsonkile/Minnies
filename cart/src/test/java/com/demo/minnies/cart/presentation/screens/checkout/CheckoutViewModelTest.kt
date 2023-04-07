@@ -2,6 +2,7 @@ package com.demo.minnies.cart.presentation.screens.checkout
 
 import app.cash.turbine.test
 import com.demo.minnies.auth.domain.GetCachedUserUseCase
+import com.demo.minnies.cart.BuildConfig
 import com.demo.minnies.cart.MainDispatcherRule
 import com.demo.minnies.cart.domain.usecases.CheckoutCartUseCase
 import com.demo.minnies.cart.domain.usecases.FetchCartUseCase
@@ -48,9 +49,6 @@ internal class CheckoutViewModelTest {
     @MockK(relaxed = true)
     lateinit var getCachedUserUseCase: GetCachedUserUseCase
 
-    @MockK
-    lateinit var getUserCurrencyPreferenceUseCase: GetUserCurrencyPreferenceUseCase
-
     @Test
     fun testLoadCart() = runTest {
         val mockCart = listOf(
@@ -63,6 +61,8 @@ internal class CheckoutViewModelTest {
                 formattedProductPrice = "$0.1"
             )
         )
+
+        coEvery { fetchDeliveryFeeUseCase() } returns 20.0
 
         coEvery { fetchCartUseCase() } returns flow { emit(mockCart) }
 
@@ -78,17 +78,18 @@ internal class CheckoutViewModelTest {
             fetchCartUseCase = fetchCartUseCase,
             checkoutCartUseCase = checkoutCartUseCase,
             getCachedUserUseCase = getCachedUserUseCase,
-            getDeliveryFeeUseCase = fetchDeliveryFeeUseCase,
-            getUserCurrencyPreferenceUseCase = getUserCurrencyPreferenceUseCase
+            getDeliveryFeeUseCase = fetchDeliveryFeeUseCase
         )
 
         viewModel.uiState.test {
             val uiState = awaitItem()
-            awaitComplete()
-
             Assert.assertEquals(mockCart, uiState.checkoutItems)
             Assert.assertEquals("haven", uiState.shippingAddress)
             Assert.assertEquals("$0.1", uiState.formattedTotalAmount)
+            Assert.assertEquals(
+                if (BuildConfig.FLAVOR.contains("premium")) "$0" else "$20",
+                uiState.deliveryFee
+            )
         }
     }
 
@@ -100,8 +101,7 @@ internal class CheckoutViewModelTest {
             fetchCartUseCase = fetchCartUseCase,
             checkoutCartUseCase = checkoutCartUseCase,
             getCachedUserUseCase = getCachedUserUseCase,
-            getDeliveryFeeUseCase = fetchDeliveryFeeUseCase,
-            getUserCurrencyPreferenceUseCase = getUserCurrencyPreferenceUseCase
+            getDeliveryFeeUseCase = fetchDeliveryFeeUseCase
         )
 
         val events = mutableListOf<Any>()
@@ -126,8 +126,7 @@ internal class CheckoutViewModelTest {
             fetchCartUseCase = fetchCartUseCase,
             checkoutCartUseCase = checkoutCartUseCase,
             getCachedUserUseCase = getCachedUserUseCase,
-            getDeliveryFeeUseCase = fetchDeliveryFeeUseCase,
-            getUserCurrencyPreferenceUseCase = getUserCurrencyPreferenceUseCase
+            getDeliveryFeeUseCase = fetchDeliveryFeeUseCase
         )
 
         val messages = mutableListOf<String>()

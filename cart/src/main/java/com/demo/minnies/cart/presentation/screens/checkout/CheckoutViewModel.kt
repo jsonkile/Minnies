@@ -12,6 +12,7 @@ import com.demo.minnies.shared.domain.GetUserCurrencyPreferenceUseCase
 import com.demo.minnies.shared.utils.Currency
 import com.demo.minnies.shared.utils.toFormattedPriceWithSign
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -23,8 +24,7 @@ class CheckoutViewModel @Inject constructor(
     private val fetchCartUseCase: FetchCartUseCase,
     private val getCachedUserUseCase: GetCachedUserUseCase,
     private val checkoutCartUseCase: CheckoutCartUseCase,
-    private val getDeliveryFeeUseCase: FetchDeliveryFeeUseCase,
-    private val getUserCurrencyPreferenceUseCase: GetUserCurrencyPreferenceUseCase
+    private val getDeliveryFeeUseCase: FetchDeliveryFeeUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UiState())
@@ -52,8 +52,10 @@ class CheckoutViewModel @Inject constructor(
                 val user = getCachedUserUseCase().first()
                 val currency = cart.getOrNull(0)?.currency ?: Currency.USD
 
-                val deliveryFee = (if (BuildConfig.FLAVOR.contains("premium", ignoreCase = true)
-                ) 0.00 else getDeliveryFeeUseCase()).toFormattedPriceWithSign(currency)
+                val deliveryFeeTask = async { getDeliveryFeeUseCase() }
+
+                val deliveryFee = if (BuildConfig.FLAVOR.contains("premium", ignoreCase = true)
+                ) 0.00 else deliveryFeeTask.await()
 
                 val totalCheckoutAmount =
                     cart.sumOf { product -> product.quantity * product.baseProductPrice }
@@ -63,7 +65,7 @@ class CheckoutViewModel @Inject constructor(
                         checkoutItems = cart,
                         formattedTotalAmount = totalCheckoutAmount.toFormattedPriceWithSign(currency),
                         shippingAddress = user?.shippingAddress.orEmpty(),
-                        deliveryFee = deliveryFee
+                        deliveryFee = deliveryFee.toFormattedPriceWithSign(currency)
                     )
                 }
 
